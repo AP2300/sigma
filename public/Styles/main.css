@@ -1,3 +1,13 @@
 .size{
     height: 65vh;
 }
+
+.home-divider{
+    text-align: center;
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
+
+.containerDemo{
+    margin: 0 7%;
+}
