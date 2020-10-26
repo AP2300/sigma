@@ -1,0 +1,19 @@
+{
+  "name": "sigma",
+  "version": "1.0.0",
+  "description": "Proyecto farmaceutica Ing del software 2",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jesuromerop/sigma.git"
+  },
+  "author": "Jesus Romero, Sebastian Montiel, Andres Paredes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jesuromerop/sigma/issues"
+  },
+  "homepage": "https://github.com/jesuromerop/sigma#readme"
+}
