@@ -1,4 +1,3 @@
-html body nav .size{
+html body nav div#splash div.size{
     height: 50vh;
-    width: 100%;
 }
