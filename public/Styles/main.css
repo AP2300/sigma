@@ -2,11 +2,17 @@
     height: 65vh;
 }
 
-.container {
+.cont {
     margin-top: 10%;
 }
 
 .login {
     width: 80%;
     margin-left: 10%;
+}
+
+.name {
+    font-family: ;
+    text-align: center;
+    text-decoration: dotted;
 }
