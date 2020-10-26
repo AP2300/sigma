@@ -1,0 +1,28 @@
+<%- include('./partials/header'); %>
+
+<div class="container">
+    <div class="card login">
+        <div class="card-body">
+            <form>
+                <div class="form-group">
+                <label for="exampleInputEmail1">Usuario</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted">Coloca tu Usuario del sistema</small>
+                </div>
+                <div class="form-group">
+                <label for="exampleInputPassword1">Clave</label>
+                <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Recordar mis Credenciales</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+  
+
+<%- include('./partials/bottom'); %>
