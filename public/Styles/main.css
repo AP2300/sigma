@@ -1,5 +1,6 @@
 .size{
     height: 65vh;
+    object-fit: cover;
 }
 
 .home-divider{
@@ -32,4 +33,8 @@
     text-align: center;
     text-decoration: dotted;
     margin-bottom: 5%;
+}
+
+.loginLink{
+    float: right;
 }
