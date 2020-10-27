@@ -9,12 +9,9 @@
     padding-bottom: 32px;
 }
 
+
 .containerDemo{
     margin: 0 7%;
-}
-
-.cont {
-    margin-top: 5%;
 }
 
 .img-Login {
@@ -31,7 +28,37 @@
 .name {
     font-size: 4em;
     text-align: center;
-    text-decoration: dotted;
-    margin-bottom: 5%;
+    margin-top: 3.5%;
 }
 
+.nav-bg{
+    background: linear-gradient(to top, black 50%, #fcb87d 50%);
+    background-size: 200% 200%;
+    background-position: top right;
+    transition: all .15s ease-out;
+    fill: black;
+}
+
+html body div.card-body.colorBg{
+    background-color: #ffddb7b7;
+    backdrop-filter: blur(1px);
+    
+}
+
+.cont{
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+svg {
+    width: 38px;
+    height: 38px;
+}
+
+.nav-bg:hover, .nav-bg:hover svg, .nav-bg:hover a,html body .nav-bg:hover div ul a
+, .nav-bg:hover ul.nav a:hover, .nav-bg:hover button.navbar-toggler, .nav-bg:hover span.navbar-toggler-icon{
+    background-position: left bottom;
+    fill:whitesmoke;
+    color: #f5f5f5 !important; 
+    border-color: rgba(255,255,255,.1);
+}
