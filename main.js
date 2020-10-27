@@ -27,6 +27,10 @@ app.get("/login", function(req, res){
     res.render("login");
 })
 
+app.get("/admin", function(req,res){
+    res.render("admin")
+})
+
 ///////////////////////
 
 app.listen(app.get("port"), function(){

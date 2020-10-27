@@ -69,3 +69,54 @@ svg {
 .fas.fa-bars{
     font-size: 1.5em;
 }
+
+.AdminCont{
+    margin-top: 5.4%;
+}
+
+html body div.card.text-center#Productos{
+    background-color: #007bffe3;
+    backdrop-filter: blur(1px);
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 700;
+}
+
+html body div.card.text-center#Productos:hover{
+    box-shadow: rgba(0, 0, 0, 0.39) 0 0 30px;
+    transition: 150ms;
+}
+
+html body div.card.text-center#Users{
+    background-color: #77d863e3;
+    backdrop-filter: blur(1px);
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 700;
+}
+
+html body div.card.text-center#Users:hover{
+    box-shadow: rgba(0, 0, 0, 0.39) 0 0 30px;
+    transition: 150ms;
+}
+
+html body div.card.text-center#Admins{
+    background-color: #f7dc66e3;
+    backdrop-filter: blur(1px);
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 700;
+}
+
+html body div.card.text-center#Admins:hover{
+    box-shadow: rgba(0, 0, 0, 0.39) 0 0 30px;
+    transition: 150ms;
+}
+
+.fa-shopping-cart, .fa-user-tie, .fa-user{
+    font-size: 3em;
+}
+
+.center{
+    align-content: center;
+}
