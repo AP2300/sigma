@@ -89,7 +89,9 @@ html body div.card.text-center#Productos{
 
 html body div.card.text-center#Productos:hover{
     box-shadow: rgba(0, 0, 0, 0.39) 0 0 30px;
-    transition: 150ms;
+    transform: scale(1.1);
+    backface-visibility: hidden;
+    transition: 330ms;
 }
 
 html body div.card.text-center#Users{
@@ -102,7 +104,9 @@ html body div.card.text-center#Users{
 
 html body div.card.text-center#Users:hover{
     box-shadow: rgba(0, 0, 0, 0.39) 0 0 30px;
-    transition: 150ms;
+    transform: scale(1.1);
+    backface-visibility: hidden;
+    transition: 330ms;
 }
 
 html body div.card.text-center#Admins{
@@ -115,7 +119,9 @@ html body div.card.text-center#Admins{
 
 html body div.card.text-center#Admins:hover{
     box-shadow: rgba(0, 0, 0, 0.39) 0 0 30px;
-    transition: 150ms;
+    transform: scale(1.1);
+    backface-visibility: hidden;
+    transition: 330ms;  
 }
 
 .fa-shopping-cart, .fa-user-tie, .fa-user.S{
