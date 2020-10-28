@@ -7,7 +7,7 @@ var express               = require("express"),
     FP                    = require("express-fileupload"),
     MethodOverride        = require("method-override"),
     flash                 = require("connect-flash"),
-    Sql                   =require("mysql"),
+    Sql                   = require("mysql"),
     User                  = require("./models/user");
 
 //Config
