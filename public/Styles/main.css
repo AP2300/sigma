@@ -1,5 +1,6 @@
 body {
     background-image: url("/Images/fondo-medicina.jpg");
+    -webkit-font-smoothing: antialiased;
 }
 
 .size{
@@ -102,7 +103,7 @@ html body div.card.text-center#Productos{
 
 html body div.card.text-center#Productos:hover{
     box-shadow: rgba(0, 0, 0, 0.39) 0 0 30px;
-    transform: scale(1.1);
+    transform: scale(1.155555555555555);
     backface-visibility: hidden;
     transition: 330ms;
 }
@@ -117,7 +118,7 @@ html body div.card.text-center#Users{
 
 html body div.card.text-center#Users:hover{
     box-shadow: rgba(0, 0, 0, 0.39) 0 0 30px;
-    transform: scale(1.1);
+    transform: scale(1.155555555555555);
     backface-visibility: hidden;
     transition: 330ms;
 }
@@ -132,7 +133,7 @@ html body div.card.text-center#Admins{
 
 html body div.card.text-center#Admins:hover{
     box-shadow: rgba(0, 0, 0, 0.39) 0 0 30px;
-    transform: scale(1.1);
+    transform: scale(1.155555555555555);
     backface-visibility: hidden;
     transition: 330ms;  
 }
