@@ -29,9 +29,11 @@ button{
     margin: 0 auto;
 }
 
-.login {
+html body div.card.login{
     width: 80%;
     margin-left: 10%;
+    background-color: #f2f2f2b2;
+    backdrop-filter: blur(10px);
 }
 
 .name {
@@ -47,12 +49,6 @@ button{
     transition: all .15s ease-out;
     fill: black;
     box-shadow: rgba(128, 128, 128, 0.363) 1px 0px 55px;
-}
-
-html body div.card-body.colorBg{
-    background-color: #f2f2f2;
-    backdrop-filter: blur(1px);
-    
 }
 
 .cont{
@@ -138,4 +134,9 @@ html body div.card.text-center#Admins:hover{
 .center{
     align-content: center;
 
+}
+
+.Login-button{
+    display: flex;
+    justify-content: center;
 }

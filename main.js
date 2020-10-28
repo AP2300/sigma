@@ -20,13 +20,13 @@ app.use(MethodOverride("_method"));
 app.use(flash());
 
 //coneccion a mysqul//
-var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'me',
-    password : 'secret',
-    database : 'my_db'
-  });
- connection.connect();  
+// var connection = mysql.createConnection({
+//     host     : 'localhost',
+//     user     : 'me',
+//     password : 'secret',
+//     database : 'my_db'
+//   });
+//  connection.connect();  
 
 //todo el codigo aqui//
 
