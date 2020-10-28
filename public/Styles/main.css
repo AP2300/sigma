@@ -47,9 +47,9 @@ html body div.card.login{
 }
 
 .name {
-    font-size: 4em;
-    text-align: center;
-    margin-top: 3.5%;
+    float: right;
+    padding-left: 8px;
+    padding-top: 3px;
 }
 
 .nav-bg{
