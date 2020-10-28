@@ -1,12 +1,18 @@
+body {
+    background-image: url("/Images/fondo-medicina.jpg");
+}
+
 .size{
     height: 65vh;
     object-fit: cover;
 }
 
-.home-divider{
+html body .jumbotron.home-divider{
     text-align: center;
     padding-top: 32px;
     padding-bottom: 32px;
+    backdrop-filter: blur(10px);
+    background-color: #e9ecefc0;
 }
 
 button{
@@ -35,15 +41,16 @@ button{
 }
 
 .nav-bg{
-    background: linear-gradient(to top, black 50%, #fcb87d 50%);
+    background: linear-gradient(to top, black 50%, #ffdd84 50%);
     background-size: 200% 200%;
     background-position: top right;
     transition: all .15s ease-out;
     fill: black;
+    box-shadow: rgba(128, 128, 128, 0.363) 1px 0px 55px;
 }
 
 html body div.card-body.colorBg{
-    background-color: #ffddb7b7;
+    background-color: #f2f2f2;
     backdrop-filter: blur(1px);
     
 }
