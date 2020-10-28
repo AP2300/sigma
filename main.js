@@ -39,7 +39,11 @@ app.get("/login", function(req, res){
 })
 
 app.get("/admin", function(req,res){
-    res.render("admin")
+    res.render("admin");
+})
+
+app.get("/contactanos", function(req, res){
+    res.render("contact");
 })
 
 ///////////////////////
