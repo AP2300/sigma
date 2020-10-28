@@ -1,7 +1,6 @@
 body {
     background-image: url("/Images/fondo-medicina.jpg");
     background-size: cover;
-    -webkit-font-smoothing: antialiased;
 }
 
 .size{
@@ -177,3 +176,29 @@ html body p{
 .containerContact{
     margin:0 0;
 }
+
+.scroll{
+    overflow-y: scroll;
+    max-height: 430px;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(85, 85, 85); 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover{
+    background: #c9c9c9;
+    transition: 370ms; 
+  }

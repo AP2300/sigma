@@ -4,7 +4,7 @@
 
     <h2 class="name-login"> <img src="Images/BigLogo.png" style="padding-bottom: 9px;"> Sigma</h2>
 
-    <div class="card login">
+    <div class="card login scroll">
         <div class="card-body colorBg">
             <form >
                 <div class="centerContact">
@@ -12,22 +12,73 @@
                     <h4>Entra en contacto con nosotros</h4>
                 </div>
                 <hr>
-                <div class="form-group">
-                <label for="exampleInputEmail1">Usuario</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <small id="emailHelp" class="form-text text-muted">Coloca tu Usuario del sistema</small>
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                      <label for="validationDefault01">Nombre de la empresa</label>
+                      <input type="text" class="form-control" id="validationDefault01"  required>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label for="validationDefault02">RIF</label>
+                      <input type="text" class="form-control" id="validationDefault02" required>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="validationDefault04">Tipo de entidad</label>
+                        <select class="custom-select" id="validationDefault04" required>
+                          <option selected disabled value="">Elegir...</option>
+                          <option>...</option>
+                        </select>
+                      </div>
+                </div>
+                <div class="form-row">
+                  <div class="col-md-3 mb-3">
+                    <label for="validationDefault01">Nombre</label>
+                    <input type="text" class="form-control" id="validationDefault01" required>
+                  </div>
+                  <div class="col-md-3 mb-3">
+                    <label for="validationDefault02">Apellido</label>
+                    <input type="text" class="form-control" id="validationDefault02" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="validationDefault02">Email</label>
+                    <input type="email" class="form-control" id="validationDefault02" required>
+                  </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <label for="validationDefault04">Pais</label>
+                        <select class="custom-select" id="validationDefault04" required>
+                          <option selected disabled value="">Elegir...</option>
+                          <option>...</option>
+                        </select>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <label for="validationDefault04">Estado</label>
+                        <select class="custom-select" id="validationDefault04" required>
+                          <option selected disabled value="">Elegir...</option>
+                          <option>...</option>
+                        </select>
+                      </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="validationDefault03">Ciudad</label>
+                    <input type="text" class="form-control" id="validationDefault03" required>
+                  </div>
                 </div>
                 <div class="form-group">
-                <label for="exampleInputPassword1">Clave</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
                 </div>
-                <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Recordar mis Credenciales</label>
-                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Comentarios</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+                    <label class="form-check-label" for="invalidCheck2">
+                      Acepto los terminos y condiciones
+                    </label>
+                  </div>
                 <div class="Login-button">
                     <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
                 </div>
+                <br>
             </form>
         </div>
     </div>
