@@ -3,7 +3,7 @@
 <div class="container AdminCont">
     <div class="row">
         <div class="col-sm">
-            <div class="card text-center" id="Productos">
+            <a class="card text-center " id="Productos" data-toggle="collapse" aria-expanded="false" aria-controls="ProductsPanel" href="#ProductsPanel">
                 <div class="card-header">
                     Productos
                 </div>
@@ -12,10 +12,10 @@
                     <hr>
                     <span>Administra y agrega productos</span>
                 </div>
-              </div>
+            </a>
         </div>
         <div class="col-sm">
-            <div class="card text-center" id="Users">
+            <a class="card text-center" id="Users" data-toggle="collapse" aria-expanded="false" aria-controls="UsersPanel" href="#UsersPanel">
                 <div class="card-header">
                     Users
                 </div>
@@ -24,10 +24,10 @@
                     <hr>
                     <span>Administra y crea usuarios</span>
                 </div>
-              </div>
+              </a>
         </div>
         <div class="col-sm">
-            <div class="card text-center" id="Admins">
+            <a class="card text-center" id="Admins" data-toggle="collapse" aria-expanded="false" aria-controls="OtrosPanel" href="#OtrosPanel">
                 <div class="card-header">
                     Estadisticas
                 </div>
@@ -37,7 +37,7 @@
                     <span>dasdklasdlkhasdlkhaslkd</span>
                 </div>
 
-              </div>
+              </a>
         </div>
     </div>
     <hr>
@@ -45,8 +45,39 @@
 
 <div class="jumbotron home-divider">
     <div class="container">
-        dasd
-    </div>  
+        <h2>Selecciona una opcion</h2>
+        <hr>
+            <div class="collapse multi-collapse hideMeBox" id="ProductsPanel">
+                panel 1
+              </div>
+            <div class="collapse multi-collapse hideMeBox" id="UsersPanel">
+                <div class="card card-body">
+                    <div class="card card-body">
+                        <form action="/register" method="POST">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Nombre</label>
+                                    <input type="text" class="form-control" id="exampleInputPassword1" name="data[name]">
+                                  </div>
+                              <label for="exampleInputEmail1">Email address</label>
+                              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="data[email]">
+                              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                              <label for="exampleInputPassword1">Password</label>
+                              <input type="password" class="form-control" id="exampleInputPassword1" name="data[pass]">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </form>
+                    </div>
+                </div>
+              </div>
+            <div class="collapse multi-collapse hideMeBox" id="OtrosPanel">
+                <div class="card card-body">
+                    panel 3
+                </div>
+              </div>
+
 </div>
 
 <%- include('./partials/bottom'); %>
