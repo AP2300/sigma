@@ -15,8 +15,18 @@ html body .jumbotron.home-divider{
     background-color: #e9ecefc0;
 }
 
-button{
+html body .btn{
     outline: none;
+    background-color: #ffdd84;
+    border: none;
+    color: black;
+
+}
+
+html body .btn:hover {
+    background-color: black;
+    color: white;
+    transition: 330ms;
 }
 
 .containerDemo{
