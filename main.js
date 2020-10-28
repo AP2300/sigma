@@ -7,9 +7,9 @@ var express               = require("express"),
     FP                    = require("express-fileupload"),
     MethodOverride        = require("method-override"),
     flash                 = require("connect-flash"),
-    Bcrypt                =require("bcryptjs"),
-    jwt                   =require("jsonwebtoken")  
-    Sql                   =require("mysql"),
+    Bcrypt                = require("bcryptjs"),
+    jwt                   = require("jsonwebtoken")  
+    Sql                   = require("mysql"),
     User                  = require("./models/user");
 
 //Config
