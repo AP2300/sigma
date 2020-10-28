@@ -47,10 +47,16 @@ html body div.card.login{
     backdrop-filter: blur(10px);
 }
 
-.name {
+.name-login {
     font-size: 4em;
     text-align: center;
     margin-top: 3.5%;
+}
+
+.name {
+    float: right;
+    padding-left: 8px;
+    padding-top: 3px;
 }
 
 .nav-bg{
