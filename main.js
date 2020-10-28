@@ -7,8 +7,10 @@ var express               = require("express"),
     FP                    = require("express-fileupload"),
     MethodOverride        = require("method-override"),
     flash                 = require("connect-flash"),
+    Sql                   =require("mysql"),
     User                  = require("./models/user");
 
+//Config
 app.set("port",process.env.PORT||3000);
 app.use(BodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
@@ -16,6 +18,15 @@ app.use(express.static("public"));
 app.use(FP());
 app.use(MethodOverride("_method"));
 app.use(flash());
+
+//coneccion a mysqul//
+var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'me',
+    password : 'secret',
+    database : 'my_db'
+  });
+ connection.connect();  
 
 //todo el codigo aqui//
 
