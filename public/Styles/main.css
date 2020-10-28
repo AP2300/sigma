@@ -99,7 +99,9 @@ a:hover{
     margin-top: 5.4%;
 }
 
-html body div.card.text-center#Productos{
+html body a#Productos{
+    color: black;
+    text-decoration: none;
     background-color: #007bffe3;
     backdrop-filter: blur(1px);
     cursor: pointer;
@@ -108,14 +110,16 @@ html body div.card.text-center#Productos{
     transition: 330ms;
 }
 
-html body div.card.text-center#Productos:hover{
+html body a#Productos:hover{
     box-shadow: rgba(0, 0, 0, 0.39) 0 0 30px;
     transform: scale(1.155555555555555);
     backface-visibility: hidden;
     transition: 330ms;
 }
 
-html body div.card.text-center#Users{
+html body a#Users{
+    color: black;
+    text-decoration: none;
     background-color: #77d863e3;
     backdrop-filter: blur(1px);
     cursor: pointer;
@@ -124,14 +128,16 @@ html body div.card.text-center#Users{
     transition: 330ms;
 }
 
-html body div.card.text-center#Users:hover{
+html body a#Users:hover{
     box-shadow: rgba(0, 0, 0, 0.39) 0 0 30px;
     transform: scale(1.155555555555555);
     backface-visibility: hidden;
     transition: 330ms;
 }
 
-html body div.card.text-center#Admins{
+html body a#Admins{
+    color: black;
+    text-decoration: none;
     background-color: #f7dc66e3;
     backdrop-filter: blur(1px);
     cursor: pointer;
@@ -140,7 +146,7 @@ html body div.card.text-center#Admins{
     transition: 330ms;
 }
 
-html body div.card.text-center#Admins:hover{
+html body a#Admins:hover{
     box-shadow: rgba(0, 0, 0, 0.39) 0 0 30px;
     transform: scale(1.155555555555555);
     backface-visibility: hidden;
