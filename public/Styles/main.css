@@ -199,6 +199,6 @@ html body p{
   
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover{
-    background: #c9c9c9;
+    background: #363636;
     transition: 370ms; 
   }
