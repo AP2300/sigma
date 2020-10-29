@@ -60,8 +60,11 @@ app.get("/contactanos", function(req, res){
     res.render("contact");
 })
 
+app.post("/contactanos", (req, res)=>{
+    
+})
+
 app.post("/register", (req,res)=>{
-    console.log(req.body.data);
     registerData = req.body.data;
 
     DB.query("SELECT nombre, correo FROM usuarios WHERE nombre = ? OR correo = ?", [registerData.name, registerData.email], async (error, results)=>{
@@ -69,14 +72,11 @@ app.post("/register", (req,res)=>{
             console.log(error);
         }
         if(results.length>0){
-            console.log(results.length);
             responses.messageErr = "El Nombre ya esta registrado.";
             responses.messageOK = "";
-            console.log("en el query"+responses.messageErr);
             res.redirect("/admin");
         }
         
-        console.log("antes del if"+responses.messageErr);
         let hash = await Bcrypt.hash(registerData.pass, 8);
         if(responses.messageErr===""){
             DB.query("INSERT INTO usuarios SET ? ",{
@@ -88,7 +88,6 @@ app.post("/register", (req,res)=>{
             }, (err, result)=>{
                 if(err) console.log(err)
                 else {
-                    console.log(3);
                     responses.messageOK = "El registro fue hecho satisfactoriamente.";
                     responses.messageErr = ""; 
                     res.redirect("/admin");
@@ -97,19 +96,6 @@ app.post("/register", (req,res)=>{
         }
     })
     })
-
-    // DB.query("SELECT Correo FROM Users WHERE Correo = ?", [registerData.email], (error, results)=>{
-    //     if (error){
-    //         console.log(2);
-    //         console.log(error);
-    //     }
-    //     if(results.length>0){
-    //         console.log(2.1);
-    //         responses.messageErr = "El email ya esta registrado.";
-    //         responses.messageOK = "";
-    //     }
-    // }) 
-
 
 ///////////////////////
 
