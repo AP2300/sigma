@@ -110,11 +110,30 @@ app.get("/admin", function(req,res){
 })
 
 app.get("/contactanos", function(req, res){
+    DB.query("SELECT * FROM contactoLog", (error, results)=>{
+        console.log(results);
+    })
     res.render("contact");
 })
 
 app.post("/contactanos", (req, res)=>{
-    DB.query
+    Data=req.body.data;
+    DB.query("INSERT INTO contactoLog SET ? ",{
+        NombreEmpresa: Data.NombreEmpresa,
+        RIF: Data.RIF,
+        TipoEntidad: Data.TipoEntidad,
+        Nombre: Data.Nombre,
+        Apellido: Data.Apellido,
+        Email: Data.Email,
+        Pais: Data.Pais,
+        Estado: Data.Estado,
+        Ciudad: Data.Ciudad,
+        Comentario: Data.Comentario
+    }, (err, result)=>{
+        if(err){
+            console.log(err);
+        }
+    })
 })
 
 app.post("/register", (req,res)=>{
