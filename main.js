@@ -96,19 +96,6 @@ app.post("/register", (req,res)=>{
     })
     })
 
-    // DB.query("SELECT Correo FROM Users WHERE Correo = ?", [registerData.email], (error, results)=>{
-    //     if (error){
-    //         console.log(2);
-    //         console.log(error);
-    //     }
-    //     if(results.length>0){
-    //         console.log(2.1);
-    //         responses.messageErr = "El email ya esta registrado.";
-    //         responses.messageOK = "";
-    //     }
-    // }) 
-
-
 ///////////////////////
 
 app.listen(app.get("port"), function(){
