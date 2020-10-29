@@ -18,7 +18,7 @@ var express               = require("express"),
     User                  = require("./models/user");
 
 //Config
-app.set("port",process.env.PORT||3000);
+app.set("port",process.env.PORT||3002);
 app.use(BodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -52,64 +52,62 @@ app.get("/login", function(req, res){
 
 app.get("/admin", function(req,res){
     res.render("admin", {responses});
+    responses.messageErr=""
+    responses.messageOK=""
 })
 
 app.get("/contactanos", function(req, res){
     res.render("contact");
 })
 
-app.post("/register", async (req,res)=>{
-    var redirect = false;
+app.post("/register", (req,res)=>{
     console.log(req.body.data);
     registerData = req.body.data;
 
-    DB.query("SELECT Nombre FROM Users WHERE Nombre = ?", [registerData.name], (error, results)=>{
+    DB.query("SELECT Nombre, Correo FROM Users WHERE Nombre = ? OR Correo = ?", [registerData.name, registerData.email], async (error, results)=>{
         if (error){
-            console.log(1);
             console.log(error);
         }
         if(results.length>0){
-            console.log(1.1);
+            console.log(results.length);
             responses.messageErr = "El Nombre ya esta registrado.";
             responses.messageOK = "";
-            redirect = true;
+            console.log("en el query"+responses.messageErr);
+            res.redirect("/admin");
+        }
+        
+        console.log("antes del if"+responses.messageErr);
+        let hash = await Bcrypt.hash(registerData.pass, 8);
+        if(responses.messageErr===""){
+            DB.query("INSERT INTO Users SET ? ",{
+                Nombre:registerData.name,
+                Correo:registerData.email,
+                Clave:hash
+            }, (err, result)=>{
+                if(err) console.log(err)
+                else {
+                    console.log(3);
+                    responses.messageOK = "El registro fue hecho satisfactoriamente.";
+                    responses.messageErr = ""; 
+                    res.redirect("/admin");
+                }
+            })
         }
     })
+    })
 
-    DB.query("SELECT Correo FROM Users WHERE Correo = ?", [registerData.email], (error, results)=>{
-        if (error){
-            console.log(2);
-            console.log(error);
-        }
-        if(results.length>0){
-            console.log(2.1);
-            responses.messageErr = "El email ya esta registrado.";
-            responses.messageOK = "";  
-            redirect = true;
-        }
-    }) 
+    // DB.query("SELECT Correo FROM Users WHERE Correo = ?", [registerData.email], (error, results)=>{
+    //     if (error){
+    //         console.log(2);
+    //         console.log(error);
+    //     }
+    //     if(results.length>0){
+    //         console.log(2.1);
+    //         responses.messageErr = "El email ya esta registrado.";
+    //         responses.messageOK = "";
+    //     }
+    // }) 
 
-    let hash = await Bcrypt.hash(registerData.pass, 8);
-
-    
-    if (responses.messageErr !== "") {
-        res.redirect("/admin");
-    } else if (responses.messageErr === "") {
-        DB.query("INSERT INTO Users SET ? ",{
-            Nombre:registerData.name,
-            Correo:registerData.email,
-            Clave:hash
-        }, (err, result)=>{
-            if(err) console.log(err)
-            else {
-                console.log(3);
-                responses.messageOK = "El registro fue hecho satisfactoriamente.";
-                responses.messageErr = ""; 
-                res.redirect("/admin");
-            }
-        })
-    }
-})
 
 ///////////////////////
 
