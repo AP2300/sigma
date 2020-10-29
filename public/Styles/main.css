@@ -190,21 +190,39 @@ html body p{
 
 ::-webkit-scrollbar {
     width: 7px;
-  }
+}
   
-  /* Track */
-  ::-webkit-scrollbar-track {
+/* Track */
+::-webkit-scrollbar-track {
     border-radius: 10px;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: rgb(85, 85, 85); 
     border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover{
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover{
     background: #363636;
     transition: 370ms; 
-  }
+}
+
+html body button.btn.btn-link.btn-block.text-left{
+    background-color: inherit;
+    outline: none;
+}
+
+html body button.btn.btn-link.btn-block.text-left:focus{
+    background-color: inherit;
+    outline: none;
+    text-decoration: none;
+    border: none;
+}
+
+html body button.btn.btn-link.btn-block.text-left:hover{
+    background-color: inherit;
+    color: inherit;
+    text-decoration: none; 
+}

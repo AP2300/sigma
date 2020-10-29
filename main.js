@@ -104,15 +104,20 @@ app.post("/login", function(req, res){
 })
 
 app.get("/admin", function(req,res){
-    res.render("admin", {responses});
-    responses.messageErr=""
-    responses.messageOK=""
-})
+    var contactoData=[];
+    DB.query("SELECT * FROM contactoLog", (error, results)=>{
+       if(error){
+           console.log(error);
+       }else{
+           contactoData=results;
+           res.render("admin", {responses:responses, contactoData:contactoData});
+           responses.messageErr="";
+           responses.messageOK="";
+       }
+    });
+});
 
 app.get("/contactanos", function(req, res){
-    DB.query("SELECT * FROM contactoLog", (error, results)=>{
-        console.log(results);
-    })
     res.render("contact");
 })
 
@@ -132,6 +137,8 @@ app.post("/contactanos", (req, res)=>{
     }, (err, result)=>{
         if(err){
             console.log(err);
+        }else{
+            res.redirect("/home");
         }
     })
 })
