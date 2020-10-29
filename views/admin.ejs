@@ -3,7 +3,8 @@
 <div class="container AdminCont">
     <div class="row">
         <div class="col-sm">
-            <a class="card text-center " id="Productos" data-toggle="collapse" aria-expanded="false" aria-controls="ProductsPanel" href="#ProductsPanel">
+            <a class="card text-center " id="Productos" data-toggle="collapse" aria-expanded="false"
+                aria-controls="ProductsPanel" href="#ProductsPanel">
                 <div class="card-header">
                     Productos
                 </div>
@@ -15,29 +16,31 @@
             </a>
         </div>
         <div class="col-sm">
-            <a class="card text-center" id="Users" data-toggle="collapse" aria-expanded="false" aria-controls="UsersPanel" href="#UsersPanel">
+            <a class="card text-center" id="Users" data-toggle="collapse" aria-expanded="false"
+                aria-controls="UsersPanel" href="#UsersPanel">
                 <div class="card-header">
                     Users
                 </div>
                 <div class="card-body">
-                    <i class="fas fa-user S"></i> 
+                    <i class="fas fa-user S"></i>
                     <hr>
                     <span>Administra y crea usuarios</span>
                 </div>
-              </a>
+            </a>
         </div>
         <div class="col-sm">
-            <a class="card text-center" id="Admins" data-toggle="collapse" aria-expanded="false" aria-controls="OtrosPanel" href="#OtrosPanel">
+            <a class="card text-center" id="Admins" data-toggle="collapse" aria-expanded="false"
+                aria-controls="OtrosPanel" href="#OtrosPanel">
                 <div class="card-header">
                     Estadisticas
                 </div>
                 <div class="card-body">
-                    <i class="fas fa-user-tie"></i>  
+                    <i class="fas fa-user-tie"></i>
                     <hr>
                     <span>dasdklasdlkhasdlkhaslkd</span>
                 </div>
 
-              </a>
+            </a>
         </div>
     </div>
     <hr>
@@ -47,37 +50,57 @@
     <div class="container">
         <h2>Selecciona una opcion</h2>
         <hr>
-            <div class="collapse multi-collapse hideMeBox" id="ProductsPanel">
-                panel 1
-              </div>
-            <div class="collapse multi-collapse hideMeBox" id="UsersPanel">
+        <% if (responses.messageErr.lenght > 0) {%>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong id="errRegister"><%= responses.messageErr %></strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <% } %>
+        <% if (responses.messageOK.lenght > 0) {%>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong id="errRegister"><%= responses.messageOK %></strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <% } %>
+        <div class="collapse multi-collapse hideMeBox" id="ProductsPanel">
+            panel 1
+        </div>
+        <div class="collapse multi-collapse hideMeBox" id="UsersPanel">
+            <div class="card card-body">
                 <div class="card card-body">
-                    <div class="card card-body">
-                        <form action="/register" method="POST">
+                    <form action="/register" method="POST">
+                        <div class="form-group">
                             <div class="form-group">
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Nombre</label>
-                                    <input type="text" class="form-control" id="exampleInputPassword1" name="data[name]">
-                                  </div>
-                              <label for="exampleInputEmail1">Email address</label>
-                              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="data[email]">
-                              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                <label for="exampleInputPassword1">Nombre</label>
+                                <input type="text" class="form-control" id="exampleInputPassword1" name="data[name]"
+                                    required>
                             </div>
-                            <div class="form-group">
-                              <label for="exampleInputPassword1">Password</label>
-                              <input type="password" class="form-control" id="exampleInputPassword1" name="data[pass]">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                          </form>
-                    </div>
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" name="data[email]" required>
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                                else.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" name="data[pass]"
+                                required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
-              </div>
-            <div class="collapse multi-collapse hideMeBox" id="OtrosPanel">
-                <div class="card card-body">
-                    panel 3
-                </div>
-              </div>
+            </div>
+        </div>
+        <div class="collapse multi-collapse hideMeBox" id="OtrosPanel">
+            <div class="card card-body">
+                panel 3
+            </div>
+        </div>
 
-</div>
+    </div>
 
-<%- include('./partials/bottom'); %>
+    <%- include('./partials/bottom'); %>
