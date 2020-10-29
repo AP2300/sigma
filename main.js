@@ -92,7 +92,7 @@ app.post("/register", async (req,res)=>{
     let hash = await Bcrypt.hash(registerData.pass, 8);
 
     
-    if (responses.messageErr !== "") {
+    if (responses.messageErr === "") {
         res.redirect("/admin");
     } else if (responses.messageErr === "") {
         DB.query("INSERT INTO Users SET ? ",{
