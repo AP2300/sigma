@@ -64,7 +64,7 @@ app.post("/register", (req,res)=>{
     console.log(req.body.data);
     registerData = req.body.data;
 
-    DB.query("SELECT Nombre, Correo FROM Users WHERE Nombre = ? OR Correo = ?", [registerData.name, registerData.email], async (error, results)=>{
+    DB.query("SELECT nombre, correo FROM usuarios WHERE nombre = ? OR correo = ?", [registerData.name, registerData.email], async (error, results)=>{
         if (error){
             console.log(error);
         }
@@ -79,10 +79,12 @@ app.post("/register", (req,res)=>{
         console.log("antes del if"+responses.messageErr);
         let hash = await Bcrypt.hash(registerData.pass, 8);
         if(responses.messageErr===""){
-            DB.query("INSERT INTO Users SET ? ",{
-                Nombre:registerData.name,
-                Correo:registerData.email,
-                Clave:hash
+            DB.query("INSERT INTO usuarios SET ? ",{
+                nombre:registerData.name,
+                correo:registerData.email,
+                clave:hash,
+                tipo_usuario:registerData.optionType,
+                cargo:registerData.optionPos
             }, (err, result)=>{
                 if(err) console.log(err)
                 else {
