@@ -6,7 +6,7 @@
 
     <div class="card login scroll">
         <div class="card-body colorBg">
-            <form >
+            <form action="/contactanos" method="POST">
                 <div class="centerContact">
                     <p><i class="fas fa-comment"></i></p>
                     <h4>Entra en contacto con nosotros</h4>
@@ -15,15 +15,15 @@
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                       <label for="validationDefault01">Nombre de la empresa</label>
-                      <input type="text" class="form-control" id="validationDefault01"  required>
+                      <input type="text" class="form-control" id="validationDefault01"  required name="data[NombreEmpresa]">
                     </div>
                     <div class="col-md-3 mb-3">
                       <label for="validationDefault02">RIF</label>
-                      <input type="text" class="form-control" id="validationDefault02" required>
+                      <input type="text" class="form-control" id="validationDefault02" required name="data[RIF]">
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="validationDefault04">Tipo de entidad</label>
-                        <select class="custom-select" id="validationDefault04" required>
+                        <select class="custom-select" id="validationDefault04" required name="data[TipoEntidad]">
                           <option selected disabled value="">Elegir...</option>
                           <option>...</option>
                         </select>
@@ -32,35 +32,35 @@
                 <div class="form-row">
                   <div class="col-md-3 mb-3">
                     <label for="validationDefault01">Nombre</label>
-                    <input type="text" class="form-control" id="validationDefault01" required>
+                    <input type="text" class="form-control" id="validationDefault01" required name="data[Nombre]">
                   </div>
                   <div class="col-md-3 mb-3">
                     <label for="validationDefault02">Apellido</label>
-                    <input type="text" class="form-control" id="validationDefault02" required>
+                    <input type="text" class="form-control" id="validationDefault02" required name="data[Apellido]">
                   </div>
                   <div class="col-md-6 mb-3">
                     <label for="validationDefault02">Email</label>
-                    <input type="email" class="form-control" id="validationDefault02" required>
+                    <input type="email" class="form-control" id="validationDefault02" required name="data[Email]">
                   </div>
                 </div>
                 <div class="form-row">
                     <div class="col-md-3 mb-3">
                         <label for="validationDefault04">Pais</label>
-                        <select class="custom-select" id="validationDefault04" required>
+                        <select class="custom-select" id="validationDefault04" required name="data[Pais]">
                           <option selected disabled value="">Elegir...</option>
                           <option>...</option>
                         </select>
                       </div>
                       <div class="col-md-3 mb-3">
                         <label for="validationDefault04">Estado</label>
-                        <select class="custom-select" id="validationDefault04" required>
+                        <select class="custom-select" id="validationDefault04" required name="data[Estado]">
                           <option selected disabled value="">Elegir...</option>
                           <option>...</option>
                         </select>
                       </div>
                   <div class="col-md-6 mb-3">
                     <label for="validationDefault03">Ciudad</label>
-                    <input type="text" class="form-control" id="validationDefault03" required>
+                    <input type="text" class="form-control" id="validationDefault03" required name="data[Ciudad]">
                   </div>
                 </div>
                 <div class="form-group">
@@ -70,7 +70,7 @@
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required name="data[Comentario]">
                     <label class="form-check-label" for="invalidCheck2">
                       Acepto los terminos y condiciones
                     </label>
