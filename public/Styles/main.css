@@ -253,12 +253,20 @@ html body div div div nav ol.categoria, li.breadcrumb-item a:hover {
     text-decoration: none;
 }
 
-li.breadcrumb-item.activo {
-    text-decoration: none;
+.activo {
     font-weight: 800;
     color: black;
 }
+
 button:focus, button.btn.btn-link.btn-block.text-left:focus {
+    outline:none !important;
+    outline-width: 0 !important;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+input:focus, input.form-control.col-sm-12.search:focus {
     outline:none !important;
     outline-width: 0 !important;
     box-shadow: none;
@@ -271,8 +279,8 @@ html body span.btn{
     background-color: rgb(253, 75, 75);
 }
 
-html body div div div div#productos div div.card-producto div.card-body {
-}
+/* html body div div div div#productos div div.card-producto div.card-body {
+} */
 
 html body div div div div#productos div div.card-producto img.card-img-top{
     height: 300px;

@@ -23,7 +23,8 @@ $('#CustomFile').on('change',function(){
     $(this).next('.custom-file-label').html(cleanFileName);
 })
 
-function buscar(Data){
+var filter="";
+function buscar(Data, filter){
     let text = document.getElementById("Busqueda").value.toLowerCase();
     text.replace(/[-[\]{}()*+?.,\\^$|#]/g, "\\$&");
     console.log(text);
@@ -31,7 +32,10 @@ function buscar(Data){
     let html = "";
 
     for(let producto of Data){
-		if(reg.test(producto.nombre)){
+        if(reg.test(producto.nombre)&&producto.tipo_medicamento===filter||reg.test(producto.nombre)&&filter==="Todos"
+        ||reg.test(producto.nombre)&&filter===""){
+            console.log(filter);
+            console.log("hola");
             html+=`
             <div class="col mb-4">
                 <div class="card card-producto">
@@ -49,5 +53,14 @@ function buscar(Data){
     }
     document.getElementById("productos").innerHTML=html;
 }
-    if(window.location.pathname === "/catalog") buscar(SearchData);
+
+$("ol").on("click","li", function (){
+    var cat=$(this).text();
+    filter=cat;
+    $(".breadcrumb-item").removeClass("activo");
+    $(this).toggleClass("activo");
+    buscar(SearchData,filter);
+})
+
+if(window.location.pathname === "/catalog") buscar(SearchData,filter);
     
