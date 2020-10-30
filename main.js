@@ -22,7 +22,7 @@ var express               = require("express"),
     cookieParser          = require("cookie-parser")
 
 //Config
-app.set("port",process.env.PORT||3002);
+app.set("port",process.env.PORT||3000);
 app.use(BodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
