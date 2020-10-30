@@ -237,14 +237,7 @@ html body div div div div.card.comentarios{
 }
 
 html body div div div form div input.search {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
     outline-color: transparent;
-}
-
-html body div div div form div button.btn-search {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
 }
 
 html body div div div nav ol.categoria {
@@ -276,4 +269,11 @@ button:focus, button.btn.btn-link.btn-block.text-left:focus {
 html body span.btn{
     color: whitesmoke;
     background-color: rgb(253, 75, 75);
+}
+
+html body div div div div#productos div div.card-producto div.card-body {
+}
+
+html body div div div div#productos div div.card-producto img.card-img-top{
+    height: 300px;
 }
