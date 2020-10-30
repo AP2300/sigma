@@ -61,6 +61,17 @@ app.get("/login", function(req, res){
     responses.messageOk = "";
 })
 
+app.get("/catalog", (req, res)=>{
+    var ProductoData = []
+    DB.query("SELECT * FROM producto", (err, results)=>{
+        if(err) console.log(err);
+        else {
+            ProductoData = results
+            res.render("catalog", {ProductoData:ProductoData});
+        }
+    })
+})
+
 app.post("/login", function(req, res){
     loginData = req.body.data;
     console.log(loginData);
@@ -118,6 +129,36 @@ app.get("/admin", function(req,res){
        }
     });
 });
+
+app.post("/adminAddProduct", (req, res)=>{
+    let DataProducto = req.body.data;
+    DB.query("SELECT nombre FROM productos WHERE nombre = ?", [DataProducto.name], async (error, results)=>{
+        if (error){
+            console.log(error);
+        }
+        if(results.length>0){
+            responses.messageErr = "El Nombre ya esta registrado.";
+            responses.messageOK = "";
+            res.redirect("/admin");
+        }
+        if(responses.messageErr===""){
+            DB.query("INSERT INTO usuarios SET ? ",{
+                nombre:registerData.name,
+                correo:registerData.email,
+                clave:hash,
+                tipo_usuario:registerData.optionType,
+                cargo:registerData.optionPos
+            }, (err, result)=>{
+                if(err) console.log(err)
+                else {
+                    responses.messageOK = "El registro fue hecho satisfactoriamente.";
+                    responses.messageErr = ""; 
+                    res.redirect("/admin");
+                }
+            })
+        }
+    })
+    })
 
 app.get("/contactanos", function(req, res){
     res.render("contact");

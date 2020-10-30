@@ -14,3 +14,4 @@ $("#Admins").click(function () {
 if ($(".alert-dismissible").length) {
     $("#UsersPanel").collapse("show");
 }
+console.log(SearchData);
