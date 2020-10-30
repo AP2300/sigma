@@ -110,6 +110,8 @@ app.get("/admin", function(req,res){
            console.log(error);
        }else{
            contactoData=results;
+           console.log(contactoData);
+           
            res.render("admin", {responses:responses, contactoData:contactoData});
            responses.messageErr="";
            responses.messageOK="";
@@ -193,7 +195,7 @@ function handleDisconnect() {
       }else{
           console.log("DB conectada");
       }                                     // to avoid a hot loop, and to allow our node script to
-    });                                     // process asynchronous requests in the meantime.
+    });                                     // process asynchronous requests in the meandntime.
                                             // If you're also serving http, display a 503 error.
     DB.on('error', function(err) {
       console.log('db error', err);
