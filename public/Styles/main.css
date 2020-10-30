@@ -235,3 +235,13 @@ html body div div div div.card.comentarios{
     background-color: rgba(255, 255, 255, 0.822);
     font-weight: 500;
 }
+
+html body div div div form div input.search {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+html body div div div form div button.btn-search {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
