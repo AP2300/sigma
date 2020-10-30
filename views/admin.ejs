@@ -112,8 +112,8 @@
         <div class="collapse multi-collapse hideMeBox" id="OtrosPanel">
                 <%var i=0%>
                 <%contactoData.forEach(el => {%>
-                    <div class="accordion" id="accordion">
-                        <div class="card">
+                    <div class="accordion " id="accordion">
+                        <div class="card comentarios">
                           <div class="card-header" id="headingThree">
                             <h2 class="mb-0">
                               <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse<%=i%>" >
@@ -131,7 +131,7 @@
                           </div>
                 
                           <div id="collapse<%=i%>" class="collapse" >
-                            <div class="card-body">
+                            <div class="card-body ">
                                 <div class="row">
                                     <div class="col-sm">
                                         Nombre: <%=el.Nombre%>
@@ -170,9 +170,10 @@
                             </div>
                           </div>
                     </div>
+                </div>
                     <%i++%>
                 <%});%>
-        </div>
+        
 
     </div>
 
