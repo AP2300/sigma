@@ -1,38 +1,41 @@
 <%- include('./partials/header'); %>
 
-<div class="containerContact">
+<script>
+    var SearchData= <%- JSON.stringify(ProductoData) %>
+</script>
 
-    <h2 class="name-login"> <img src="Images/BigLogo.png" style="padding-bottom: 9px;"> Sigma</h2>
+    <div class="containerContact">
 
-    <div class="card login scroll">
-        <div class="card-body colorBg">
-            <form class="form ">
-                <div class="row ml-sm-1 mr-sm-1">
-                    <input class="form-control col-sm-11 search" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-sm-0 col-sm-1 btn-search" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
+        <h2 class="name-login"> <img src="Images/BigLogo.png" style="padding-bottom: 9px;"> Sigma</h2>
+
+        <div class="card login">
+            <div class="card-body colorBg">
+                <form class="form ">
+                    <div class="row ml-sm-1 mr-sm-1">
+                        <input class="form-control col-sm-12 search" id="Busqueda" type="search" placeholder='Search' oninput="buscar(SearchData)" aria-label="Search">
+                        <!-- <button class="btn btn-outline-success my-sm-0 col-sm-1 btn-search" type="submit" onclick="buscar()">
+                            
+                        </button> -->
+                    </div>
+                </form>
+                <hr>
+                <nav aria-label="breadcrumb categoria">
+                    <ol class="breadcrumb categoria">
+                        <li class="breadcrumb-item activo" aria-current="page">Todos</li>
+                        <li class="breadcrumb-item"><a href="#">AntiViral</a></li>
+                        <li class="breadcrumb-item"><a href="#">AntiEstaminico</a></li>
+                        <li class="breadcrumb-item"><a href="#">AntiFlamatorio</a></li>
+                        <li class="breadcrumb-item"><a href="#">AntiAlergico</a></li>
+                        <li class="breadcrumb-item"><a href="#">Condones</a></li>
+                    </ol>
+                </nav>
+                <hr>
+                <div class="row row-cols-1 row-cols-md-3" id="productos">
+
                 </div>
-              </form>
-              <hr>
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">Todos</li>
-                    <li class="breadcrumb-item"><a href="#">AntiViral</a></li>
-                    <li class="breadcrumb-item"><a href="#">AntiEstaminico</a></li>
-                    <li class="breadcrumb-item"><a href="#">AntiFlamatorio</a></li>
-                    <li class="breadcrumb-item"><a href="#">AntiAlergico</a></li>
-                    <li class="breadcrumb-item"><a href="#">Condones</a></li>
-                </ol>
-              </nav>
+            </div>
         </div>
+
     </div>
-
-</div>
     
-    
-    <script>
-        var SearchData= <%- JSON.stringify(ProductoData) %>
-    </script>
-
 <%- include('./partials/bottom'); %>

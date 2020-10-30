@@ -22,4 +22,47 @@ $('#CustomFile').on('change',function(){
     //replace the "Choose a file" label
     $(this).next('.custom-file-label').html(cleanFileName);
 })
-console.log(SearchData);
+
+function buscar(Data){
+    let text = document.getElementById("Busqueda").value.toLowerCase();
+    text.replace(/[-[\]{}()*+?.,\\^$|#]/g, "\\$&");
+    console.log(text);
+    let reg = new RegExp(`\\b${text}`, 'i');
+    let html = "";
+
+    for(let producto of Data){
+		if(reg.test(producto.nombre)){
+            html+=`
+            <div class="col mb-4">
+                <div class="card">
+                    <img src="${producto.IMG}" class="card-img-top" >
+                    <div class="card-body">
+                        <h5 class="card-title">${producto.nombre}</h5>
+                        <p class="card-text">Tipo de Medicamento: ${producto.tipo_medicamento}</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Precio: ${producto.precio}$</small>
+                    </div>
+                </div>
+            </div>`
+        }
+        else if(reg.test("")){
+            html+=`
+            <div class="col mb-4">
+                <div class="card">
+                    <img src="${producto.IMG}" class="card-img-top" >
+                    <div class="card-body">
+                        <h5 class="card-title">${producto.nombre}</h5>
+                        <p class="card-text">Tipo de Medicamento: ${producto.tipo_medicamento}</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Precio: ${producto.precio}$</small>
+                    </div>
+                </div>
+            </div>`
+        }
+    }
+    document.getElementById("productos").innerHTML=html;
+}
+    if(window.location.pathname === "/catalog") buscar(SearchData);
+    

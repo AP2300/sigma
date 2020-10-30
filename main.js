@@ -145,14 +145,14 @@ app.post("/adminAddProduct", (req, res)=>{
             if(!req.files) return res.redirect("/admin");
             else{
                 File = req.files.img;
-                imgSource = `/Images/${File.name}`;
-                File.mv(`./public/Images/${File.name}`, (err)=>{
+                imgSource = `/Img-Producto/${File.name}`;
+                File.mv(`./public/Img-Producto/${File.name}`, (err)=>{
                     if(err) console.log(err);
                 })
             }
         }
         if(responses.PmessageErr===""){
-            DB.query("INSERT INTO producto SET ? SELECT  ",{
+            DB.query("INSERT INTO producto SET ?",{
                 nombre:DataProducto.name,
                 precio:DataProducto.price,
                 tipo_medicamento:DataProducto.type,

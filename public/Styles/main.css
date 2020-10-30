@@ -245,3 +245,22 @@ html body div div div form div button.btn-search {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
+
+html body div div div nav ol.categoria {
+    background-color: #ffdc84b7;
+}
+
+li.breadcrumb-item a {
+    color: grey;
+}
+
+html body div div div nav ol.categoria, li.breadcrumb-item a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+li.breadcrumb-item.activo {
+    text-decoration: none;
+    font-weight: 800;
+    color: black;
+}
