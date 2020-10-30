@@ -3,6 +3,8 @@ const bcrypt = require("bcryptjs/dist/bcrypt");
 var responses = {
     messageErr:"",
     messageOK:"",
+    PmessageErr:"",
+    PmessageOK: ""
 }
 
 var express               = require("express"),
@@ -121,8 +123,6 @@ app.get("/admin", function(req,res){
            console.log(error);
        }else{
            contactoData=results;
-           console.log(contactoData);
-           
            res.render("admin", {responses:responses, contactoData:contactoData});
            responses.messageErr="";
            responses.messageOK="";
@@ -131,23 +131,33 @@ app.get("/admin", function(req,res){
 });
 
 app.post("/adminAddProduct", (req, res)=>{
-    let DataProducto = req.body.data;
-    DB.query("SELECT nombre FROM productos WHERE nombre = ?", [DataProducto.name], async (error, results)=>{
+    let DataProducto = req.body;
+    DB.query("SELECT nombre FROM producto WHERE nombre = ?", [DataProducto.name], async (error, results)=>{
+        let imgSource;
         if (error){
             console.log(error);
         }
         if(results.length>0){
-            responses.messageErr = "El Nombre ya esta registrado.";
-            responses.messageOK = "";
+            responses.PmessageErr = "Este producto ya se encuentra en el sistema";
+            responses.PmessageOK = "";
             res.redirect("/admin");
+        }else{
+            if(!req.files) return res.redirect("/admin");
+            else{
+                File = req.files.img;
+                imgSource = `/Images/${File.name}`;
+                File.mv(`./public/Images/${File.name}`, (err)=>{
+                    if(err) console.log(err);
+                })
+            }
         }
-        if(responses.messageErr===""){
-            DB.query("INSERT INTO usuarios SET ? ",{
-                nombre:registerData.name,
-                correo:registerData.email,
-                clave:hash,
-                tipo_usuario:registerData.optionType,
-                cargo:registerData.optionPos
+        if(responses.PmessageErr===""){
+            DB.query("INSERT INTO producto SET ? SELECT  ",{
+                nombre:DataProducto.name,
+                precio:DataProducto.price,
+                tipo_medicamento:DataProducto.type,
+                descripcion:DataProducto.description,
+                IMG:imgSource
             }, (err, result)=>{
                 if(err) console.log(err)
                 else {
