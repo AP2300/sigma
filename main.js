@@ -83,12 +83,13 @@ app.use(session({
 
 //todo el codigo aqui//
 
-app.get("/home", function(req, res){
+app.get("/home",function(req, res){
     if(IsAuthenticated(req.session.user)!=null){
-        res.render("index",{Sesion:IsAuthenticated(req.session.user)});
+        Sesion=IsAuthenticated(req.session.user);
     }else{
-        res.render("index", {Sesion:"null"});
+        Sesion=null
     }
+    res.render("index", {Sesion:Sesion});
     
 })
 
@@ -287,13 +288,8 @@ function handleDisconnect() {
 
 function IsAuthenticated(data){
     if(typeof(data)!="undefined"){
-        console.log("/////////////////");
-        console.log(data);
-        Sesion=data;
-        console.log("////////////////");
-        return Sesion
+        return data
     }else{
-        console.log(data);
         return null;
     }
 }
