@@ -7,6 +7,8 @@ var responses = {
     PmessageOK: ""
 }
 
+var Sesion;
+
 var express               = require("express"),
     app                   = express(),
     BodyParser            = require("body-parser"),
@@ -19,6 +21,8 @@ var express               = require("express"),
     Bcrypt                = require("bcryptjs"),
     jwt                   = require("jsonwebtoken")  
     Sql                   = require("mysql"),
+    session               = require("express-session"),
+    MySQLStore            = require("express-mysql-session")(session);
     cookieParser          = require("cookie-parser")
 
 //Config
@@ -43,6 +47,30 @@ var DBconfig = {
 var DB;
 handleDisconnect(DBconfig)
 
+//configurado midleware para la sesion//
+
+var sessionStore = new MySQLStore({
+    expiration: 60*10,
+    createDatabaseTable: true,
+    schema: {
+        tableName: 'USERS_SESSIONS',
+        columnNames: {
+            session_id: 'session_id',
+            expires: 'expires',
+            data: 'data'
+        }
+    }
+}, DB);
+
+app.use(session({
+    key: '69Atu22GZTSyDGW4sf4mMJdJ42436gAs',
+    secret: '3dCE84rey8R8pHKrVRedgyEjhrqGT5Hz',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: true
+}));
+///////////////////////////////////////
+
 //  DB.connect((error)=>{
 //      if(error) {
 //          DB.connect();
@@ -54,11 +82,20 @@ handleDisconnect(DBconfig)
 //todo el codigo aqui//
 
 app.get("/home", function(req, res){
-    res.render("index");
+    if(IsAuthenticated(req.session.user)!=null){
+        res.render("index",{Sesion:IsAuthenticated(req.session.user)});
+    }else{
+        res.render("index", {Sesion:"null"});
+    }
+    
 })
 
 app.get("/login", function(req, res){
-    res.render("login", {responses});
+    if(IsAuthenticated(req.session.user)!=null){
+        res.render("login",{Sesion:Sesion,responses});
+    }else{
+        res.render("login", {Sesion:"null",responses});
+    }
     responses.messageErr = "";
     responses.messageOk = "";
 })
@@ -84,23 +121,11 @@ app.post("/login", function(req, res){
             await bcrypt.compare(loginData.pass, results[0].clave, function(err, result) {
                 if(err) console.log(err);
                 if(result) {
-                    const id = results[0].id;
-
-                    const token = jwt.sign({ id }, process.env.JWT_SECRET||"mysupersecretpassword", {
-                        expiresIn: process.env.JWT_EXPIRES_IN||"2h"
-                    });
-
-                    console.log(`The token is ${token}`);
-
-                    const cookieOptions = {
-                        expires: new Date(
-                            Date.now() + process.env.JWT_COOKIE_EXPIRES||2 * 60 * 60 * 1000
-                        ),
-                        httpOnly: true
-                    }
-                    
-                    res.cookie('jwt', token, cookieOptions);
-                    
+                    req.session.user = {
+                        id: results[0].id,
+                        nickname: results[0].correo,
+                        isAuthed: true
+                    };
                     res.redirect("/home");
                 }
                 else {
@@ -257,4 +282,17 @@ function handleDisconnect() {
       }
     });
   }
-  
+
+
+function IsAuthenticated(data){
+    if(typeof(data)!="undefined"){
+        console.log("/////////////////");
+        console.log(data);
+        Sesion=data;
+        console.log("////////////////");
+        return Sesion
+    }else{
+        console.log(data);
+        return null;
+    }
+}
