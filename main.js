@@ -50,7 +50,9 @@ handleDisconnect(DBconfig)
 //configurado midleware para la sesion//
 
 var sessionStore = new MySQLStore({
-    expiration: 60*10,
+    expiration: 10000*30,
+    clearExpired: true,
+    checkExpirationInterval: 10000*60,
     createDatabaseTable: true,
     schema: {
         tableName: 'USERS_SESSIONS',
@@ -282,7 +284,6 @@ function handleDisconnect() {
       }
     });
   }
-
 
 function IsAuthenticated(data){
     if(typeof(data)!="undefined"){
