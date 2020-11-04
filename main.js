@@ -145,7 +145,6 @@ app.post("/login", function(req, res){
 app.get("/admin", function(req,res){
     IsAuthenticated(req.session.user);
     var contactoData=[];
-<<<<<<< HEAD
 
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
@@ -168,18 +167,6 @@ app.get("/admin", function(req,res){
         res.redirect("/home");
     }
 
-=======
-    DB.query("SELECT * FROM contactoLog", (error, results)=>{
-       if(error){
-           console.log(error);
-       }else{
-           contactoData=results;
-           res.render("admin", {Sesion:Sesion,responses:responses, contactoData:contactoData});
-           responses.messageErr="";
-           responses.messageOK="";
-       }
-    });
->>>>>>> dc414fee23c88cad2076269541d0c2766e828699
 });
 
 app.post("/adminAddProduct", (req, res)=>{
@@ -312,17 +299,12 @@ function handleDisconnect() {
   }
 
 function IsAuthenticated(data){
-<<<<<<< HEAD
     if(typeof(data)!="undefined"){
         if(data.isAdmin){
             return [data.isAdmin,data];
         }else{
             return data;
         }
-=======
-    if(typeof(data) !== "undefined"){
-        Sesion=data;
->>>>>>> dc414fee23c88cad2076269541d0c2766e828699
     }else{
         Sesion=null;
     }
