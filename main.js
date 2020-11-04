@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs/dist/bcrypt");
+const { session } = require("passport");
 
 var responses = {
     messageErr:"",
@@ -146,16 +147,28 @@ app.post("/login", function(req, res){
 
 app.get("/admin", function(req,res){
     var contactoData=[];
-    DB.query("SELECT * FROM contactoLog", (error, results)=>{
-       if(error){
-           console.log(error);
-       }else{
-           contactoData=results;
-           res.render("admin", {responses:responses, contactoData:contactoData});
-           responses.messageErr="";
-           responses.messageOK="";
-       }
-    });
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+    }else{
+        Sesion=null
+    }
+
+    if(Sesion.isAdmin){
+        DB.query("SELECT * FROM contactoLog", (error, results)=>{
+            if(error){
+                console.log(error);
+            }else{
+                contactoData=results;
+                res.render("admin", {responses:responses, contactoData:contactoData});
+                responses.messageErr="";
+                responses.messageOK="";
+            }
+         });
+    }else{
+        res.redirect("/home");
+    }
+
 });
 
 app.post("/adminAddProduct", (req, res)=>{
@@ -288,7 +301,11 @@ function handleDisconnect() {
 
 function IsAuthenticated(data){
     if(typeof(data)!="undefined"){
-        return data
+        if(data.isAdmin){
+            return [data.isAdmin,data];
+        }else{
+            return data;
+        }
     }else{
         return null;
     }
