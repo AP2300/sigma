@@ -84,40 +84,37 @@ app.use(session({
 
 //todo el codigo aqui//
 
+app.get("/", function (req, res) { 
+    res.redirect("/home");
+})
+
 app.get("/home",function(req, res){
-    if(IsAuthenticated(req.session.user)!=null){
-        Sesion=IsAuthenticated(req.session.user);
-    }else{
-        Sesion=null
-    }
+    IsAuthenticated(req.session.user);
     res.render("index", {Sesion:Sesion});
     
 })
 
 app.get("/login", function(req, res){
-    if(IsAuthenticated(req.session.user)!=null){
-        res.render("login",{Sesion:Sesion,responses});
-    }else{
-        res.render("login", {Sesion:"null",responses});
-    }
+    IsAuthenticated(req.session.user);
+    res.render("login", {Sesion:Sesion,responses});
     responses.messageErr = "";
     responses.messageOk = "";
 })
 
 app.get("/catalog", (req, res)=>{
+    IsAuthenticated(req.session.user);
     var ProductoData = []
     DB.query("SELECT * FROM producto", (err, results)=>{
         if(err) console.log(err);
         else {
             ProductoData = results
-            res.render("catalog", {ProductoData:ProductoData});
+            res.render("catalog", {Sesion:Sesion,ProductoData:ProductoData});
         }
     })
 })
 
 app.post("/login", function(req, res){
     loginData = req.body.data;
-    console.log(loginData);
     DB.query("SELECT id, correo, clave from usuarios WHERE correo = ?", [loginData.email], async (error, results) => {
         console.log(results);
         if(error) console.log(error);
@@ -146,7 +143,9 @@ app.post("/login", function(req, res){
 })
 
 app.get("/admin", function(req,res){
+    IsAuthenticated(req.session.user);
     var contactoData=[];
+<<<<<<< HEAD
 
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
@@ -169,6 +168,18 @@ app.get("/admin", function(req,res){
         res.redirect("/home");
     }
 
+=======
+    DB.query("SELECT * FROM contactoLog", (error, results)=>{
+       if(error){
+           console.log(error);
+       }else{
+           contactoData=results;
+           res.render("admin", {Sesion:Sesion,responses:responses, contactoData:contactoData});
+           responses.messageErr="";
+           responses.messageOK="";
+       }
+    });
+>>>>>>> dc414fee23c88cad2076269541d0c2766e828699
 });
 
 app.post("/adminAddProduct", (req, res)=>{
@@ -212,7 +223,8 @@ app.post("/adminAddProduct", (req, res)=>{
     })
 
 app.get("/contactanos", function(req, res){
-    res.render("contact");
+    IsAuthenticated(req.session.user);
+    res.render("contact", {Sesion:Sesion});
 })
 
 app.post("/contactanos", (req, res)=>{
@@ -300,13 +312,18 @@ function handleDisconnect() {
   }
 
 function IsAuthenticated(data){
+<<<<<<< HEAD
     if(typeof(data)!="undefined"){
         if(data.isAdmin){
             return [data.isAdmin,data];
         }else{
             return data;
         }
+=======
+    if(typeof(data) !== "undefined"){
+        Sesion=data;
+>>>>>>> dc414fee23c88cad2076269541d0c2766e828699
     }else{
-        return null;
+        Sesion=null;
     }
 }

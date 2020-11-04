@@ -38,7 +38,7 @@ function buscar(Data, filter){
             console.log("hola");
             html+=`
             <div class="col mb-4">
-                <div class="card card-producto">
+                <div class="card card-producto h-100">
                     <img src="${producto.IMG}" class="card-img-top" >
                     <div class="card-body">
                         <h5 class="card-title">${producto.nombre}</h5>
