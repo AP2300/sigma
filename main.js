@@ -1,6 +1,3 @@
-const bcrypt = require("bcryptjs/dist/bcrypt");
-const { session } = require("passport");
-
 var responses = {
     messageErr:"",
     messageOK:"",
@@ -89,7 +86,12 @@ app.get("/", function (req, res) {
 })
 
 app.get("/home",function(req, res){
-    IsAuthenticated(req.session.user);
+    // IsAuthenticated(req.session.user);
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+    }else{
+        Sesion=null
+    }
     res.render("index", {Sesion:Sesion});
     
 })
