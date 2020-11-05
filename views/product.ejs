@@ -2,11 +2,9 @@
 
 
 
-<div class="containerContact">
+<div class="containerProduct">
 
-    <h2 class="name-login"> <img src="/Images/BigLogo.png" style="padding-bottom: 9px;"> Sigma</h2>
-
-    <div class="card login">
+    <!-- <div class="card login">
         <div class="card-body colorBg">
             <div class="row">
                 <div class="col-sm-6 card card-body-left">
@@ -26,7 +24,26 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+
+    <div class="card mb-3 Producto">
+        <div style="padding: 1% 15%; ">
+            <img src="<%- Producto[0].IMG%>" class="card-img-top rounded" height="350" >
+        </div>
+        
+        <hr>
+        <div class="card-body center">
+          <h5 class="card-title"><%= Producto[0].nombre%></h5>
+          <hr>
+          <p class="card-text"><%= Producto[0].descripcion%></p>
+        </div>
+        <div class="card-footer  price">
+            <i class="fas fa-dollar-sign"></i> <%= Producto[0].precio%>
+          </div>
+          <div class="card-footer BuyBtn">
+            Comprar
+          </div>
+      </div>
 
 </div>
 
