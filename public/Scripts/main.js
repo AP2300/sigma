@@ -31,23 +31,28 @@ function buscar(Data, filter){
     let reg = new RegExp(`\\b${text}`, 'i');
     let html = "";
 
+    console.log(Data);
+    
+
     for(let producto of Data){
         if(reg.test(producto.nombre)&&producto.tipo_medicamento===filter||reg.test(producto.nombre)&&filter==="Todos"
         ||reg.test(producto.nombre)&&filter===""){
             console.log(filter);
-            console.log("hola");
+            console.log(producto.id, producto.nombre);
             html+=`
             <div class="col mb-4">
-                <div class="card card-producto h-100">
-                    <img src="${producto.IMG}" class="card-img-top" >
-                    <div class="card-body">
-                        <h5 class="card-title">${producto.nombre}</h5>
-                        <p class="card-text">Tipo de Medicamento: ${producto.tipo_medicamento}</p>
+                <a class="product" href="/product/${producto.id}">
+                    <div class="card card-producto h-100">
+                        <img src="${producto.IMG}" class="card-img-top" >
+                        <div class="card-body">
+                            <h5 class="card-title">${producto.nombre}</h5>
+                            <p class="card-text">Tipo de Medicamento: ${producto.tipo_medicamento}</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Precio: ${producto.precio}$</small>
+                        </div>
                     </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Precio: ${producto.precio}$</small>
-                    </div>
-                </div>
+                </a>
             </div>`
         }
     }
