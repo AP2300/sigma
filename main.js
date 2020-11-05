@@ -43,7 +43,12 @@ var DBconfig = {
   };
 
 var DB;
-handleDisconnect(DBconfig)
+DB = Sql.createConnection(DBconfig);
+DB.connect((err) => {
+    if(err) console.log(err);
+    else console.log("DB conectada");
+})
+setTimeout(handleDisconnect, 30000);
 
 //configurado midleware para la sesion//
 
@@ -318,6 +323,14 @@ app.listen(app.get("port"), function(){
 });
 
 function handleDisconnect() {
+    DB.query("select * from USERS_SESSIONS", (err) => {
+        if(err) console.log(err);
+        else {
+            console.log("DB reconectada");
+            setTimeout(handleDisconnect, 30000)
+        }
+    });
+    /*
     DB = Sql.createConnection(DBconfig); // Recreate the connection, since
                                                     // the old one cannot be reused.
   
@@ -327,6 +340,7 @@ function handleDisconnect() {
         setTimeout(handleDisconnect, 500); // We introduce a delay before attempting to reconnect,
       }else{
           console.log("DB conectada");
+          return setTimeout(handleDisconnect, 30000);
       }                                     // to avoid a hot loop, and to allow our node script to
     });                                     // process asynchronous requests in the meandntime.
                                             // If you're also serving http, display a 503 error.
@@ -337,7 +351,7 @@ function handleDisconnect() {
       } else {                                      // connnection idle timeout (the wait_timeout
         throw err;                                  // server variable configures this)
       }
-    });
+    });*/
 }
 
 function IsAuthenticated(data){
