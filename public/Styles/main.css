@@ -157,6 +157,10 @@ html body a#Admins:hover{
     font-size: 3em;
 }
 
+#nickname:hover {
+    cursor: pointer;
+} 
+
 .center{
     align-content: center;
     text-align: center;
