@@ -63,4 +63,4 @@ $("ol").on("click","li", function (){
 })
 
 if(window.location.pathname === "/catalog") buscar(SearchData,filter);
-    
+

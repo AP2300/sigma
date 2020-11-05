@@ -285,3 +285,17 @@ html body span.btn{
 html body div div div div#productos div div.card-producto img.card-img-top{
     height: 300px;
 }
+
+html body span:focus{
+    outline: none;
+}
+
+html body div.popover.bs-popover-bottom {
+    backdrop-filter: blur(3px);
+    background-color: #e9ecefad;
+}
+
+.bs-popover-auto[x-placement^=bottom]>.arrow::after, .bs-popover-bottom>.arrow::after {
+    backdrop-filter: blur(3px);
+    border-right-color: #e9ecefad !important;
+  }

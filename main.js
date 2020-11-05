@@ -306,7 +306,7 @@ function handleDisconnect() {
     DB.connect(function(err) {              // The server is either down
       if(err) {                                     // or restarting (takes a while sometimes).
         console.log('error when connecting to db:', err);
-        setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
+        setTimeout(handleDisconnect, 500); // We introduce a delay before attempting to reconnect,
       }else{
           console.log("DB conectada");
       }                                     // to avoid a hot loop, and to allow our node script to
@@ -320,7 +320,7 @@ function handleDisconnect() {
         throw err;                                  // server variable configures this)
       }
     });
-  }
+}
 
 function IsAuthenticated(data){
     if(typeof(data)!="undefined"){
