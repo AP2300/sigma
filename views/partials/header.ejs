@@ -57,7 +57,7 @@
                             trigger: "click",
                             html: true,
                             content: `<a class="nav-link" href="/admin"><i class="fas fa-user-cog"></i> Panel Administrativo</a>
-                            <a class="nav-link" href="/SessionClose"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a>`
+                            <a class="nav-link" href="/SessionClose"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>`
                         })
                     })
                   </script>
@@ -69,13 +69,13 @@
                       $('[data-toggle="popover"]').popover({
                           trigger: "click",
                           html: true,
-                          content: `<a class="nav-link" href="/SessionClose"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a>`
+                          content: `<a class="nav-link" href="/SessionClose"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>`
                       })
                   })
                 </script>
                 <span tabindex="0"  data-toggle="popover" data-trigger="focus" data-placement="bottom"  id="nickname"><i class="fas fa-user"></i> <%=Sesion.nickname%></span>
               <%}}else{%>
-                <a class="nav-link" href="/login"><i class="fas fa-user"></i> Iniciar sesion</a>
+                <a class="nav-link" href="/login"><i class="fas fa-user"></i> Iniciar sesión</a>
               <%}%>
             </li>
           </ul>
