@@ -1,5 +1,3 @@
-const bcrypt = require("bcryptjs/dist/bcrypt");
-
 var responses = {
     messageErr:"",
     messageOK:"",
@@ -18,7 +16,7 @@ var express               = require("express"),
     FP                    = require("express-fileupload"),
     MethodOverride        = require("method-override"),
     flash                 = require("connect-flash"),
-    Bcrypt                = require("bcryptjs"),
+    bcrypt                = require("bcryptjs"),
     jwt                   = require("jsonwebtoken")  
     Sql                   = require("mysql"),
     session               = require("express-session"),
@@ -83,14 +81,18 @@ app.use(session({
 
 //todo el codigo aqui//
 
-app.get("/", function (req, res) { 
+app.get("/", function (_, res) { 
     res.redirect("/home");
 })
 
 app.get("/home",function(req, res){
-    IsAuthenticated(req.session.user);
+    // IsAuthenticated(req.session.user);
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+    }else{
+        Sesion=null
+    }
     res.render("index", {Sesion:Sesion});
-    
 })
 
 app.get("/login", function(req, res){
@@ -112,20 +114,40 @@ app.get("/catalog", (req, res)=>{
     })
 })
 
+app.get("/product/:id", (req, res) =>{
+    IsAuthenticated(req.session.user);
+    const id = req.params.id;
+    let Producto = "";
+    DB.query("SELECT * FROM producto WHERE id = ?", [id], (err, results)=>{
+        if(err) console.log(err);
+        else {
+            Producto = results;
+            console.log(Producto);
+            res.render("product", {Sesion:Sesion,Producto:Producto});
+        }
+    })
+})
+
 app.post("/login", function(req, res){
     loginData = req.body.data;
-    DB.query("SELECT id, correo, clave from usuarios WHERE correo = ?", [loginData.email], async (error, results) => {
+    let admin = false;
+    DB.query("SELECT id, correo,tipo_usuario,clave from usuarios WHERE correo = ?", [loginData.email], async (error, results) => {
         console.log(results);
         if(error) console.log(error);
         if(results.length > 0) {
             await bcrypt.compare(loginData.pass, results[0].clave, function(err, result) {
                 if(err) console.log(err);
                 if(result) {
+
+                    if(results[0].tipo_usuario==="admin") admin=true; 
+                    
                     req.session.user = {
                         id: results[0].id,
                         nickname: results[0].correo,
-                        isAuthed: true
+                        isAuthed: true,
+                        isAdmin: admin
                     };
+                    console.log(admin);
                     res.redirect("/home");
                 }
                 else {
@@ -142,18 +164,30 @@ app.post("/login", function(req, res){
 })
 
 app.get("/admin", function(req,res){
-    IsAuthenticated(req.session.user);
+    // IsAuthenticated(req.session.user);
     var contactoData=[];
-    DB.query("SELECT * FROM contactoLog", (error, results)=>{
-       if(error){
-           console.log(error);
-       }else{
-           contactoData=results;
-           res.render("admin", {Sesion:Sesion,responses:responses, contactoData:contactoData});
-           responses.messageErr="";
-           responses.messageOK="";
-       }
-    });
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("SELECT * FROM contactoLog", (error, results)=>{
+                if(error){
+                    console.log(error);
+                }else{
+                    contactoData=results;
+                    res.render("admin", {responses:responses, contactoData:contactoData, Sesion:Sesion});
+                    responses.messageErr="";
+                    responses.messageOK="";
+                }
+             });
+        }else{
+            res.redirect("/home");
+        }
+    }else{
+        Sesion=null
+    }
+
+
 });
 
 app.post("/adminAddProduct", (req, res)=>{
@@ -236,12 +270,18 @@ app.post("/register", (req,res)=>{
             console.log(error);
         }
         if(results.length>0){
-            responses.messageErr = "El Nombre ya esta registrado.";
-            responses.messageOK = "";
-            res.redirect("/admin");
+            if(results[0].nombre){
+                responses.messageErr = "El Nombre ya esta registrado.";
+                responses.messageOK = "";
+                res.redirect("/admin");
+            }else{
+                responses.messageErr = "El Correo ya esta registrado.";
+                responses.messageOK = "";
+                res.redirect("/admin");
+            }
         }
         
-        let hash = await Bcrypt.hash(registerData.pass, 8);
+        let hash = await bcrypt.hash(registerData.pass, 8);
         if(responses.messageErr===""){
             DB.query("INSERT INTO usuarios SET ? ",{
                 nombre:registerData.name,
@@ -261,6 +301,16 @@ app.post("/register", (req,res)=>{
     })
     })
 
+app.get("/SessionClose", (req,res)=>{
+    req.session.destroy((err)=>{
+        if(err) console.log(err);
+        else {
+            res.clearCookie('user');
+            res.redirect("/home");
+        }
+    });
+
+})
 ///////////////////////
 
 app.listen(app.get("port"), function(){
@@ -291,8 +341,12 @@ function handleDisconnect() {
   }
 
 function IsAuthenticated(data){
-    if(typeof(data) !== "undefined"){
-        Sesion=data;
+    if(typeof(data)!="undefined"){
+        if(data.isAdmin){
+            return data;
+        }else{
+            return data;
+        }
     }else{
         Sesion=null;
     }
