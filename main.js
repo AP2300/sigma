@@ -81,7 +81,7 @@ app.use(session({
 
 //todo el codigo aqui//
 
-app.get("/", function (req, res) { 
+app.get("/", function (_, res) { 
     res.redirect("/home");
 })
 
@@ -283,6 +283,16 @@ app.post("/register", (req,res)=>{
     })
     })
 
+app.get("/SessionClose", (req,res)=>{
+    req.session.destroy((err)=>{
+        if(err) console.log(err);
+        else {
+            res.clearCookie('user');
+            res.redirect("/home");
+        }
+    });
+
+})
 ///////////////////////
 
 app.listen(app.get("port"), function(){
