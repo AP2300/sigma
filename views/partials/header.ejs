@@ -50,19 +50,31 @@
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <%if(Sesion !== null){%>
-                <%if(Sesion.isAuthed){%>
+                <%if(Sesion.isAuthed && Sesion.isAdmin){%>
                   <script>
                     $(document).ready(function () {
                         $('[data-toggle="popover"]').popover({
                             trigger: "click",
                             html: true,
-                            content: `<a class="nav-link" href="/SessionClose"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a>`
+                            content: `<a class="nav-link" href="/admin"><i class="fas fa-user-cog"></i> Panel Administrativo</a>
+                            <a class="nav-link" href="/SessionClose"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a>`
                         })
                     })
                   </script>
                 <span tabindex="0"  data-toggle="popover" data-trigger="focus" data-placement="bottom"  id="nickname"><i class="fas fa-user"></i> <%=Sesion.nickname%></span>
-                <%}%>
-              <%}else{%>
+                <%}else{%>
+              
+                <script>
+                  $(document).ready(function () {
+                      $('[data-toggle="popover"]').popover({
+                          trigger: "click",
+                          html: true,
+                          content: `<a class="nav-link" href="/SessionClose"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a>`
+                      })
+                  })
+                </script>
+                <span tabindex="0"  data-toggle="popover" data-trigger="focus" data-placement="bottom"  id="nickname"><i class="fas fa-user"></i> <%=Sesion.nickname%></span>
+              <%}}else{%>
                 <a class="nav-link" href="/login"><i class="fas fa-user"></i> Iniciar sesion</a>
               <%}%>
             </li>
