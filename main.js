@@ -93,7 +93,6 @@ app.get("/home",function(req, res){
         Sesion=null
     }
     res.render("index", {Sesion:Sesion});
-    
 })
 
 app.get("/login", function(req, res){
@@ -111,6 +110,20 @@ app.get("/catalog", (req, res)=>{
         else {
             ProductoData = results
             res.render("catalog", {Sesion:Sesion,ProductoData:ProductoData});
+        }
+    })
+})
+
+app.get("/product/:id", (req, res) =>{
+    IsAuthenticated(req.session.user);
+    const id = req.params.id;
+    let Producto = "";
+    DB.query("SELECT * FROM producto WHERE id = ?", [id], (err, results)=>{
+        if(err) console.log(err);
+        else {
+            Producto = results;
+            console.log(Producto);
+            res.render("product", {Sesion:Sesion,Producto:Producto});
         }
     })
 })

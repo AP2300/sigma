@@ -2,4 +2,32 @@
 
 
 
+<div class="containerContact">
+
+    <h2 class="name-login"> <img src="/Images/BigLogo.png" style="padding-bottom: 9px;"> Sigma</h2>
+
+    <div class="card login">
+        <div class="card-body colorBg">
+            <div class="row">
+                <div class="col-sm-6 card card-body-left">
+                    <img src="<%- Producto[0].IMG%>" class="img-producto">
+                </div>
+                <div class="col-sm-5 card card-body-right">
+                    <h1 class="center">Nombre: <%= Producto[0].nombre%></h1>
+                    <div class="center">
+                        <span class="text-product">Tipo de Medicamento: <%= Producto[0].tipo_medicamento%></span>
+                        <hr>
+                        <span class="text-product">Descripcion: <%= Producto[0].descripcion%></span>
+                        <hr>
+                        <span class="text-product" id="precio">Precio: <%= Producto[0].precio%></span>
+                        <br>
+                        <button class="btn btn-product">Comprar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 <%- include('./partials/bottom'); %>
