@@ -16,7 +16,7 @@ var express               = require("express"),
     FP                    = require("express-fileupload"),
     MethodOverride        = require("method-override"),
     flash                 = require("connect-flash"),
-    Bcrypt                = require("bcryptjs"),
+    bcrypt                = require("bcryptjs"),
     jwt                   = require("jsonwebtoken")  
     Sql                   = require("mysql"),
     session               = require("express-session"),
@@ -117,18 +117,24 @@ app.get("/catalog", (req, res)=>{
 
 app.post("/login", function(req, res){
     loginData = req.body.data;
-    DB.query("SELECT id, correo, clave from usuarios WHERE correo = ?", [loginData.email], async (error, results) => {
+    let admin = false;
+    DB.query("SELECT id, correo,tipo_usuario,clave from usuarios WHERE correo = ?", [loginData.email], async (error, results) => {
         console.log(results);
         if(error) console.log(error);
         if(results.length > 0) {
             await bcrypt.compare(loginData.pass, results[0].clave, function(err, result) {
                 if(err) console.log(err);
                 if(result) {
+
+                    if(results[0].tipo_usuario==="admin") admin=true; 
+                    
                     req.session.user = {
                         id: results[0].id,
                         nickname: results[0].correo,
-                        isAuthed: true
+                        isAuthed: true,
+                        isAdmin: admin
                     };
+                    console.log(admin);
                     res.redirect("/home");
                 }
                 else {
@@ -145,29 +151,29 @@ app.post("/login", function(req, res){
 })
 
 app.get("/admin", function(req,res){
-    IsAuthenticated(req.session.user);
+    // IsAuthenticated(req.session.user);
     var contactoData=[];
 
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("SELECT * FROM contactoLog", (error, results)=>{
+                if(error){
+                    console.log(error);
+                }else{
+                    contactoData=results;
+                    res.render("admin", {responses:responses, contactoData:contactoData, Sesion:Sesion});
+                    responses.messageErr="";
+                    responses.messageOK="";
+                }
+             });
+        }else{
+            res.redirect("/home");
+        }
     }else{
         Sesion=null
     }
 
-    if(Sesion.isAdmin){
-        DB.query("SELECT * FROM contactoLog", (error, results)=>{
-            if(error){
-                console.log(error);
-            }else{
-                contactoData=results;
-                res.render("admin", {responses:responses, contactoData:contactoData});
-                responses.messageErr="";
-                responses.messageOK="";
-            }
-         });
-    }else{
-        res.redirect("/home");
-    }
 
 });
 
@@ -303,7 +309,7 @@ function handleDisconnect() {
 function IsAuthenticated(data){
     if(typeof(data)!="undefined"){
         if(data.isAdmin){
-            return [data.isAdmin,data];
+            return data;
         }else{
             return data;
         }
