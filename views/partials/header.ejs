@@ -32,6 +32,13 @@
             <li class="nav-item">
               <a class="nav-link" href="/catalog">Catalogo</a>
             </li>
+            <%if(Sesion !== null){%>
+              <%if(Sesion.isAuthed){%>
+                <li class="nav-item">
+                  <a class="nav-link" href="/tracking">Tracking</a>
+                </li>
+              <%}%>
+            <%}%>
             <li class="nav-item">
               <a class="nav-link" href="/contactanos">Contactanos</a>
             </li>

@@ -201,6 +201,11 @@ app.get("/contactanos", function(req, res){
     res.render("contact", {Sesion:Sesion});
 })
 
+app.get("/tracking", function(req, res){
+    IsAuthenticated(req.session.user);
+    res.render("tracking", {Sesion:Sesion});
+})
+
 app.post("/contactanos", (req, res)=>{
     Data=req.body.data;
     DB.query("INSERT INTO contactoLog SET ? ",{
