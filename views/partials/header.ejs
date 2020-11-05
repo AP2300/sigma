@@ -14,7 +14,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light nav-bg">
-        <a class="navbar-brand" href="/home"> <svg>
+        <a class="navbar-brand hover" href="/home"> <svg>
           <g transform="translate(0.000000,40.000000) scale(0.100000,-0.100000)"
           stroke="none">
           <path d="M60 367 c0 -15 31 -47 46 -47 5 0 34 -25 64 -55 48 -48 59 -55 94
@@ -34,17 +34,17 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="/catalog">Catalogo</a>
+              <a class="nav-link hover" href="/catalog">Catalogo</a>
             </li>
             <%if(Sesion !== null){%>
               <%if(Sesion.isAuthed){%>
                 <li class="nav-item">
-                  <a class="nav-link" href="/tracking">Tracking</a>
+                  <a class="nav-link hover" href="/tracking">Tracking</a>
                 </li>
               <%}%>
             <%}%>
             <li class="nav-item">
-              <a class="nav-link" href="/contactanos">Contactanos</a>
+              <a class="nav-link hover" href="/contactanos">Contactanos</a>
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">
@@ -56,8 +56,8 @@
                         $('[data-toggle="popover"]').popover({
                             trigger: "click",
                             html: true,
-                            content: `<a class="nav-link" href="/admin"><i class="fas fa-user-cog"></i> Panel Administrativo</a>
-                            <a class="nav-link" href="/SessionClose"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>`
+                            content: `<a class="nav-link hover" href="/admin"><i class="fas fa-user-cog"></i> Panel Administrativo</a>
+                            <a class="nav-link hover" href="/SessionClose"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>`
                         })
                     })
                   </script>
@@ -69,13 +69,13 @@
                       $('[data-toggle="popover"]').popover({
                           trigger: "click",
                           html: true,
-                          content: `<a class="nav-link" href="/SessionClose"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>`
+                          content: `<a class="nav-link hover" href="/SessionClose"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>`
                       })
                   })
                 </script>
                 <span tabindex="0"  data-toggle="popover" data-trigger="focus" data-placement="bottom"  id="nickname"><i class="fas fa-user"></i> <%=Sesion.nickname%></span>
               <%}}else{%>
-                <a class="nav-link" href="/login"><i class="fas fa-user"></i> Iniciar sesión</a>
+                <a class="nav-link hover" href="/login"><i class="fas fa-user"></i> Iniciar sesión</a>
               <%}%>
             </li>
           </ul>

@@ -86,7 +86,7 @@ svg {
     border-color: rgba(255, 255, 255, 0.233);
 }
 
-a:hover{
+a.hover:hover{
     font-weight: 700;
     transition: 220ms;
 }
@@ -164,7 +164,7 @@ html body a#Admins:hover{
 .center{
     align-content: center;
     text-align: center;
-    margin: auto;
+
 }
 
 .Login-button{
@@ -311,27 +311,17 @@ html body a:hover {
     outline: none;
 }
 
-.card-body-left{
-    padding: 1%;
-    margin: 2% 0;  
-    margin-left: 4%;
-    max-height: 500px; 
-}
-
-.card-body-right{
-    max-height: 500px;
-    margin: 2% 0;
-}
-
-html body .col-space{
-    width: 50%;
-}
-
 .img-producto{
-    border-radius: .25rem;
-    width: 100%;
-    height: 450px;
-    max-height: 500px;
+    height: 65vh;
+}
+
+html body div.card-body.page{
+    margin-top: -113px;
+    color: whitesmoke;
+    text-shadow: 0 0 7px #00000085;
+    background-color: rgba(0, 0, 0, 0.219);
+    box-shadow: rgb(0 0 0 / 31%) 1px -20px 60px 0px;
+    padding: .1em;
 }
 
 .price{
@@ -352,10 +342,10 @@ div.card-footer.BuyBtn:hover{
     transition: 250ms;
 }
 
-div.containerProduct{
-    margin: 1% 20%;
+div.containerProductpage{
+    margin: 1% 14%;
 }
 
-div.card.Producto{
-    background-color: #f2f2f2b2; backdrop-filter: blur(10px);
+div.card.Producto.page{
+    height: 80vh;
 }
