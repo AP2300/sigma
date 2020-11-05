@@ -294,9 +294,9 @@ html body div.popover.bs-popover-bottom {
 }
 
 .bs-popover-auto[x-placement^=bottom]>.arrow::after, .bs-popover-bottom>.arrow::after {
-    backdrop-filter: blur(3px);
-    border-right-color: #e9ecefad !important;
-  }
+    border-bottom-color: #e9ecefad !important;
+}
+
 html body a {
     color: black;
 }
