@@ -125,6 +125,15 @@
                                 required>
                         </div>
                         <div class="form-group">
+                            <label for="exampleInputType1">Sucursal</label> <br>
+                            <select name="data[optionSucursal]" class="form-control" id="">
+                                <option selected disabled value="">Elegir...</option>
+                                <%sucursal.forEach(item => {%>
+                                    <option value="<%=item.id%>"><%=item.nombre%></option>
+                                <%});%>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputType1">Tipo de usuario</label> <br>
                             <select name="data[optionType]" class="form-control" id="">
                                 <option selected disabled value="">Elegir...</option>

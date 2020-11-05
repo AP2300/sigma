@@ -180,9 +180,15 @@ app.get("/admin", function(req,res){
                     console.log(error);
                 }else{
                     contactoData=results;
-                    res.render("admin", {responses:responses, contactoData:contactoData, Sesion:Sesion});
-                    responses.messageErr="";
-                    responses.messageOK="";
+                    DB.query("SELECT * FROM sucursal", (error, results)=>{
+                        if(error){
+                            console.log(error);
+                        }else{
+                            res.render("admin", {responses:responses, contactoData:contactoData, Sesion:Sesion, sucursal: results});
+                            responses.messageErr="";
+                            responses.messageOK="";
+                        }
+                    });
                 }
              });
         }else{
@@ -190,6 +196,7 @@ app.get("/admin", function(req,res){
         }
     }else{
         Sesion=null
+        res.redirect("home");
     }
 
 
@@ -292,12 +299,13 @@ app.post("/register", (req,res)=>{
                 nombre:registerData.name,
                 correo:registerData.email,
                 clave:hash,
+                idSucursal: registerData.optionSucursal,
                 tipo_usuario:registerData.optionType,
                 cargo:registerData.optionPos
             }, (err, result)=>{
                 if(err) console.log(err)
                 else {
-                    responses.messageOK = "El registro fue hecho satisfactoriamente.";
+                    responses.messageOK = "El registro fue creado satisfactoriamente.";
                     responses.messageErr = ""; 
                     res.redirect("/admin");
                 }
