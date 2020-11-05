@@ -81,7 +81,7 @@ app.use(session({
 
 //todo el codigo aqui//
 
-app.get("/", function (req, res) { 
+app.get("/", function (_, res) { 
     res.redirect("/home");
 })
 
@@ -265,12 +265,18 @@ app.post("/register", (req,res)=>{
             console.log(error);
         }
         if(results.length>0){
-            responses.messageErr = "El Nombre ya esta registrado.";
-            responses.messageOK = "";
-            res.redirect("/admin");
+            if(results[0].nombre){
+                responses.messageErr = "El Nombre ya esta registrado.";
+                responses.messageOK = "";
+                res.redirect("/admin");
+            }else{
+                responses.messageErr = "El Correo ya esta registrado.";
+                responses.messageOK = "";
+                res.redirect("/admin");
+            }
         }
         
-        let hash = await Bcrypt.hash(registerData.pass, 8);
+        let hash = await bcrypt.hash(registerData.pass, 8);
         if(responses.messageErr===""){
             DB.query("INSERT INTO usuarios SET ? ",{
                 nombre:registerData.name,
@@ -290,6 +296,16 @@ app.post("/register", (req,res)=>{
     })
     })
 
+app.get("/SessionClose", (req,res)=>{
+    req.session.destroy((err)=>{
+        if(err) console.log(err);
+        else {
+            res.clearCookie('user');
+            res.redirect("/home");
+        }
+    });
+
+})
 ///////////////////////
 
 app.listen(app.get("port"), function(){
