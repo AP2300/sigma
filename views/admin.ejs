@@ -59,7 +59,7 @@
         </div>
         <div class="col-sm">
             <a class="card text-center" id="Users" data-toggle="collapse" aria-expanded="false"
-                aria-controls="UsersPanel" href="#UsersPanel">
+                aria-controls="UsersPanel" href="#">
                 <div class="card-header">
                     Users
                 </div>
@@ -72,7 +72,7 @@
         </div>
         <div class="col-sm">
             <a class="card text-center" id="Admins" data-toggle="collapse" aria-expanded="false"
-                aria-controls="OtrosPanel" href="#OtrosPanel">
+                aria-controls="OtrosPanel" href="#">
                 <div class="card-header">
                     Estadisticas
                 </div>
@@ -93,46 +93,53 @@
         <h2>Selecciona una opcion</h2>
         <hr>
         <% if (responses.messageErr !== "") {%>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong id="errRegister"><%= responses.messageErr %></strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong id="errRegister"><%= responses.messageErr %></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         <% } %>
         <% if (responses.messageOK !== "") {%>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong id="errRegister"><%= responses.messageOK %></strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong id="errRegister"><%= responses.messageOK %></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         <% } %>
         <div class="collapse multi-collapse hideMeBox" id="ProductsPanel">
             <form action="/adminAddProduct" method="POST" enctype="multipart/form-data">
                 <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputMedName">Nombre</label>
-                    <input type="text" class="form-control" id="inputMedName" required name="name">
-                  </div>
-                  <div class="form-group col-md-2">
-                    <label for="inputPrice">Precio</label>
-                    <input type="number" class="form-control" id="inputPrice" required name="price">
-                  </div>
-                  <div class="form-group col-md-4">
-                    <label for="inputType">Tipo de medicamento</label>
-                    <select class="form-control" id="inputType" required name="type">
-                        <option selected disabled value="">Elegir...</option>
-                        <option>Dolor General</option>
-                        <option>Salud Digestiva</option>
-                        <option>Salud Respiratoria</option>
-                        <option>Vitaminas y Productos Naturales</option>
-                        <option>Botiquín y Primeros Auxilios</option>
-                        <option>Rehabilitacion y Equipos Medicos</option>
-                    </select>
-                  </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputMedName">Nombre</label>
+                        <input type="text" class="form-control" id="inputMedName" required name="name">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputPrice">Precio</label>
+                        <input type="number" class="form-control" id="inputPrice" required name="price">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputType">Tipo de medicamento</label>
+                        <select class="form-control" id="inputType" required name="type">
+                            <option selected disabled value="">Elegir...</option>
+                            <option>Dolor General</option>
+                            <option>Salud Digestiva</option>
+                            <option>Salud Respiratoria</option>
+                            <option>Vitaminas y Productos Naturales</option>
+                            <option>Botiquín y Primeros Auxilios</option>
+                            <option>Rehabilitacion y Equipos Medicos</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-row">
+                    <div class="mb-3 w-100">
+                        <label for="inputQuantity">Cantidad</label>
+                        <input type="number" class="form-control" id="inputQuantity" required name="quantity">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="CustomFile" class="mx-auto">Agregar Imagen</label>
                     <div class="custom-file mb-3">
                         <input type="file" class="custom-file-input" id="CustomFile" required name="img">
                         <label class="custom-file-label" for="CustomFile">Elige un archivo...</label>
@@ -140,10 +147,11 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1">Descripcion</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
-                  </div>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                        name="description"></textarea>
+                </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
-              </form>
+            </form>
         </div>
         <div class="collapse multi-collapse hideMeBox" id="UsersPanel">
             <div class="card card-body">
@@ -171,7 +179,7 @@
                             <select name="data[optionSucursal]" class="form-control" id="">
                                 <option selected disabled value="">Elegir...</option>
                                 <%sucursal.forEach(item => {%>
-                                    <option value="<%=item.id%>"><%=item.nombre%></option>
+                                <option value="<%=item.id%>"><%=item.nombre%></option>
                                 <%});%>
                             </select>
                         </div>
@@ -197,77 +205,90 @@
             </div>
         </div>
         <div class="collapse multi-collapse hideMeBox" id="OtrosPanel">
-                <%var i=0%>
-                <%contactoData.forEach(el => {%>
-                    <div class="accordion " id="accordion">
-                        <div class="card comentarios">
-                          <div class="card-header" id="headingThree">
-                            <h2 class="mb-0">
-                              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse<%=i%>" >
+            <%var i=0%>
+            <%contactoData.forEach(el => {%>
+            <div class="accordion " id="accordion">
+                <div class="card comentarios">
+                    <div class="card-header" id="headingThree">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                data-target="#collapse<%=i%>">
                                 <div class="row">
                                     <div class="col-sm">
                                         Nombre: <%=el.NombreEmpresa%>
                                     </div>
                                     <div class="col-sm">
                                         Tipo de Entidad: <%=el.TipoEntidad%>
-                                    </div>                                        
+                                    </div>
                                     <span class="btn" type=""><i class="far fa-trash-alt"></i></span>
                                 </div>
-                              </button>
-                            </h2>
-                          </div>
-                
-                          <div id="collapse<%=i%>" class="collapse" >
-                            <div class="card-body ">
-                                <div class="row">
-                                    <div class="col-sm">
-                                        Nombre: <%=el.Nombre%>
-                                    </div>
-                                    <div class="col-sm">
-                                        Apellido: <%=el.Apellido%>
-                                    </div>
-                                    <div class="col-sm">
-                                        RIF: <%=el.RIF%>
-                                    </div>
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapse<%=i%>" class="collapse">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-sm">
+                                    Nombre: <%=el.Nombre%>
                                 </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm">
-                                        Pais: <%=el.Pais%>
-                                    </div>
-                                    <div class="col-sm">
-                                        Estado: <%=el.Estado%>
-                                    </div>
-                                    <div class="col-sm">
-                                        Ciudad: <%=el.Ciudad%>
-                                    </div>
+                                <div class="col-sm">
+                                    Apellido: <%=el.Apellido%>
                                 </div>
-                                <hr>
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            Correo: <%=el.Email%>
-                                        </div>
-                                    </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm">
-                                        Comentario: <%=el.Comentario%>
-                                    </div>
+                                <div class="col-sm">
+                                    RIF: <%=el.RIF%>
                                 </div>
                             </div>
-                          </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm">
+                                    Pais: <%=el.Pais%>
+                                </div>
+                                <div class="col-sm">
+                                    Estado: <%=el.Estado%>
+                                </div>
+                                <div class="col-sm">
+                                    Ciudad: <%=el.Ciudad%>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm">
+                                    Correo: <%=el.Email%>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm">
+                                    Comentario: <%=el.Comentario%>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                    <%i++%>
-                <%});%>
-        
+            </div>
+            <%i++%>
+            <%});%>
 
+
+        </div>
+        <div class="collapse multi-collapse hideMeBox" id="SucursalPanel">
+            <form action="/adminAddBranch" method="POST" enctype="multipart/form-data">
+                <div class="form-row mb-3">
+                    <div class="w-100">
+                    <label for="inputBrName">Nombre</label>
+                    <input type="text" class="form-control" id="inputBrName" required name="name">
+                    </div>
+                </div>
+                <div class="form-row mb-3">
+                    <div class="w-100">
+                    <label for="inputLoc">Ubicacion</label>
+                    <input type="text" class="form-control" id="inputLoc" required name="location">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
     </div>
-
-    <%- include('./partials/bottom'); %>
-
-
-    
-
-
-
+</div>
+<%- include('./partials/bottom'); %>

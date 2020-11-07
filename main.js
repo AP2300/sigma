@@ -228,6 +228,7 @@ app.post("/adminAddProduct", (req, res)=>{
                 nombre:DataProducto.name,
                 precio:DataProducto.price,
                 tipo_medicamento:DataProducto.type,
+                cantidad:DataProducto.quantity,
                 descripcion:DataProducto.description,
                 IMG:imgSource
             }, (err, result)=>{
@@ -242,6 +243,33 @@ app.post("/adminAddProduct", (req, res)=>{
     })
     })
 
+app.post("/adminAddBranch", (req, res)=>{
+    let DataSucursal = req.body;
+    DB.query("SELECT nombre FROM sucursal WHERE nombre = ?", [DataSucursal.name], async (error, results)=>{
+        if (error){
+            console.log(error);
+        }
+        if(results.length>0){
+            responses.PmessageErr = "Esta sucursal ya se encuentra en el sistema";
+            responses.PmessageOK = "";
+            res.redirect("/admin");
+        }
+        if(responses.PmessageErr===""){
+            DB.query("INSERT INTO sucursal SET ?",{
+                nombre:DataSucursal.name,
+                ubicacion:DataSucursal.location,
+            }, (err, result)=>{
+                if(err) console.log(err)
+                else {
+                    responses.messageOK = "El registro fue hecho satisfactoriamente.";
+                    responses.messageErr = ""; 
+                    res.redirect("/admin");
+                }
+            })
+        }
+    })
+})
+    
 app.get("/contactanos", function(req, res){
     IsAuthenticated(req.session.user);
     res.render("contact", {Sesion:Sesion});
