@@ -1,6 +1,6 @@
 $("#Productos").click(function () { 
     $("#UsersPanel").collapse("hide")
-    $("#ProductsPanel").collapse("hide")
+    $("#OtrosPanel").collapse("hide")
     $("#SucursalPanel").collapse("hide")
     document.getElementById("textSelection").innerHTML="Administre los productos";
 });
