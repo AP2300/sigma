@@ -37,6 +37,8 @@ app.use(cookieParser());
 
 //conexion a mysql//
 var DBconfig = {
+    multipleStatements: true,
+    connectionLimit : 2,
     host     : "remotemysql.com",
     port     : "3306",
     user     : '7HTdwmHsRH',
@@ -381,8 +383,9 @@ app.post("/contactanos", (req, res)=>{
 
 app.post("/register", (req,res)=>{
     registerData = req.body.data;
+    let id;
 
-    DB.query("SELECT nombre, correo FROM usuarios WHERE nombre = ? OR correo = ?", [registerData.name, registerData.email], async (error, results)=>{
+    DB.query("SELECT id,nombre, correo FROM usuarios WHERE nombre = ? OR correo = ?", [registerData.name, registerData.email], async (error, results)=>{
         if (error){
             console.log(error);
         }
@@ -397,17 +400,18 @@ app.post("/register", (req,res)=>{
                 res.redirect("/admin");
             }
         }
-        
+
+        // id=results[0].id
         let hash = await bcrypt.hash(registerData.pass, 8);
         if(responses.messageErr===""){
-            DB.query("INSERT INTO usuarios SET ? ",{
+            DB.query("INSERT INTO usuarios SET ?; INSERT INTO carrito SET ?",[{
                 nombre:registerData.name,
                 correo:registerData.email,
                 clave:hash,
                 idSucursal: registerData.optionSucursal,
                 tipo_usuario:registerData.optionType,
                 cargo:registerData.optionPos
-            }, (err, result)=>{
+            },{idUsuario:7}], (err, result)=>{
                 if(err) console.log(err)
                 else {
                     responses.messageOK = "El registro fue creado satisfactoriamente.";
