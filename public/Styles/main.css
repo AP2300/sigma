@@ -407,3 +407,7 @@ div.card.Producto.page{
 .separador{
     margin-bottom: 64px;
 }
+
+.card-footer{
+    height: 100%;
+}
