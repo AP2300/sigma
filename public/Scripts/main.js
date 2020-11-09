@@ -84,7 +84,7 @@ function buscar(Data, filter, isAdmin){
                             <h5 class="card-title">${producto.nombre}</h5>
                             <p class="card-text">Tipo de Medicamento: ${producto.tipo_medicamento}</p>
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer" id="catalogPage">
                             <small class="text-muted">Precio: ${producto.precio}$</small>`
                             if(isAdmin==true) {
                                 html += `<br><form class="mt-2 mb-2 d-inline-block" action="/adminEditProduct/${producto.id}" method="GET" enctype="multipart/form-data">
