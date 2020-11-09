@@ -1,0 +1,68 @@
+<%- include('./partials/header'); %>
+
+<div class="containerProductpage">
+
+    <form action="/adminAddProduct" method="POST" enctype="multipart/form-data">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputMedName">Nombre</label>
+                <input type="text" class="form-control" id="inputMedName" required name="name">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputPrice">Precio</label>
+                <input type="number" class="form-control" id="inputPrice" required name="price" min="1" max="1000000000000">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputType">Tipo de medicamento</label>
+                <select class="form-control" id="inputType" required name="type">
+                    <option selected disabled value="">Elegir...</option>
+                    <option>Dolor General</option>
+                    <option>Salud Digestiva</option>
+                    <option>Salud Respiratoria</option>
+                    <option>Vitaminas y Productos Naturales</option>
+                    <option>Botiquín y Primeros Auxilios</option>
+                    <option>Rehabilitacion y Equipos Medicos</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="mb-3 w-100">
+                <label for="inputQuantity">Cantidad</label>
+                <input type="number" class="form-control" id="inputQuantity" required name="quantity" min="1" max="10000000000000">
+            </div>
+        </div>
+        <div class="form-row">
+            <label for="CustomFile" class="mx-auto">Agregar Imagen</label>
+            <div class="custom-file mb-3">
+                <input type="file" class="custom-file-input" id="CustomFile" required name="img">
+                <label class="custom-file-label" for="CustomFile">Elige un archivo...</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Descripcion</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                name="description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+        <div class="card mb-3 Producto page">
+            <div class="">
+                <img src="<%- Producto[0].IMG%>" class="card-img-top rounded img-producto" height="350" >
+            </div>
+            
+            <div class="card-body center page">
+            <h5 class="card-title"><%= Producto[0].nombre%></h5>
+            <hr>
+            <p class="card-text"><%= Producto[0].descripcion%></p>
+            </div>
+            <div class="card-footer  price">
+            <i class="fas fa-dollar-sign"></i> <%= Producto[0].precio%>
+            </div>
+            <div class="card-footer BuyBtn">
+                Comprar
+            </div>
+        </div>
+
+</div>
+
+<%- include('./partials/bottom'); %>

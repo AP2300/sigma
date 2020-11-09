@@ -2,17 +2,34 @@
 
 <script>
     var SearchData= <%- JSON.stringify(ProductoData) %>
+    var isAdmin = <%- isAdmin %>
+
 </script>
 
     <div class="containerContact">
-
         <h2 class="name-login"> <img src="Images/BigLogo.png" style="padding-bottom: 9px;"> Sigma</h2>
 
         <div class="card login">
             <div class="card-body colorBg">
                 <form class="form ">
                     <div class="row ml-sm-1 mr-sm-1">
-                        <input class="form-control col-sm-12 search" id="Busqueda" type="search" placeholder='Search' oninput="buscar(SearchData,filter)" aria-label="Search">
+                        <% if (responses.messageErr !== "") {%>
+                            <div class="alert alert-danger alert-dismissible fade show w-100" role="alert">
+                                <strong id="errRegister"><%= responses.messageErr %></strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        <% } %>
+                        <% if (responses.messageOK !== "") {%>
+                            <div class="alert alert-success alert-dismissible fade show w-100" role="alert">
+                                <strong id="errRegister"><%= responses.messageOK %></strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        <% } %>
+                        <input class="form-control col-sm-12 search" id="Busqueda" type="search" placeholder='Search' oninput="buscar(SearchData,filter,isAdmin)" aria-label="Search">
                     </div>
                 </form>
                 <hr>

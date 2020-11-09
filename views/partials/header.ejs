@@ -36,7 +36,7 @@
             <li class="nav-item">
               <a class="nav-link hover" href="/catalog">Catalogo</a>
             </li>
-            <%if(Sesion !== null){%>
+            <%if(Sesion != null){%>
               <%if(Sesion.isAuthed){%>
                 <li class="nav-item">
                   <a class="nav-link hover" href="/tracking">Tracking</a>
@@ -49,7 +49,7 @@
           </ul>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <%if(Sesion !== null){%>
+              <%if(Sesion != null){%>
                 <%if(Sesion.isAuthed && Sesion.isAdmin){%>
                   <script>
                     $(document).ready(function () {

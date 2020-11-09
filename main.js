@@ -21,7 +21,9 @@ var express               = require("express"),
     Sql                   = require("mysql"),
     session               = require("express-session"),
     MySQLStore            = require("express-mysql-session")(session);
-    cookieParser          = require("cookie-parser")
+    cookieParser          = require("cookie-parser"),
+    fs                    = require("fs"),
+    { v4: uuidv4 }        = require('uuid');
 
 //Config
 app.set("port",process.env.PORT||3000);
@@ -114,7 +116,15 @@ app.get("/catalog", (req, res)=>{
         if(err) console.log(err);
         else {
             ProductoData = results
-            res.render("catalog", {Sesion:Sesion,ProductoData:ProductoData});
+            if(IsAuthenticated(req.session.user)!=null){
+                Sesion=IsAuthenticated(req.session.user);
+                if(Sesion.isAdmin){
+                    var isAdmin = true;
+                } else var isAdmin = false;
+            } else var isAdmin = false;
+            res.render("catalog", {Sesion:Sesion,ProductoData:ProductoData,isAdmin:isAdmin,responses:responses});
+            responses.messageErr="";
+            responses.messageOK="";
         }
     })
 })
@@ -217,8 +227,9 @@ app.post("/adminAddProduct", (req, res)=>{
             if(!req.files) return res.redirect("/admin");
             else{
                 File = req.files.img;
-                imgSource = `/Img-Producto/${File.name}`;
-                File.mv(`./public/Img-Producto/${File.name}`, (err)=>{
+                uniqueName = uuidv4();
+                imgSource = `/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`;
+                File.mv(`./public/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`, (err)=>{
                     if(err) console.log(err);
                 })
             }
@@ -242,6 +253,72 @@ app.post("/adminAddProduct", (req, res)=>{
         }
     })
     })
+
+app.get("/adminEditProduct/:id", (req, res) =>{
+    console.log(`Editar ${req.params.id}`);
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("SELECT * FROM producto WHERE id = ?", [id], async (error, results)=>{
+                if (error){
+                    console.log(error);
+                } else{
+                    res.render("adminEditProduct");
+                }
+            });
+        } else {
+            res.redirect("/catalog");
+        }
+    } else {
+        red.redirect("/catalog");
+    }
+})
+
+app.get("/adminDeleteProduct/:id", (req, res) =>{
+    var id = req.params.id;
+    console.log(`eliminar ${id}`);
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("SELECT IMG FROM producto WHERE id = ?", [id], (error, results)=>{
+                if(error){
+                    console.log(error);
+                    responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                    res.redirect("/catalog");
+                }else{ 
+                    var image = `./public/${results[0].IMG}`;
+                    console.log(image);
+                    DB.query("DELETE FROM producto WHERE id = ?", [id], (error, results)=>{
+                        if(error){
+                            console.log(error);
+                            responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                            res.redirect("/catalog");
+                        }else{
+                            fs.unlink(image, function(err) {
+                                if (err) {
+                                    console.log(err);
+                                    responses.messageOK = "El producto ha sido eliminado de forma exitosa";
+                                    res.redirect("/catalog");
+                                } else {
+                                    responses.messageOK = "El producto ha sido eliminado de forma exitosa";
+                                    res.redirect("/catalog");
+                                }
+                            });
+                            
+                        }
+                    });
+                }
+            });
+        }else{
+            res.redirect("/catalog");
+        }
+    }else{
+        Sesion=null
+        res.redirect("/catalog");
+    }
+})
 
 app.post("/adminAddBranch", (req, res)=>{
     let DataSucursal = req.body;

@@ -60,7 +60,7 @@ $('#CustomFile').on('change',function(){
 })
 
 var filter="";
-function buscar(Data, filter){
+function buscar(Data, filter, isAdmin){
     let text = document.getElementById("Busqueda").value.toLowerCase();
     text.replace(/[-[\]{}()*+?.,\\^$|#]/g, "\\$&");
     console.log(text);
@@ -85,14 +85,36 @@ function buscar(Data, filter){
                             <p class="card-text">Tipo de Medicamento: ${producto.tipo_medicamento}</p>
                         </div>
                         <div class="card-footer">
-                            <small class="text-muted">Precio: ${producto.precio}$</small>
+                            <small class="text-muted">Precio: ${producto.precio}$</small>`
+                            if(isAdmin==true) {
+                                html += `<br><form class="mt-2 mb-2 d-inline-block" action="/adminEditProduct/${producto.id}" method="GET" enctype="multipart/form-data">
+                                <button type="submit" class="btn btn-alert">Editar</button>
+                            </form>
+                            <a href="javascript: void(0)">
+                                <button type="button" class="btn btn-danger d-inline-block" onclick="borrarProducto(${producto.id})">Eliminar</button>
+                            </a>
                         </div>
                     </div>
                 </a>
-            </div>`
+            </div>`}
+                            else {html += `
+                        </div>
+                    </div>
+                </a>
+            </div>`}
         }
     }
+    console.log(isAdmin)
     document.getElementById("productos").innerHTML=html;
+}
+
+function borrarProducto(id) {
+    var res = confirm("Está seguro de que desea eliminar el producto?");
+
+    if(res) {
+        console.log(`eliminado ${id}`);
+        window.location.href = `/adminDeleteProduct/${id}`;
+    }
 }
 
 $("ol").on("click","li", function (){
@@ -100,8 +122,8 @@ $("ol").on("click","li", function (){
     filter=cat;
     $(".breadcrumb-item").removeClass("activo");
     $(this).toggleClass("activo");
-    buscar(SearchData,filter);
+    buscar(SearchData,filter,isAdmin);
 })
 
-if(window.location.pathname === "/catalog") buscar(SearchData,filter);
+if(window.location.pathname === "/catalog") buscar(SearchData,filter,isAdmin);
 
