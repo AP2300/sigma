@@ -143,6 +143,21 @@ app.get("/product/:id", (req, res) =>{
     })
 })
 
+app.get("/buy", (req, res)=>{
+    IsAuthenticated(req.session.user);
+    var Car= [];
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        res.render("buy", {Sesion:Sesion,Car:Car,responses:responses});
+        responses.messageErr="";
+        responses.messageOK="";
+        
+    } else{
+        Sesion=null
+        res.redirect("home");
+    }
+})
+
 app.post("/login", function(req, res){
     loginData = req.body.data;
     let admin = false;
@@ -208,8 +223,6 @@ app.get("/admin", function(req,res){
         Sesion=null
         res.redirect("home");
     }
-
-
 });
 
 app.post("/adminAddProduct", (req, res)=>{
