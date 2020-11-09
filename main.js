@@ -37,7 +37,6 @@ app.use(cookieParser());
 
 //conexion a mysql//
 var DBconfig = {
-    multipleStatements: true,
     connectionLimit : 2,
     host     : "remotemysql.com",
     port     : "3306",
@@ -413,25 +412,32 @@ app.post("/register", (req,res)=>{
                 res.redirect("/admin");
             }
         }
-
-        // id=results[0].id
+        let id = 0;
         let hash = await bcrypt.hash(registerData.pass, 8);
         if(responses.messageErr===""){
-            DB.query("INSERT INTO usuarios SET ?; INSERT INTO carrito SET ?",[{
+            DB.query("INSERT INTO usuarios SET ?",{
                 nombre:registerData.name,
                 correo:registerData.email,
                 clave:hash,
                 idSucursal: registerData.optionSucursal,
                 tipo_usuario:registerData.optionType,
-                cargo:registerData.optionPos
-            },{idUsuario:7}], (err, result)=>{
+                cargo:registerData.optionPos}, (err, results)=>{
+                if(err) console.log(err)
+                else {
+                    id = results.insertId;
+                    console.log(id) 
+                }
+            })
+            DB.query("INSERT INTO carrito SET ?"),{idUsuario:id}, (err, results)=>{
+                console.log("Si ENTRO");
+                
                 if(err) console.log(err)
                 else {
                     responses.messageOK = "El registro fue creado satisfactoriamente.";
                     responses.messageErr = ""; 
                     res.redirect("/admin");
                 }
-            })
+            }
         }
     })
     })
