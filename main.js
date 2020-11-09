@@ -43,12 +43,12 @@ var DBconfig = {
 };
 
 var DB;
-DB = Sql.createConnection(DBconfig);
-DB.connect((err) => {
+DB = Sql.createPool(DBconfig);
+/*DB.connect((err) => {
     if(err) console.log(err);
     else console.log("DB conectada");
-})
-setTimeout(handleDisconnect, 3000);
+})*/
+//setTimeout(handleDisconnect, 3000);
 
 //configurado midleware para la sesion//
 
