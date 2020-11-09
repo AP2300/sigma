@@ -98,10 +98,11 @@ app.get("/home",function(req, res){
     IsAuthenticated(req.session.user);
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
-    }else{
-        Sesion=null
-    }
-    res.render("index", {Sesion:Sesion});
+        if(Sesion.isAdmin){
+            var isAdmin = true;
+        } else var isAdmin = false;
+    } else var isAdmin = false;
+    res.render("index", {Sesion:Sesion,isAdmin:isAdmin});
 })
 
 app.get("/login", function(req, res){
@@ -396,7 +397,6 @@ app.post("/contactanos", (req, res)=>{
 
 app.post("/register", (req,res)=>{
     registerData = req.body.data;
-    let id;
 
     DB.query("SELECT id,nombre, correo FROM usuarios WHERE nombre = ? OR correo = ?", [registerData.name, registerData.email], async (error, results)=>{
         if (error){
@@ -414,27 +414,31 @@ app.post("/register", (req,res)=>{
             }
         }
 
-        // id=results[0].id
         let hash = await bcrypt.hash(registerData.pass, 8);
         if(responses.messageErr===""){
-            DB.query("INSERT INTO usuarios SET ?; INSERT INTO carrito SET ?",[{
+            DB.query("INSERT INTO usuarios SET ?",{
                 nombre:registerData.name,
                 correo:registerData.email,
                 clave:hash,
                 idSucursal: registerData.optionSucursal,
                 tipo_usuario:registerData.optionType,
                 cargo:registerData.optionPos
-            },{idUsuario:7}], (err, result)=>{
+            }, (err, results)=>{
                 if(err) console.log(err)
-                else {
-                    responses.messageOK = "El registro fue creado satisfactoriamente.";
-                    responses.messageErr = ""; 
-                    res.redirect("/admin");
-                }
+
+                DB.query("INSERT INTO carrito SET ?",{idUsuario:results.insertId}, (err, results)=>{
+                    console.log("hola");
+                    if(err) console.log(err);
+                    else{
+                        responses.messageOK = "El registro fue creado satisfactoriamente.";
+                        responses.messageErr = ""; 
+                        res.redirect("/admin");
+                    }
+                })
             })
         }
     })
-    })
+})
 
 app.get("/SessionClose", (req,res)=>{
     req.session.destroy((err)=>{
