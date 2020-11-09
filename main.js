@@ -93,7 +93,7 @@ app.get("/", function (_, res) {
 })
 
 app.get("/home",function(req, res){
-    // IsAuthenticated(req.session.user);
+    IsAuthenticated(req.session.user);
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
     }else{
@@ -154,7 +154,7 @@ app.get("/buy", (req, res)=>{
         
     } else{
         Sesion=null
-        res.redirect("home");
+        res.redirect("/login");
     }
 })
 
