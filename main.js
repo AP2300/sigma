@@ -272,6 +272,7 @@ app.post("/adminAddProduct", (req, res)=>{
 
 app.get("/adminEditProduct/:id", (req, res) =>{
     console.log(`Editar ${req.params.id}`);
+    var id = req.params.id;
 
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
@@ -280,14 +281,79 @@ app.get("/adminEditProduct/:id", (req, res) =>{
                 if (error){
                     console.log(error);
                 } else{
-                    res.render("adminEditProduct");
+                    var producto = results[0];
+                    console.log(producto);
+                    res.render("adminEditProduct", {Sesion:Sesion, producto:producto, responses:responses});
                 }
             });
         } else {
             res.redirect("/catalog");
         }
     } else {
-        red.redirect("/catalog");
+        res.redirect("/catalog");
+    }
+})
+
+app.post("/adminEditProduct/:id", (req, res) => {
+    var id = req.params.id;
+    var DataProducto = req.body;
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("SELECT * FROM producto WHERE id = ?", [id], async (error, results)=>{
+                if (error){
+                    console.log(error);
+                } else{
+                    if(DataProducto.notChange != undefined) {
+                        var query = {
+                            nombre:DataProducto.name,
+                            precio:DataProducto.price,
+                            tipo_medicamento:DataProducto.type,
+                            cantidad:DataProducto.quantity,
+                            descripcion:DataProducto.description
+                        }
+                    } else {
+                        File = req.files.img;
+                        uniqueName = uuidv4();
+                        imgSource = `/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`;
+                        File.mv(`./public/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`, (err)=>{
+                            if(err) {
+                                console.log(err);
+                                responses.messageOK = "";
+                                responses.messageErr = "Ha ocurrido un error, intentelo nuevamente"; 
+                                res.redirect(`/adminEditProduct/${id}`);
+                            }
+                        });
+                        
+                        var query = {
+                            nombre:DataProducto.name,
+                            precio:DataProducto.price,
+                            tipo_medicamento:DataProducto.type,
+                            cantidad:DataProducto.quantity,
+                            descripcion:DataProducto.description,
+                            IMG:imgSource
+                        }
+                    }
+                    
+                    DB.query("UPDATE producto SET ? WHERE id = ?",[query, id], (err, result)=>{
+                        if(err) {
+                            console.log(err);
+                            responses.messageOK = "";
+                            responses.messageErr = "Ha ocurrido un error, intentelo nuevamente"; 
+                            res.redirect(`/adminEditProduct/${id}`);
+                        } else {
+                            responses.messageOK = "El producto fue actualizado satisfactoriamente.";
+                            responses.messageErr = ""; 
+                            res.redirect("/catalog");
+                        }
+                    })
+                }
+            });
+        } else {
+            res.redirect("/catalog");
+        }
+    } else {
+        res.redirect("/catalog");
     }
 })
 
