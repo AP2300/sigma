@@ -1,67 +1,70 @@
 <%- include('./partials/header'); %>
 
-<div class="containerProductpage">
-
-    <form action="/adminAddProduct" method="POST" enctype="multipart/form-data">
+<div class="card login p-5" style="margin-top:80px;">
+    <% if (responses.messageErr !== "") {%>
+        <div class="alert alert-danger alert-dismissible fade show w-100" role="alert">
+            <strong id="errRegister"><%= responses.messageErr %></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <% } %>
+    <% if (responses.messageOK !== "") {%>
+        <div class="alert alert-success alert-dismissible fade show w-100" role="alert">
+            <strong id="errRegister"><%= responses.messageOK %></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <% } %>
+    <h1 class="mb-4 mx-auto">Editar producto</h1>
+    <form action="/adminEditProduct/<%= producto.id%>" method="POST" enctype="multipart/form-data">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputMedName">Nombre</label>
-                <input type="text" class="form-control" id="inputMedName" required name="name">
+                <input type="text" class="form-control" id="inputMedName" required name="name" value="<%= producto.nombre%>">
             </div>
             <div class="form-group col-md-2">
                 <label for="inputPrice">Precio</label>
-                <input type="number" class="form-control" id="inputPrice" required name="price" min="1" max="1000000000000">
+                <input type="number" class="form-control" id="inputPrice" required name="price" min="1" max="1000000000000" value="<%= producto.precio%>">
             </div>
             <div class="form-group col-md-4">
                 <label for="inputType">Tipo de medicamento</label>
-                <select class="form-control" id="inputType" required name="type">
-                    <option selected disabled value="">Elegir...</option>
-                    <option>Dolor General</option>
-                    <option>Salud Digestiva</option>
-                    <option>Salud Respiratoria</option>
-                    <option>Vitaminas y Productos Naturales</option>
-                    <option>Botiquín y Primeros Auxilios</option>
-                    <option>Rehabilitacion y Equipos Medicos</option>
+                <select class="form-control" id="inputType" required name="type" value="<%= producto.tipo_medicamento%>">
+                    <option disabled>Elegir...</option>
+                    <option value="Dolor General">Dolor General</option>
+                    <option value="Salud Digestiva">Salud Digestiva</option>
+                    <option value="Salud Respiratoria">Salud Respiratoria</option>
+                    <option value="Vitaminas y Productos Naturales">Vitaminas y Productos Naturales</option>
+                    <option value="Botiquín y Primeros Auxilios">Botiquín y Primeros Auxilios</option>
+                    <option value="Rehabilitacion y Equipos Medicos">Rehabilitacion y Equipos Medicos</option>
                 </select>
             </div>
         </div>
         <div class="form-row">
             <div class="mb-3 w-100">
                 <label for="inputQuantity">Cantidad</label>
-                <input type="number" class="form-control" id="inputQuantity" required name="quantity" min="1" max="10000000000000">
+                <input type="number" class="form-control" id="inputQuantity" required name="quantity" min="1" max="10000000000000" value="<%= producto.cantidad %>">
             </div>
         </div>
         <div class="form-row">
-            <label for="CustomFile" class="mx-auto">Agregar Imagen</label>
-            <div class="custom-file mb-3">
+            <label for="CustomFile" class="mx-auto">Cambiar Imagen</label>
+            <div class="custom-file mb-5">
                 <input type="file" class="custom-file-input" id="CustomFile" required name="img">
                 <label class="custom-file-label" for="CustomFile">Elige un archivo...</label>
+                <input type="checkbox" id="checkimg" name="notChange" value="true" onchange="handleChange(this)">
+                <label for="checkimg"> Mantener la imagen actual</label>
             </div>
         </div>
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Descripcion</label>
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                name="description"></textarea>
+                name="description" required><%= producto.descripcion %></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+        <a href="/catalog"><button type="button" class="btn btn-primary">Cancelar</button></a>
     </form>
-        <div class="card mb-3 Producto page">
-            <div class="">
-                <img src="<%- Producto[0].IMG%>" class="card-img-top rounded img-producto" height="350" >
-            </div>
-            
-            <div class="card-body center page">
-            <h5 class="card-title"><%= Producto[0].nombre%></h5>
-            <hr>
-            <p class="card-text"><%= Producto[0].descripcion%></p>
-            </div>
-            <div class="card-footer  price">
-            <i class="fas fa-dollar-sign"></i> <%= Producto[0].precio%>
-            </div>
-            <div class="card-footer BuyBtn">
-                Comprar
-            </div>
-        </div>
+        
 
 </div>
 
