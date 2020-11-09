@@ -97,10 +97,11 @@ app.get("/home",function(req, res){
     IsAuthenticated(req.session.user);
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
-    }else{
-        Sesion=null
-    }
-    res.render("index", {Sesion:Sesion});
+        if(Sesion.isAdmin){
+            var isAdmin = true;
+        } else var isAdmin = false;
+    } else var isAdmin = false;
+    res.render("index", {Sesion:Sesion,isAdmin:isAdmin});
 })
 
 app.get("/login", function(req, res){
@@ -270,6 +271,7 @@ app.post("/adminAddProduct", (req, res)=>{
 
 app.get("/adminEditProduct/:id", (req, res) =>{
     console.log(`Editar ${req.params.id}`);
+    var id = req.params.id;
 
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
@@ -278,14 +280,79 @@ app.get("/adminEditProduct/:id", (req, res) =>{
                 if (error){
                     console.log(error);
                 } else{
-                    res.render("adminEditProduct");
+                    var producto = results[0];
+                    console.log(producto);
+                    res.render("adminEditProduct", {Sesion:Sesion, producto:producto, responses:responses});
                 }
             });
         } else {
             res.redirect("/catalog");
         }
     } else {
-        red.redirect("/catalog");
+        res.redirect("/catalog");
+    }
+})
+
+app.post("/adminEditProduct/:id", (req, res) => {
+    var id = req.params.id;
+    var DataProducto = req.body;
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("SELECT * FROM producto WHERE id = ?", [id], async (error, results)=>{
+                if (error){
+                    console.log(error);
+                } else{
+                    if(DataProducto.notChange != undefined) {
+                        var query = {
+                            nombre:DataProducto.name,
+                            precio:DataProducto.price,
+                            tipo_medicamento:DataProducto.type,
+                            cantidad:DataProducto.quantity,
+                            descripcion:DataProducto.description
+                        }
+                    } else {
+                        File = req.files.img;
+                        uniqueName = uuidv4();
+                        imgSource = `/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`;
+                        File.mv(`./public/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`, (err)=>{
+                            if(err) {
+                                console.log(err);
+                                responses.messageOK = "";
+                                responses.messageErr = "Ha ocurrido un error, intentelo nuevamente"; 
+                                res.redirect(`/adminEditProduct/${id}`);
+                            }
+                        });
+                        
+                        var query = {
+                            nombre:DataProducto.name,
+                            precio:DataProducto.price,
+                            tipo_medicamento:DataProducto.type,
+                            cantidad:DataProducto.quantity,
+                            descripcion:DataProducto.description,
+                            IMG:imgSource
+                        }
+                    }
+                    
+                    DB.query("UPDATE producto SET ? WHERE id = ?",[query, id], (err, result)=>{
+                        if(err) {
+                            console.log(err);
+                            responses.messageOK = "";
+                            responses.messageErr = "Ha ocurrido un error, intentelo nuevamente"; 
+                            res.redirect(`/adminEditProduct/${id}`);
+                        } else {
+                            responses.messageOK = "El producto fue actualizado satisfactoriamente.";
+                            responses.messageErr = ""; 
+                            res.redirect("/catalog");
+                        }
+                    })
+                }
+            });
+        } else {
+            res.redirect("/catalog");
+        }
+    } else {
+        res.redirect("/catalog");
     }
 })
 
@@ -395,7 +462,6 @@ app.post("/contactanos", (req, res)=>{
 
 app.post("/register", (req,res)=>{
     registerData = req.body.data;
-    let id;
 
     DB.query("SELECT id,nombre, correo FROM usuarios WHERE nombre = ? OR correo = ?", [registerData.name, registerData.email], async (error, results)=>{
         if (error){
@@ -412,7 +478,6 @@ app.post("/register", (req,res)=>{
                 res.redirect("/admin");
             }
         }
-        let id = 0;
         let hash = await bcrypt.hash(registerData.pass, 8);
         if(responses.messageErr===""){
             DB.query("INSERT INTO usuarios SET ?",{
@@ -421,26 +486,23 @@ app.post("/register", (req,res)=>{
                 clave:hash,
                 idSucursal: registerData.optionSucursal,
                 tipo_usuario:registerData.optionType,
-                cargo:registerData.optionPos}, (err, results)=>{
+                cargo:registerData.optionPos
+            }, (err, results)=>{
                 if(err) console.log(err)
-                else {
-                    id = results.insertId;
-                    console.log(id) 
-                }
+
+                DB.query("INSERT INTO carrito SET ?",{idUsuario:results.insertId}, (err, results)=>{
+                    console.log("hola");
+                    if(err) console.log(err);
+                    else{
+                        responses.messageOK = "El registro fue creado satisfactoriamente.";
+                        responses.messageErr = ""; 
+                        res.redirect("/admin");
+                    }
+                })
             })
-            DB.query("INSERT INTO carrito SET ?"),{idUsuario:id}, (err, results)=>{
-                console.log("Si ENTRO");
-                
-                if(err) console.log(err)
-                else {
-                    responses.messageOK = "El registro fue creado satisfactoriamente.";
-                    responses.messageErr = ""; 
-                    res.redirect("/admin");
-                }
-            }
         }
     })
-    })
+})
 
 app.get("/SessionClose", (req,res)=>{
     req.session.destroy((err)=>{

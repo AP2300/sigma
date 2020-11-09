@@ -117,6 +117,14 @@ function borrarProducto(id) {
     }
 }
 
+function handleChange(obj) {
+    if(obj.checked == true){
+        document.getElementById("CustomFile").setAttribute("disabled", "disabled");
+    }else{
+        document.getElementById("CustomFile").removeAttribute("disabled");
+   }
+}
+
 $("ol").on("click","li", function (){
     var cat=$(this).text();
     filter=cat;
