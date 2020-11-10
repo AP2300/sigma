@@ -577,24 +577,24 @@ app.get("/UserCart/:id", (req, res)=>{
     }
     const id = req.params.id;
 
-    DB.query("SELECT idProducto,cantidad FROM carrito_producto WHERE idUsuario = ?",[id], (err, results)=>{
+    DB.query("SELECT idProducto,cantidad FROM carrito_producto WHERE idUsuario = ?",[id], async (err, results)=>{
         if(err) console.log(err);
         else{
-            console.log(results.length);
             for (let i in results) {
-                DB.query("SELECT * FROM producto WHERE id = ?", [results[i].idProducto], (err, result)=>{
-                    if(err) console.log(err);
-                    else{
-                        console.log(result);
-                        CartInfo[i] = {data:result, cantidad:results[i].cantidad}
-                        console.log(CartInfo[0].data);
-                    }
+                let query =  DB.query("SELECT * FROM producto WHERE id = ?", [results[i].idProducto])
+                query.on("result",function (row) {
+                    CartInfo[i] = {data:row, cantidad:results[i].cantidad};
                 })
+                if(CartInfo.length===results.length){
+                    console.log(CartInfo[0]);
+                    res.render("Cart",{Sesion:Sesion, CartInfo:CartInfo});
+                }
             }
+
         }
     })
 })
-// res.render("Cart",{Sesion:Sesion, CartInfo:CartInfo});
+
 ///////////////////////
 
 app.listen(app.get("port"), function(){
