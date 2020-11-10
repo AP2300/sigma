@@ -94,14 +94,11 @@ app.get("/", function (_, res) {
 })
 
 app.get("/home",function(req, res){
-    IsAuthenticated(req.session.user);
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
-        if(Sesion.isAdmin){
-            var isAdmin = true;
-        } else var isAdmin = false;
-    } else var isAdmin = false;
-    res.render("index", {Sesion:Sesion,isAdmin:isAdmin});
+    }
+    console.log(Sesion);
+    res.render("index", {Sesion:Sesion});
 })
 
 app.get("/login", function(req, res){
@@ -164,7 +161,6 @@ app.post("/login", function(req, res){
     loginData = req.body.data;
     let admin = false;
     DB.query("SELECT id, correo,tipo_usuario,clave from usuarios WHERE correo = ?", [loginData.email], async (error, results) => {
-        console.log(results);
         if(error) console.log(error);
         if(results.length > 0) {
             await bcrypt.compare(loginData.pass, results[0].clave, function(err, result) {
@@ -180,7 +176,7 @@ app.post("/login", function(req, res){
                         isAdmin: admin
                     };
                     console.log(admin);
-                    res.redirect("/home");
+                    res.redirect("/");
                 }
                 else {
                     responses.messageErr = "La contraseña ingresada es inválida."
@@ -513,6 +509,24 @@ app.get("/SessionClose", (req,res)=>{
         }
     });
 
+})
+
+app.post("/AddtoCart", (req, res)=>{
+    console.log(req.body.cantidad);
+    console.log(req.body.ID);
+    if(IsAuthenticated(req.session.user)!=null){
+        console.log("hola");
+        Sesion=IsAuthenticated(req.session.user);
+    }else{
+       res.redirect("/login");
+    }
+    if(Sesion.isAuthed){
+        DB.query("INSER INTO carrito_producto Set ?",{idProducto:idProducto,cantidad:cantidad}, (err, results)=>{
+
+        })
+    }else{
+        // res.redirect("/login");
+    }
 })
 ///////////////////////
 

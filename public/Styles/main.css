@@ -412,4 +412,20 @@ div.card.Producto.page{
     padding-bottom: 30px;
 }
 
+.addForm{
+    display: inline;
+}
+
+.addInput{
+    background-color: inherit;
+    border: 1px solid #bbbbbb;
+    border-radius: .5em;
+    color: inherit;
+}
+
+.invisible{
+    display: none;
+}
+
+
 

@@ -1,6 +1,8 @@
 <%- include('./partials/header'); %>
 
+<div class="separador2">
 
+</div>
 
 <div class="containerProductpage">
 
@@ -14,11 +16,15 @@
           <hr>
           <p class="card-text"><%= Producto[0].descripcion%></p>
         </div>
-        <div class="card-footer  price">
-            <i class="fas fa-dollar-sign"></i> <%= Producto[0].precio%>
+        <script>
+            Value= <%=Producto[0].precio%>
+        </script>
+        <div class="card-footer  price" >
+            <i class="fas fa-dollar-sign"></i> <span id="Total"><%= Producto[0].precio%></span> 
+              | Cantidad  <form id="qtty" action="/AddtoCart" method="POST"  class="addForm"><input type="number" name="cantidad" id="InputQtty" onchange="calculate()" class="addInput" required min="1" value="1" max=<%=Producto[0].cantidad%>> <input type="text" class="invisible" name="ID" value=<%=Producto[0].id%>></form> 
           </div>
-          <div class="card-footer BuyBtn">
-            Comprar
+          <div class="card-footer BuyBtn" onclick="AddToCart()">
+            Añadir al carrito
           </div>
       </div>
 
