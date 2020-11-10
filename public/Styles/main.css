@@ -412,4 +412,13 @@ div.card.Producto.page{
     padding-bottom: 30px;
 }
 
+html body .body-card{
+    min-height: 125px;
+}
 
+<<<<<<< HEAD
+html body .button-delete{
+    z-index: 100000000000000000000;
+}
+=======
+>>>>>>> 18473c5745956e14409634b0a95a87e7ae946631
