@@ -412,7 +412,6 @@ div.card.Producto.page{
     padding-bottom: 30px;
 }
 
-
-.card-footer{
-    height: 100%;
+html body .body-card{
+    min-height: 125px;
 }

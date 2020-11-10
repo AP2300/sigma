@@ -80,7 +80,7 @@ function buscar(Data, filter, isAdmin){
                 <a class="product" href="/product/${producto.id}">
                     <div class="card card-producto h-100">
                         <img src="${producto.IMG}" class="card-img-top" >
-                        <div class="card-body">
+                        <div class="card-body body-card">
                             <h5 class="card-title">${producto.nombre}</h5>
                             <p class="card-text">Tipo de Medicamento: ${producto.tipo_medicamento}</p>
                         </div>
