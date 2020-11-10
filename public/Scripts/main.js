@@ -1,50 +1,59 @@
-$("#Productos").click(function () { 
+$(document).ready(function(){
     $("#UsersPanel").collapse("hide")
+    $("#ProductsPanel").collapse("hide")
     $("#OtrosPanel").collapse("hide")
     $("#SucursalPanel").collapse("hide")
     $("#DisPanel").collapse("hide")
     $("#EarningsPanel").collapse("hide")
-    document.getElementById("textSelection").innerHTML="Administre los productos";
-});
-$("#Users").click(function () { 
-    $("#ProductsPanel").collapse("hide")
-    $("#SucursalPanel").collapse("hide")
-    $("#OtrosPanel").collapse("hide")
-    $("#DisPanel").collapse("hide")
-    $("#EarningsPanel").collapse("hide")
-    document.getElementById("textSelection").innerHTML="Administre los usuarios";
-});
-$("#Admins").click(function () { 
-    $("#UsersPanel").collapse("hide")
-    $("#ProductsPanel").collapse("hide")
-    $("#SucursalPanel").collapse("hide")
-    $("#DisPanel").collapse("hide")
-    $("#EarningsPanel").collapse("hide")
-    document.getElementById("textSelection").innerHTML="Administre las consultas";
-});
-$("#Sucursal").click(function () { 
-    $("#UsersPanel").collapse("hide")
-    $("#ProductsPanel").collapse("hide")
-    $("#OtrosPanel").collapse("hide")
-    $("#DisPanel").collapse("hide")
-    $("#EarningsPanel").collapse("hide")
-    document.getElementById("textSelection").innerHTML="Administre las sucursales";
-});
-$("#Distribution").click(function () { 
-    $("#ProductsPanel").collapse("hide")
-    $("#UsersPanel").collapse("hide")
-    $("#OtrosPanel").collapse("hide")
-    $("#SucursalPanel").collapse("hide")
-    $("#EarningsPanel").collapse("hide")
-    document.getElementById("textSelection").innerHTML="Administre las distribuciones";
-});
-$("#Earning").click(function () { 
-    $("#ProductsPanel").collapse("hide")
-    $("#UsersPanel").collapse("hide")
-    $("#OtrosPanel").collapse("hide")
-    $("#SucursalPanel").collapse("hide")
-    $("#DisPanel").collapse("hide")
-    document.getElementById("textSelection").innerHTML="Observe las ganancias";
+
+    $("#Productos").click(function () { 
+        $("#UsersPanel").collapse("hide")
+        $("#OtrosPanel").collapse("hide")
+        $("#SucursalPanel").collapse("hide")
+        $("#DisPanel").collapse("hide")
+        $("#EarningsPanel").collapse("hide")
+        document.getElementById("textSelection").innerHTML="Administre los productos";
+    });
+    $("#Users").click(function () { 
+        $("#ProductsPanel").collapse("hide")
+        $("#SucursalPanel").collapse("hide")
+        $("#OtrosPanel").collapse("hide")
+        $("#DisPanel").collapse("hide")
+        $("#EarningsPanel").collapse("hide")
+        document.getElementById("textSelection").innerHTML="Administre los usuarios";
+    });
+    $("#Admins").click(function () { 
+        $("#UsersPanel").collapse("hide")
+        $("#ProductsPanel").collapse("hide")
+        $("#SucursalPanel").collapse("hide")
+        $("#DisPanel").collapse("hide")
+        $("#EarningsPanel").collapse("hide")
+        document.getElementById("textSelection").innerHTML="Administre las consultas";
+    });
+    $("#Sucursal").click(function () { 
+        $("#UsersPanel").collapse("hide")
+        $("#ProductsPanel").collapse("hide")
+        $("#OtrosPanel").collapse("hide")
+        $("#DisPanel").collapse("hide")
+        $("#EarningsPanel").collapse("hide")
+        document.getElementById("textSelection").innerHTML="Administre las sucursales";
+    });
+    $("#Distribution").click(function () { 
+        $("#ProductsPanel").collapse("hide")
+        $("#UsersPanel").collapse("hide")
+        $("#OtrosPanel").collapse("hide")
+        $("#SucursalPanel").collapse("hide")
+        $("#EarningsPanel").collapse("hide")
+        document.getElementById("textSelection").innerHTML="Administre las distribuciones";
+    });
+    $("#Earning").click(function () { 
+        $("#ProductsPanel").collapse("hide")
+        $("#UsersPanel").collapse("hide")
+        $("#OtrosPanel").collapse("hide")
+        $("#SucursalPanel").collapse("hide")
+        $("#DisPanel").collapse("hide")
+        document.getElementById("textSelection").innerHTML="Observe las ganancias";
+    });
 });
 
 if ($(".alert-dismissible").length) {
@@ -128,6 +137,15 @@ function borrarProducto(id) {
     if(res) {
         console.log(`eliminado ${id}`);
         window.location.href = `/adminDeleteProduct/${id}`;
+    }
+}
+
+function borrarUsuario(id) {
+    var res = confirm("Está seguro de que desea eliminar el usuario?");
+
+    if(res) {
+        console.log(`eliminado ${id}`);
+        window.location.href = `/adminDeleteUser/${id}`;
     }
 }
 

@@ -420,7 +420,7 @@ app.get("/adminDeleteProduct/:id", (req, res) =>{
     }
 })
 
-app.get("adminUsers", (req, res) => {
+app.get("/adminUsers", (req, res) => {
     var UserData = []
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
@@ -429,14 +429,45 @@ app.get("adminUsers", (req, res) => {
                 if(err) console.log(err);
                 else {
                     UserData = results;
-                    res.render("catalog", {Sesion:Sesion,ProductoData:ProductoData,responses:responses});
+                    res.render("adminUsers", {Sesion:Sesion,UserData:UserData,responses:responses});
                     responses.messageErr="";
                     responses.messageOK="";
                 }
             })
-        } else res.redirect("/home");
-    } else Sesion = null; res.redirect("/home")
+        } else {
+            res.redirect("/home");
+        }
+    } else {
+        Sesion = null; 
+        res.redirect("/home");
+    }
 }) 
+
+app.get("/adminDeleteUser/:id", (req, res) =>{
+    var id = req.params.id;
+    console.log(`eliminar ${id}`);
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("DELETE FROM usuarios WHERE id = ?", [id], (error, results)=>{
+                if(error){
+                    console.log(error);
+                    responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                    res.redirect("/adminUsers");
+                }else{
+                    responses.messageOK = "El usuario ha sido eliminado de forma exitosa";
+                    res.redirect("/adminUsers");
+                }
+            });
+        } else{
+            res.redirect("/home");
+        }
+    } else{
+        Sesion=null
+        res.redirect("/home");
+    }
+});
 
 app.post("/adminAddBranch", (req, res)=>{
     let DataSucursal = req.body;
