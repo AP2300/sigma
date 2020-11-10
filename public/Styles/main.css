@@ -415,3 +415,7 @@ div.card.Producto.page{
 html body .body-card{
     min-height: 125px;
 }
+
+html body .button-delete{
+    z-index: 100000000000000000000;
+}

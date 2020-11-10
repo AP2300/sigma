@@ -37,7 +37,7 @@ app.use(cookieParser());
 
 //conexion a mysql//
 var DBconfig = {
-    connectionLimit : 2,
+    connectionLimit : 1,
     host     : "remotemysql.com",
     port     : "3306",
     user     : '7HTdwmHsRH',
@@ -138,9 +138,13 @@ app.get("/product/:id", (req, res) =>{
     DB.query("SELECT * FROM producto WHERE id = ?", [id], (err, results)=>{
         if(err) console.log(err);
         else {
-            Producto = results;
-            console.log(Producto);
-            res.render("product", {Sesion:Sesion,Producto:Producto});
+            if(results.length > 0){
+                Producto = results;
+                console.log(Producto);
+                res.render("product", {Sesion:Sesion,Producto:Producto});
+            } else {
+                res.redirect("/catalog");
+            }
         }
     })
 })
