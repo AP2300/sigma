@@ -496,16 +496,11 @@ app.post("/register", (req,res)=>{
                 cargo:registerData.optionPos
             }, (err, results)=>{
                 if(err) console.log(err)
-
-                DB.query("INSERT INTO carrito SET ?",{idUsuario:results.insertId}, (err, results)=>{
-                    console.log("hola");
-                    if(err) console.log(err);
-                    else{
-                        responses.messageOK = "El registro fue creado satisfactoriamente.";
-                        responses.messageErr = ""; 
-                        res.redirect("/admin");
-                    }
-                })
+                else{
+                    responses.messageOK = "El registro fue creado satisfactoriamente.";
+                    responses.messageErr = ""; 
+                    res.redirect("/admin");
+                }   
             })
         }
     })
@@ -523,21 +518,23 @@ app.get("/SessionClose", (req,res)=>{
 })
 
 app.post("/AddtoCart", (req, res)=>{
-    console.log(req.body.cantidad);
-    console.log(req.body.ID);
     if(IsAuthenticated(req.session.user)!=null){
-        console.log("hola");
         Sesion=IsAuthenticated(req.session.user);
     }else{
        res.redirect("/login");
     }
-    if(Sesion.isAuthed){
-        DB.query("INSER INTO carrito_producto Set ?",{idProducto:idProducto,cantidad:cantidad}, (err, results)=>{
+    DB.query("SELECT id FROM usuarios WHERE correo= ?", [Session.nickname], (err,results)=>{
+        if(err) console.log(err);
+        else{
+            DB.query("INSER INTO carrito_producto SET ?",{idProducto:req.body.cantidad,idUsuario:results[0].id,cantidad:req.body.ID}, (err, results)=>{
+                if(err) console.log(err);
+                else{
+                    res.redirect("/catalog");
+                }
+            })    
+        }
+    })
 
-        })
-    }else{
-        // res.redirect("/login");
-    }
 })
 ///////////////////////
 
