@@ -412,13 +412,21 @@ div.card.Producto.page{
     padding-bottom: 30px;
 }
 
-html body .body-card{
-    min-height: 125px;
+.addForm{
+    display: inline;
 }
 
-<<<<<<< HEAD
+.addInput{
+    background-color: inherit;
+    border: 1px solid #bbbbbb;
+    border-radius: .5em;
+    color: inherit;
+}
+
+.invisible{
+    display: none;
+}
+
 html body .button-delete{
     z-index: 100000000000000000000;
 }
-=======
->>>>>>> 18473c5745956e14409634b0a95a87e7ae946631
