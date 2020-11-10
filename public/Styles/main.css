@@ -362,6 +362,11 @@ html body div.popover.bs-popover-bottom {
     background-color: #e9ecefad;
 }
 
+html body div.popover .popover-body{
+    padding: 5px 5px;
+    max-width: 100%;
+}
+
 .bs-popover-auto[x-placement^=bottom]>.arrow::after, .bs-popover-bottom>.arrow::after {
     border-bottom-color: #e9ecefad !important;
 }
@@ -438,3 +443,27 @@ div.card.Producto.page{
     display: none;
 }
 
+html body .button-delete{
+    z-index: 100000000000000000000;
+}
+
+.fas.fa-shopping-cart{
+    font-size: 1em;
+    cursor: pointer;
+}
+
+html body div ul li.bgTransparent{
+    background-color: inherit;
+    cursor: pointer;
+    border-radius: .2em;
+}
+
+html body div ul li.bgTransparent:hover{
+    background-color: #ffdc8431;
+}
+
+.scrollCart{
+    overflow-y: scroll;
+    max-height: 400px;
+    max-width: 100%;
+}

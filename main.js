@@ -305,6 +305,7 @@ app.get("/adminEditProduct/:id", (req, res) =>{
 app.post("/adminEditProduct/:id", (req, res) => {
     var id = req.params.id;
     var DataProducto = req.body;
+    var query;
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
         if(Sesion.isAdmin){
@@ -313,7 +314,7 @@ app.post("/adminEditProduct/:id", (req, res) => {
                     console.log(error);
                 } else{
                     if(DataProducto.notChange != undefined) {
-                        var query = {
+                        query = {
                             nombre:DataProducto.name,
                             precio:DataProducto.price,
                             tipo_medicamento:DataProducto.type,
@@ -321,40 +322,49 @@ app.post("/adminEditProduct/:id", (req, res) => {
                             descripcion:DataProducto.description
                         }
                     } else {
-                        File = req.files.img;
-                        uniqueName = uuidv4();
-                        imgSource = `/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`;
-                        File.mv(`./public/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`, (err)=>{
-                            if(err) {
+                        var image = `./public/${results[0].IMG}`;
+                        fs.unlink(image, function(err) {
+                            if (err) {
                                 console.log(err);
-                                responses.messageOK = "";
-                                responses.messageErr = "Ha ocurrido un error, intentelo nuevamente"; 
-                                res.redirect(`/adminEditProduct/${id}`);
                             }
+                            File = req.files.img;
+                            uniqueName = uuidv4();
+                            imgSource = `/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`;
+                            File.mv(`./public/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`, (err)=>{
+                                if(err) {
+                                    console.log(err);
+                                    responses.messageOK = "";
+                                    responses.messageErr = "Ha ocurrido un error, intentelo nuevamente"; 
+                                    res.redirect(`/adminEditProduct/${id}`);
+                                }
+                            });
+                            
+                            query = {
+                                nombre:DataProducto.name,
+                                precio:DataProducto.price,
+                                tipo_medicamento:DataProducto.type,
+                                cantidad:DataProducto.quantity,
+                                descripcion:DataProducto.description,
+                                IMG:imgSource
+                            }
+
+                            DB.query("UPDATE producto SET ? WHERE id = ?",[query, id], (err, result)=>{
+                                if(err) {
+                                    console.log(err);
+                                    responses.messageOK = "";
+                                    responses.messageErr = "Ha ocurrido un error, intentelo nuevamente"; 
+                                    res.redirect(`/adminEditProduct/${id}`);
+                                } else {
+                                    responses.messageOK = "El producto fue actualizado satisfactoriamente.";
+                                    responses.messageErr = ""; 
+                                    res.redirect("/catalog");
+                                }
+                            })
+                            
                         });
-                        
-                        var query = {
-                            nombre:DataProducto.name,
-                            precio:DataProducto.price,
-                            tipo_medicamento:DataProducto.type,
-                            cantidad:DataProducto.quantity,
-                            descripcion:DataProducto.description,
-                            IMG:imgSource
-                        }
                     }
                     
-                    DB.query("UPDATE producto SET ? WHERE id = ?",[query, id], (err, result)=>{
-                        if(err) {
-                            console.log(err);
-                            responses.messageOK = "";
-                            responses.messageErr = "Ha ocurrido un error, intentelo nuevamente"; 
-                            res.redirect(`/adminEditProduct/${id}`);
-                        } else {
-                            responses.messageOK = "El producto fue actualizado satisfactoriamente.";
-                            responses.messageErr = ""; 
-                            res.redirect("/catalog");
-                        }
-                    })
+                    
                 }
             });
         } else {
@@ -436,6 +446,55 @@ app.get("/adminDeleteLog/:id", (req, res) =>{
         res.redirect("/home");
     }
 })
+
+app.get("/adminUsers", (req, res) => {
+    var UserData = []
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("SELECT * FROM usuarios", (err, results)=>{
+                if(err) console.log(err);
+                else {
+                    UserData = results;
+                    res.render("adminUsers", {Sesion:Sesion,UserData:UserData,responses:responses});
+                    responses.messageErr="";
+                    responses.messageOK="";
+                }
+            })
+        } else {
+            res.redirect("/home");
+        }
+    } else {
+        Sesion = null; 
+        res.redirect("/home");
+    }
+}) 
+
+app.get("/adminDeleteUser/:id", (req, res) =>{
+    var id = req.params.id;
+    console.log(`eliminar ${id}`);
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("DELETE FROM usuarios WHERE id = ?", [id], (error, results)=>{
+                if(error){
+                    console.log(error);
+                    responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                    res.redirect("/adminUsers");
+                }else{
+                    responses.messageOK = "El usuario ha sido eliminado de forma exitosa";
+                    res.redirect("/adminUsers");
+                }
+            });
+        } else{
+            res.redirect("/home");
+        }
+    } else{
+        Sesion=null
+        res.redirect("/home");
+    }
+});
 
 app.post("/adminAddBranch", (req, res)=>{
     let DataSucursal = req.body;
@@ -525,16 +584,11 @@ app.post("/register", (req,res)=>{
                 cargo:registerData.optionPos
             }, (err, results)=>{
                 if(err) console.log(err)
-
-                DB.query("INSERT INTO carrito SET ?",{idUsuario:results.insertId}, (err, results)=>{
-                    console.log("hola");
-                    if(err) console.log(err);
-                    else{
-                        responses.messageOK = "El registro fue creado satisfactoriamente.";
-                        responses.messageErr = ""; 
-                        res.redirect("/admin");
-                    }
-                })
+                else{
+                    responses.messageOK = "El registro fue creado satisfactoriamente.";
+                    responses.messageErr = ""; 
+                    res.redirect("/admin");
+                }   
             })
         }
     })
@@ -552,22 +606,53 @@ app.get("/SessionClose", (req,res)=>{
 })
 
 app.post("/AddtoCart", (req, res)=>{
-    console.log(req.body.cantidad);
-    console.log(req.body.ID);
     if(IsAuthenticated(req.session.user)!=null){
-        console.log("hola");
         Sesion=IsAuthenticated(req.session.user);
+        console.log(Sesion);
     }else{
        res.redirect("/login");
     }
-    if(Sesion.isAuthed){
-        DB.query("INSER INTO carrito_producto Set ?",{idProducto:idProducto,cantidad:cantidad}, (err, results)=>{
+    DB.query("SELECT id FROM usuarios WHERE correo= ?", [Sesion.nickname], (err,results)=>{
+        if(err) console.log(err);
+        else{
+            DB.query("INSERT INTO carrito_producto SET ?",{idProducto:req.body.ID,idUsuario:results[0].id,cantidad:Number(req.body.cantidad)}, (err, results)=>{
+                if(err) console.log(err);
+                else{
+                    res.redirect("/catalog");
+                }
+            })    
+        }
+    })
 
-        })
-    }else{
-        // res.redirect("/login");
-    }
 })
+
+app.get("/UserCart/:id", (req, res)=>{
+    let CartInfo = [];
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion= IsAuthenticated(req.session.user)
+    }else{
+        res.redirect("/login");
+    }
+    const id = req.params.id;
+
+    DB.query("SELECT idProducto,cantidad FROM carrito_producto WHERE idUsuario = ?",[id], (err, results)=>{
+        if(err) console.log(err);
+        else{
+            console.log(results.length);
+            for (let i in results) {
+                DB.query("SELECT * FROM producto WHERE id = ?", [results[i].idProducto], (err, result)=>{
+                    if(err) console.log(err);
+                    else{
+                        console.log(result);
+                        CartInfo[i] = {data:result, cantidad:results[i].cantidad}
+                        console.log(CartInfo[0].data);
+                    }
+                })
+            }
+        }
+    })
+})
+// res.render("Cart",{Sesion:Sesion, CartInfo:CartInfo});
 ///////////////////////
 
 app.listen(app.get("port"), function(){
