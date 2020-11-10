@@ -60,6 +60,7 @@ $('#CustomFile').on('change',function(){
 })
 
 var filter="";
+
 function buscar(Data, filter, isAdmin){
     let text = document.getElementById("Busqueda").value.toLowerCase();
     text.replace(/[-[\]{}()*+?.,\\^$|#]/g, "\\$&");
@@ -75,15 +76,33 @@ function buscar(Data, filter, isAdmin){
         ||reg.test(producto.nombre)&&filter===""){
             console.log(filter);
             console.log(producto.id, producto.nombre);
+
+            let buttons = ``;
+
+            if (isAdmin) {
+                buttons = ` <br>
+                            <form class="mt-2 mb-2 d-inline-block" action="/adminEditProduct/${producto.id}" method="GET" enctype="multipart/form-data">
+                            <button type="submit" class="btn btn-alert">Editar</button>
+                            </form>
+                            <button type="button" class="btn button-delete btn-danger d-inline-block" onclick="borrarProducto(${producto.id})">Eliminar</button>`;
+            }
+
             html+=`
             <div class="col mb-4">
-                <a class="product" href="/product/${producto.id}">
                     <div class="card card-producto h-100">
+                    <a class="product" href="/product/${producto.id}">
                         <img src="${producto.IMG}" class="card-img-top" >
-                        <div class="card-body">
+                        <div class="card-body body-card">
                             <h5 class="card-title">${producto.nombre}</h5>
                             <p class="card-text">Tipo de Medicamento: ${producto.tipo_medicamento}</p>
                         </div>
+<<<<<<< HEAD
+                    </a>
+
+                        <div class="card-footer">
+                            <small class="text-muted">Precio: ${producto.precio}$</small>
+                            ${buttons}
+=======
                         <div class="card-footer" id="catalogPage">
                             <small class="text-muted">Precio: ${producto.precio}$</small>`
                             if(isAdmin==true) {
@@ -93,19 +112,15 @@ function buscar(Data, filter, isAdmin){
                             <a href="javascript: void(0)">
                                 <button type="button" class="btn btn-danger d-inline-block" onclick="borrarProducto(${producto.id})">Eliminar</button>
                             </a>
+>>>>>>> 18473c5745956e14409634b0a95a87e7ae946631
                         </div>
                     </div>
-                </a>
-            </div>`}
-                            else {html += `
-                        </div>
-                    </div>
-                </a>
-            </div>`}
+            </div>`
         }
     }
     console.log(isAdmin)
     document.getElementById("productos").innerHTML=html;
+
 }
 
 function borrarProducto(id) {
