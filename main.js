@@ -557,16 +557,11 @@ app.post("/register", (req,res)=>{
                 cargo:registerData.optionPos
             }, (err, results)=>{
                 if(err) console.log(err)
-
-                DB.query("INSERT INTO carrito SET ?",{idUsuario:results.insertId}, (err, results)=>{
-                    console.log("hola");
-                    if(err) console.log(err);
-                    else{
-                        responses.messageOK = "El registro fue creado satisfactoriamente.";
-                        responses.messageErr = ""; 
-                        res.redirect("/admin");
-                    }
-                })
+                else{
+                    responses.messageOK = "El registro fue creado satisfactoriamente.";
+                    responses.messageErr = ""; 
+                    res.redirect("/admin");
+                }   
             })
         }
     })
@@ -584,22 +579,53 @@ app.get("/SessionClose", (req,res)=>{
 })
 
 app.post("/AddtoCart", (req, res)=>{
-    console.log(req.body.cantidad);
-    console.log(req.body.ID);
     if(IsAuthenticated(req.session.user)!=null){
-        console.log("hola");
         Sesion=IsAuthenticated(req.session.user);
+        console.log(Sesion);
     }else{
        res.redirect("/login");
     }
-    if(Sesion.isAuthed){
-        DB.query("INSER INTO carrito_producto Set ?",{idProducto:idProducto,cantidad:cantidad}, (err, results)=>{
+    DB.query("SELECT id FROM usuarios WHERE correo= ?", [Sesion.nickname], (err,results)=>{
+        if(err) console.log(err);
+        else{
+            DB.query("INSERT INTO carrito_producto SET ?",{idProducto:req.body.ID,idUsuario:results[0].id,cantidad:Number(req.body.cantidad)}, (err, results)=>{
+                if(err) console.log(err);
+                else{
+                    res.redirect("/catalog");
+                }
+            })    
+        }
+    })
 
-        })
-    }else{
-        // res.redirect("/login");
-    }
 })
+
+app.get("/UserCart/:id", (req, res)=>{
+    let CartInfo = [];
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion= IsAuthenticated(req.session.user)
+    }else{
+        res.redirect("/login");
+    }
+    const id = req.params.id;
+
+    DB.query("SELECT idProducto,cantidad FROM carrito_producto WHERE idUsuario = ?",[id], (err, results)=>{
+        if(err) console.log(err);
+        else{
+            console.log(results.length);
+            for (let i in results) {
+                DB.query("SELECT * FROM producto WHERE id = ?", [results[i].idProducto], (err, result)=>{
+                    if(err) console.log(err);
+                    else{
+                        console.log(result);
+                        CartInfo[i] = {data:result, cantidad:results[i].cantidad}
+                        console.log(CartInfo[0].data);
+                    }
+                })
+            }
+        }
+    })
+})
+// res.render("Cart",{Sesion:Sesion, CartInfo:CartInfo});
 ///////////////////////
 
 app.listen(app.get("port"), function(){
