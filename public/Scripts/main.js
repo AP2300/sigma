@@ -96,11 +96,23 @@ function buscar(Data, filter, isAdmin){
                             <h5 class="card-title">${producto.nombre}</h5>
                             <p class="card-text">Tipo de Medicamento: ${producto.tipo_medicamento}</p>
                         </div>
+<<<<<<< HEAD
                     </a>
 
                         <div class="card-footer">
                             <small class="text-muted">Precio: ${producto.precio}$</small>
                             ${buttons}
+=======
+                        <div class="card-footer" id="catalogPage">
+                            <small class="text-muted">Precio: ${producto.precio}$</small>`
+                            if(isAdmin==true) {
+                                html += `<br><form class="mt-2 mb-2 d-inline-block" action="/adminEditProduct/${producto.id}" method="GET" enctype="multipart/form-data">
+                                <button type="submit" class="btn btn-alert">Editar</button>
+                            </form>
+                            <a href="javascript: void(0)">
+                                <button type="button" class="btn btn-danger d-inline-block" onclick="borrarProducto(${producto.id})">Eliminar</button>
+                            </a>
+>>>>>>> 18473c5745956e14409634b0a95a87e7ae946631
                         </div>
                     </div>
             </div>`
