@@ -211,12 +211,14 @@ app.get("/admin", function(req,res){
                         if(error){
                             console.log(error);
                         }else{
+                            var sucursal = results;
+                            console.log(sucursal);
                             DB.query("SELECT * FROM ganancias", (error, results)=>{
                                 if(error){
                                     console.log(error);
                                 }else{
                                     earningsData = results;
-                                    res.render("admin", {responses:responses, contactoData:contactoData, Sesion:Sesion, sucursal: results, earningsData:earningsData});
+                                    res.render("admin", {responses:responses, contactoData:contactoData, Sesion:Sesion, sucursal: sucursal, earningsData:earningsData});
                                     responses.messageErr="";
                                     responses.messageOK="";
                                 }
