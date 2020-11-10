@@ -427,13 +427,12 @@ app.get("/adminDeleteLog/:id", (req, res) =>{
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
         if(Sesion.isAdmin){
-            DB.query("DELETE FROM contactolog WHERE id = ?", [id], (error, results)=>{
+            DB.query("DELETE FROM contactoLog WHERE id = ?", [id], (error, results)=>{
                 if(error){
                     console.log(error);
                     responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
                     res.redirect("/admin");
                 }else{
-                    console.log(err);
                     responses.messageOK = "El Log ha sido eliminado de forma exitosa";
                     res.redirect("/admin");
                 }
