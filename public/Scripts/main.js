@@ -145,3 +145,13 @@ $("ol").on("click","li", function (){
 
 if(window.location.pathname === "/catalog") buscar(SearchData,filter,isAdmin);
 
+function AddToCart() {  
+    document.getElementById("qtty").submit();
+}
+
+var Value;
+function calculate(){
+    let qtty = document.getElementById("InputQtty").value;
+    let Total = Value*qtty;
+    document.getElementById("Total").innerText=Total;
+}
