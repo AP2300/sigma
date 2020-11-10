@@ -1,50 +1,67 @@
-$("#Productos").click(function () { 
+var EstadosUSA = ["Alabama","Alaska","American Samoa","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","District Of Columbia","Federated States Of Micronesia","Florida",
+                "Georgia","Guam","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Marshall Islands","Maryland","Massachusetts","Michigan","Minnesota","Mississippi",
+                "Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Northern Mariana Islands","Ohio","Oklahoma","Oregon","Palau",
+                "Pennsylvania","Puerto Rico","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virgin Islands","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]
+
+var EstadosVEN = ["Amazonas","Anzoategui","Apure","Aragua","Barinas","Bolivar","Carabobo","Cojedes","Delta Amacuro","Distrito Capital","Falcon","Guarico","Lara","Merida","Miranda","Monagas",
+                "Nueva Esparta","Portuguesa","Sucre","Tachira","Trujillo","Vargas","Yacuray","Zulia"]
+
+$(document).ready(function(){
     $("#UsersPanel").collapse("hide")
+    $("#ProductsPanel").collapse("hide")
     $("#OtrosPanel").collapse("hide")
     $("#SucursalPanel").collapse("hide")
     $("#DisPanel").collapse("hide")
     $("#EarningsPanel").collapse("hide")
-    document.getElementById("textSelection").innerHTML="Administre los productos";
-});
-$("#Users").click(function () { 
-    $("#ProductsPanel").collapse("hide")
-    $("#SucursalPanel").collapse("hide")
-    $("#OtrosPanel").collapse("hide")
-    $("#DisPanel").collapse("hide")
-    $("#EarningsPanel").collapse("hide")
-    document.getElementById("textSelection").innerHTML="Administre los usuarios";
-});
-$("#Admins").click(function () { 
-    $("#UsersPanel").collapse("hide")
-    $("#ProductsPanel").collapse("hide")
-    $("#SucursalPanel").collapse("hide")
-    $("#DisPanel").collapse("hide")
-    $("#EarningsPanel").collapse("hide")
-    document.getElementById("textSelection").innerHTML="Administre las consultas";
-});
-$("#Sucursal").click(function () { 
-    $("#UsersPanel").collapse("hide")
-    $("#ProductsPanel").collapse("hide")
-    $("#OtrosPanel").collapse("hide")
-    $("#DisPanel").collapse("hide")
-    $("#EarningsPanel").collapse("hide")
-    document.getElementById("textSelection").innerHTML="Administre las sucursales";
-});
-$("#Distribution").click(function () { 
-    $("#ProductsPanel").collapse("hide")
-    $("#UsersPanel").collapse("hide")
-    $("#OtrosPanel").collapse("hide")
-    $("#SucursalPanel").collapse("hide")
-    $("#EarningsPanel").collapse("hide")
-    document.getElementById("textSelection").innerHTML="Administre las distribuciones";
-});
-$("#Earning").click(function () { 
-    $("#ProductsPanel").collapse("hide")
-    $("#UsersPanel").collapse("hide")
-    $("#OtrosPanel").collapse("hide")
-    $("#SucursalPanel").collapse("hide")
-    $("#DisPanel").collapse("hide")
-    document.getElementById("textSelection").innerHTML="Observe las ganancias";
+
+    $("#Productos").click(function () { 
+        $("#UsersPanel").collapse("hide")
+        $("#OtrosPanel").collapse("hide")
+        $("#SucursalPanel").collapse("hide")
+        $("#DisPanel").collapse("hide")
+        $("#EarningsPanel").collapse("hide")
+        document.getElementById("textSelection").innerHTML="Administre los productos";
+    });
+    $("#Users").click(function () { 
+        $("#ProductsPanel").collapse("hide")
+        $("#SucursalPanel").collapse("hide")
+        $("#OtrosPanel").collapse("hide")
+        $("#DisPanel").collapse("hide")
+        $("#EarningsPanel").collapse("hide")
+        document.getElementById("textSelection").innerHTML="Administre los usuarios";
+    });
+    $("#Admins").click(function () { 
+        $("#UsersPanel").collapse("hide")
+        $("#ProductsPanel").collapse("hide")
+        $("#SucursalPanel").collapse("hide")
+        $("#DisPanel").collapse("hide")
+        $("#EarningsPanel").collapse("hide")
+        document.getElementById("textSelection").innerHTML="Administre las consultas";
+    });
+    $("#Sucursal").click(function () { 
+        $("#UsersPanel").collapse("hide")
+        $("#ProductsPanel").collapse("hide")
+        $("#OtrosPanel").collapse("hide")
+        $("#DisPanel").collapse("hide")
+        $("#EarningsPanel").collapse("hide")
+        document.getElementById("textSelection").innerHTML="Administre las sucursales";
+    });
+    $("#Distribution").click(function () { 
+        $("#ProductsPanel").collapse("hide")
+        $("#UsersPanel").collapse("hide")
+        $("#OtrosPanel").collapse("hide")
+        $("#SucursalPanel").collapse("hide")
+        $("#EarningsPanel").collapse("hide")
+        document.getElementById("textSelection").innerHTML="Administre las distribuciones";
+    });
+    $("#Earning").click(function () { 
+        $("#ProductsPanel").collapse("hide")
+        $("#UsersPanel").collapse("hide")
+        $("#OtrosPanel").collapse("hide")
+        $("#SucursalPanel").collapse("hide")
+        $("#DisPanel").collapse("hide")
+        document.getElementById("textSelection").innerHTML="Observe las ganancias";
+    });
 });
 
 if ($(".alert-dismissible").length) {
@@ -122,12 +139,34 @@ $(document).ready(function(){
     })
 })
 
+function borrarlog(id) {
+    var res = confirm("Está seguro de que desea eliminar el producto?");
+
+    if(res) {
+        console.log(`eliminado ${id}`);
+        window.location.href = `/adminDeleteLog/${id}`;
+    }
+}
+
 function borrarProducto(id) {
     var res = confirm("Está seguro de que desea eliminar el producto?");
 
     if(res) {
         console.log(`eliminado ${id}`);
         window.location.href = `/adminDeleteProduct/${id}`;
+    }
+}
+
+function editarUsuario(id) {
+    window.location.href = `/adminEditUser/${id}`;
+}
+
+function borrarUsuario(id) {
+    var res = confirm("Está seguro de que desea eliminar el usuario?");
+
+    if(res) {
+        console.log(`eliminado ${id}`);
+        window.location.href = `/adminDeleteUser/${id}`;
     }
 }
 
@@ -158,4 +197,30 @@ function calculate(){
     let qtty = document.getElementById("InputQtty").value;
     let Total = Value*qtty;
     document.getElementById("Total").innerText=Total;
+}
+
+function estados() {
+    let html = `<option selected disabled value="">Elegir...</option>`
+    
+    let Name = document.getElementById("PaisSelect").value;
+
+    if(Name === 'Estados Unidos'){
+        EstadosUSA.forEach(el => {
+            html+=`<option>${el}</option>`
+        });
+    } else if (Name === 'Venezuela'){
+        EstadosVEN.forEach(el => {
+            html+=`<option>${el}</option>`
+        });
+    }
+
+    document.getElementById("Estados").innerHTML = html;
+}
+
+function selectuser(){
+    let user = document.getElementById("SelectUser").value;
+
+    if(user === "client"){
+        document.getElementById("SelectJob").value = "null";
+    }
 }

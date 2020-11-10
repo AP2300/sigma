@@ -420,7 +420,33 @@ app.get("/adminDeleteProduct/:id", (req, res) =>{
     }
 })
 
-app.get("adminUsers", (req, res) => {
+app.get("/adminDeleteLog/:id", (req, res) =>{
+    var id = req.params.id;
+    console.log(`eliminando log ${id}`);
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("DELETE FROM contactoLog WHERE id = ?", [id], (error, results)=>{
+                if(error){
+                    console.log(error);
+                    responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                    res.redirect("/admin");
+                }else{
+                    responses.messageOK = "El Log ha sido eliminado de forma exitosa";
+                    res.redirect("/admin");
+                }
+            });
+        }else{
+            res.redirect("/home");
+        }
+    }else{
+        Sesion=null
+        res.redirect("/home");
+    }
+})
+
+app.get("/adminUsers", (req, res) => {
     var UserData = []
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
@@ -429,14 +455,122 @@ app.get("adminUsers", (req, res) => {
                 if(err) console.log(err);
                 else {
                     UserData = results;
-                    res.render("catalog", {Sesion:Sesion,ProductoData:ProductoData,responses:responses});
+                    res.render("adminUsers", {Sesion:Sesion,UserData:UserData,responses:responses});
                     responses.messageErr="";
                     responses.messageOK="";
                 }
             })
-        } else res.redirect("/home");
-    } else Sesion = null; res.redirect("/home")
+        } else {
+            res.redirect("/home");
+        }
+    } else {
+        Sesion = null; 
+        res.redirect("/home");
+    }
 }) 
+
+app.get("/adminEditUser/:id", (req, res) =>{
+    console.log(`Editar ${req.params.id}`);
+    var id = req.params.id;
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("SELECT * FROM usuarios WHERE id = ?", [id], async (error, results)=>{
+                if (error){
+                    console.log(error);
+                } else{
+                    var user = results[0];
+                    console.log(user);
+                    DB.query("SELECT * FROM sucursal", (error, results)=>{
+                        if(error){
+                            console.log(error);
+                        }else{
+                            var sucursal = results;
+                            res.render("adminEditUser", {Sesion:Sesion, user:user, responses:responses, sucursal: sucursal});
+                        }
+                    });
+                }
+            });
+        } else {
+            res.redirect("/home");
+        }
+    } else {
+        res.redirect("/home");
+    }
+})
+
+app.post("/adminEditUser/:id", (req, res) => {
+    var id = req.params.id;
+    var DataUser = req.body.data;
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("SELECT id,nombre, correo FROM usuarios WHERE correo = ? AND NOT id = ?", [DataUser.correo, id], async (error, results)=>{
+                if (error){
+                    console.log(error);
+                    responses.messageOK = "Ocurrió un error, inténtelo nuevamente.";
+                    responses.messageErr = ""; 
+                    res.redirect("/adminEditUsers");
+                }
+                if(results.length>0){
+                    responses.messageErr = "El Correo ya está registrado.";
+                    responses.messageOK = "";
+                    res.redirect("/admin");
+                }
+                let hash = await bcrypt.hash(DataUser.pass, 8);
+                if(responses.messageErr===""){
+                    DB.query("UPDATE usuarios SET ? WHERE id = ?",[{
+                        nombre:DataUser.name,
+                        correo:DataUser.email,
+                        clave:hash,
+                        idSucursal: DataUser.optionSucursal,
+                        tipo_usuario:DataUser.optionType,
+                        cargo:DataUser.optionPos
+                    }, id], (err, results)=>{
+                        if(err) console.log(err)
+                        else{
+                            responses.messageOK = "El usuario fue actualizado satisfactoriamente.";
+                            responses.messageErr = ""; 
+                            res.redirect("/adminUsers");
+                        }   
+                    })
+                }
+            })
+        } else {
+            res.redirect("/home");
+        }
+    } else {
+        res.redirect("/home");
+    }
+})
+
+app.get("/adminDeleteUser/:id", (req, res) =>{
+    var id = req.params.id;
+    console.log(`eliminar ${id}`);
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("DELETE FROM usuarios WHERE id = ?", [id], (error, results)=>{
+                if(error){
+                    console.log(error);
+                    responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                    res.redirect("/adminUsers");
+                }else{
+                    responses.messageOK = "El usuario ha sido eliminado de forma exitosa";
+                    res.redirect("/adminUsers");
+                }
+            });
+        } else{
+            res.redirect("/home");
+        }
+    } else{
+        Sesion=null
+        res.redirect("/home");
+    }
+});
 
 app.post("/adminAddBranch", (req, res)=>{
     let DataSucursal = req.body;
