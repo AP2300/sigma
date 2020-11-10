@@ -37,7 +37,7 @@ app.use(cookieParser());
 
 //conexion a mysql//
 var DBconfig = {
-    connectionLimit : 2,
+    connectionLimit : 1,
     host     : "remotemysql.com",
     port     : "3306",
     user     : '7HTdwmHsRH',
@@ -94,14 +94,11 @@ app.get("/", function (_, res) {
 })
 
 app.get("/home",function(req, res){
-    IsAuthenticated(req.session.user);
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
-        if(Sesion.isAdmin){
-            var isAdmin = true;
-        } else var isAdmin = false;
-    } else var isAdmin = false;
-    res.render("index", {Sesion:Sesion,isAdmin:isAdmin});
+    }
+    console.log(Sesion);
+    res.render("index", {Sesion:Sesion});
 })
 
 app.get("/login", function(req, res){
@@ -138,9 +135,13 @@ app.get("/product/:id", (req, res) =>{
     DB.query("SELECT * FROM producto WHERE id = ?", [id], (err, results)=>{
         if(err) console.log(err);
         else {
-            Producto = results;
-            console.log(Producto);
-            res.render("product", {Sesion:Sesion,Producto:Producto});
+            if(results.length > 0){
+                Producto = results;
+                console.log(Producto);
+                res.render("product", {Sesion:Sesion,Producto:Producto});
+            } else {
+                res.redirect("/catalog");
+            }
         }
     })
 })
@@ -164,7 +165,6 @@ app.post("/login", function(req, res){
     loginData = req.body.data;
     let admin = false;
     DB.query("SELECT id, correo,tipo_usuario,clave from usuarios WHERE correo = ?", [loginData.email], async (error, results) => {
-        console.log(results);
         if(error) console.log(error);
         if(results.length > 0) {
             await bcrypt.compare(loginData.pass, results[0].clave, function(err, result) {
@@ -180,7 +180,7 @@ app.post("/login", function(req, res){
                         isAdmin: admin
                     };
                     console.log(admin);
-                    res.redirect("/home");
+                    res.redirect("/");
                 }
                 else {
                     responses.messageErr = "La contraseña ingresada es inválida."
@@ -211,9 +211,18 @@ app.get("/admin", function(req,res){
                         if(error){
                             console.log(error);
                         }else{
-                            res.render("admin", {responses:responses, contactoData:contactoData, Sesion:Sesion, sucursal: results});
-                            responses.messageErr="";
-                            responses.messageOK="";
+                            var sucursal = results;
+                            console.log(sucursal);
+                            DB.query("SELECT * FROM ganancias", (error, results)=>{
+                                if(error){
+                                    console.log(error);
+                                }else{
+                                    earningsData = results;
+                                    res.render("admin", {responses:responses, contactoData:contactoData, Sesion:Sesion, sucursal: sucursal, earningsData:earningsData});
+                                    responses.messageErr="";
+                                    responses.messageOK="";
+                                }
+                            });
                         }
                     });
                 }
@@ -427,7 +436,7 @@ app.post("/adminAddBranch", (req, res)=>{
         }
     })
 })
-    
+
 app.get("/contactanos", function(req, res){
     IsAuthenticated(req.session.user);
     res.render("contact", {Sesion:Sesion});
@@ -513,6 +522,24 @@ app.get("/SessionClose", (req,res)=>{
         }
     });
 
+})
+
+app.post("/AddtoCart", (req, res)=>{
+    console.log(req.body.cantidad);
+    console.log(req.body.ID);
+    if(IsAuthenticated(req.session.user)!=null){
+        console.log("hola");
+        Sesion=IsAuthenticated(req.session.user);
+    }else{
+       res.redirect("/login");
+    }
+    if(Sesion.isAuthed){
+        DB.query("INSER INTO carrito_producto Set ?",{idProducto:idProducto,cantidad:cantidad}, (err, results)=>{
+
+        })
+    }else{
+        // res.redirect("/login");
+    }
 })
 ///////////////////////
 

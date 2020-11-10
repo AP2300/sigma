@@ -16,6 +16,17 @@ html body .jumbotron.home-divider{
     background-color: #e9ecefc0;
 }
 
+#edit {
+    background-color: #ffdd84; 
+    color: #1b1b1b;
+}
+
+#edit:hover {
+    background-color: black;
+    color: white;
+    transition: 330ms;
+}
+
 html body .btn{
     outline: none;
     background-color: #ffdd84;
@@ -412,6 +423,21 @@ div.card.Producto.page{
     padding-bottom: 30px;
 }
 
-html body .body-card{
-    min-height: 125px;
+.addForm{
+    display: inline;
+}
+
+.addInput{
+    background-color: inherit;
+    border: 1px solid #bbbbbb;
+    border-radius: .5em;
+    color: inherit;
+}
+
+.invisible{
+    display: none;
+}
+
+html body .button-delete{
+    z-index: 100000000000000000000;
 }

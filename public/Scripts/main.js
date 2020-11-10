@@ -77,22 +77,19 @@ function buscar(Data, filter, isAdmin){
             console.log(producto.id, producto.nombre);
             html+=`
             <div class="col mb-4">
-                <a class="product" href="/product/${producto.id}">
+                <a class="product" onclick="redirect(${producto.id})" style="cursor: pointer">
                     <div class="card card-producto h-100">
                         <img src="${producto.IMG}" class="card-img-top" >
-                        <div class="card-body body-card">
+                        <div class="card-body">
                             <h5 class="card-title">${producto.nombre}</h5>
                             <p class="card-text">Tipo de Medicamento: ${producto.tipo_medicamento}</p>
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer" id="catalogPage">
                             <small class="text-muted">Precio: ${producto.precio}$</small>`
                             if(isAdmin==true) {
-                                html += `<br><form class="mt-2 mb-2 d-inline-block" action="/adminEditProduct/${producto.id}" method="GET" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-alert">Editar</button>
-                            </form>
-                            <a href="javascript: void(0)">
-                                <button type="button" class="btn btn-danger d-inline-block" onclick="borrarProducto(${producto.id})">Eliminar</button>
-                            </a>
+                                html += `<br>
+                                <span class="btn btn-alert" role="button" id="edit" onclick="editarProducto(${producto.id})"><i class="far fa-edit"></i></span>
+                                <span class="btn" type="" onclick="borrarProducto(${producto.id})" id="boton"><i class="far fa-trash-alt"></i></span>
                         </div>
                     </div>
                 </a>
@@ -107,6 +104,23 @@ function buscar(Data, filter, isAdmin){
     console.log(isAdmin)
     document.getElementById("productos").innerHTML=html;
 }
+
+function editarProducto(id) {
+    window.location.href = `/adminEditProduct/${id}`;
+}
+
+function redirect(id) {
+    window.location.href = `/product/${id}`;
+}
+
+$(document).ready(function(){
+    $("#boton").click(function(event) {
+        event.stopPropagation();
+    })
+    $("#edit").click(function(event) {
+        event.stopPropagation();
+    })
+})
 
 function borrarProducto(id) {
     var res = confirm("Está seguro de que desea eliminar el producto?");
@@ -135,3 +149,13 @@ $("ol").on("click","li", function (){
 
 if(window.location.pathname === "/catalog") buscar(SearchData,filter,isAdmin);
 
+function AddToCart() {  
+    document.getElementById("qtty").submit();
+}
+
+var Value;
+function calculate(){
+    let qtty = document.getElementById("InputQtty").value;
+    let Total = Value*qtty;
+    document.getElementById("Total").innerText=Total;
+}
