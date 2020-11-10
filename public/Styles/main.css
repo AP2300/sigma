@@ -438,6 +438,3 @@ div.card.Producto.page{
     display: none;
 }
 
-html body .button-delete{
-    z-index: 100000000000000000000;
-}

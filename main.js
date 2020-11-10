@@ -410,6 +410,33 @@ app.get("/adminDeleteProduct/:id", (req, res) =>{
     }
 })
 
+app.get("/adminDeleteLog/:id", (req, res) =>{
+    var id = req.params.id;
+    console.log(`eliminando log ${id}`);
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("DELETE FROM contactolog WHERE id = ?", [id], (error, results)=>{
+                if(error){
+                    console.log(error);
+                    responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                    res.redirect("/admin");
+                }else{
+                    console.log(err);
+                    responses.messageOK = "El Log ha sido eliminado de forma exitosa";
+                    res.redirect("/admin");
+                }
+            });
+        }else{
+            res.redirect("/home");
+        }
+    }else{
+        Sesion=null
+        res.redirect("/home");
+    }
+})
+
 app.post("/adminAddBranch", (req, res)=>{
     let DataSucursal = req.body;
     DB.query("SELECT nombre FROM sucursal WHERE nombre = ?", [DataSucursal.name], async (error, results)=>{

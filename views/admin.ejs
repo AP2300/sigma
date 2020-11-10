@@ -192,18 +192,20 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputType1">Tipo de usuario</label> <br>
-                            <select name="data[optionType]" class="form-control" id="">
+                            <select name="data[optionType]" class="form-control" onchange="selectuser()" id="SelectUser">
                                 <option selected disabled value="">Elegir...</option>
                                 <option value="admin">Administrador</option>
-                                <option value="other">Otro</option>
+                                <option value="emple">Empleado</option>
+                                <option value="client">Cliente</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPos1">Cargo</label> <br>
-                            <select name="data[optionPos]" class="form-control" id="">
+                            <select name="data[optionPos]" class="form-control" onchange="selectuser()" id="SelectJob">
                                 <option selected disabled value="">Elegir...</option>
                                 <option value="encargado">Encargado</option>
-                                <option value="cachifo">Cachifo</option>
+                                <option value="contador">Contador</option>
+                                <option value="null">Ninguno</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -227,7 +229,7 @@
                                     <div class="col-sm">
                                         Tipo de Entidad: <%=el.TipoEntidad%>
                                     </div>
-                                    <span class="btn" type=""><i class="far fa-trash-alt"></i></span>
+                                    <span class="btn" onclick='borrarlog(`<%=el.ID%>`)' type="" id="boton"><i class="far fa-trash-alt"></i></span>
                                 </div>
                             </button>
                         </h2>
