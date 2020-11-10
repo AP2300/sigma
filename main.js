@@ -539,6 +539,28 @@ app.post("/AddtoCart", (req, res)=>{
     })
 
 })
+
+app.get("/UserCart/:id", (req, res)=>{
+    let CartInfo = [];
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion= IsAuthenticated(req.session.user)
+    }else{
+        res.redirect("/login");
+    }
+    const id = req.params.id;
+
+    DB.query("SELECT idProducto,cantidad FROM carrito_producto WHERE idUsuario = ?",[id], (err, results)=>{
+        if(err) console.log(err);
+        else{
+            for (let i in results.length) {
+                DB.query("SELECT * FROM productos WHERE id = ?", [results.idProducto], (err, result)=>{
+                    CartInfo = [{data:result[i], cantidad:results[i].cantidad}]
+                    console.log(CartInfo);
+                })
+            }
+        }
+    })
+})
 ///////////////////////
 
 app.listen(app.get("port"), function(){
