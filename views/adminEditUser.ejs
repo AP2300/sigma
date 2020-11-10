@@ -1,0 +1,70 @@
+<%- include('./partials/header'); %>
+
+<div class="card login p-5" style="margin-top:80px;">
+    <% if (responses.messageErr !== "") {%>
+        <div class="alert alert-danger alert-dismissible fade show w-100" role="alert">
+            <strong id="errRegister"><%= responses.messageErr %></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <% } %>
+    <% if (responses.messageOK !== "") {%>
+        <div class="alert alert-success alert-dismissible fade show w-100" role="alert">
+            <strong id="errRegister"><%= responses.messageOK %></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <% } %>
+    <h1 class="mb-4 mx-auto">Editar usuario</h1>
+    <form action="/adminEditUser/<%=user.id%>" method="POST">
+        <div class="form-group">
+            <div class="form-group">
+                <label for="exampleInputPassword1">Nombre</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" name="data[name]"
+                    required value="<%=user.nombre%>">
+            </div>
+            <label for="exampleInputEmail1">Correo Electrónico</label>
+            <input type="email" class="form-control" id="exampleInputEmail1"
+                aria-describedby="emailHelp" name="data[email]" value="<%=user.correo%>" required>
+            <small id="emailHelp" class="form-text text-muted">No compartiremos tu correo con nadie más.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Contraseña</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="data[pass]"
+                required>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputType1">Sucursal</label> <br>
+            <select name="data[optionSucursal]" class="form-control" id="" value="<%= sucursal.id%>">
+                <option disabled value="">Elegir...</option>
+                <%sucursal.forEach(item => {%>
+                <option value="<%=item.id%>"><%=item.nombre%></option>
+                <%});%>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputType1">Tipo de usuario</label> <br>
+            <select name="data[optionType]" class="form-control" id="" value="<%=user.tipo_usuario%>">
+                <option disabled value="">Elegir...</option>
+                <option value="admin">Administrador</option>
+                <option value="other">Otro</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPos1">Cargo</label> <br>
+            <select name="data[optionPos]" class="form-control" id="" value="<%=user.cargo%>">
+                <option disabled value="">Elegir...</option>
+                <option value="encargado">Encargado</option>
+                <option value="cachifo">Cachifo</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+        <span class="btn" type="" onclick="window.location.href='/adminUsers'">Cancelar</span>
+    </form>
+        
+
+</div>
+
+<%- include('./partials/bottom'); %>

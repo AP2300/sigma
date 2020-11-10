@@ -140,6 +140,10 @@ function borrarProducto(id) {
     }
 }
 
+function editarUsuario(id) {
+    window.location.href = `/adminEditUser/${id}`;
+}
+
 function borrarUsuario(id) {
     var res = confirm("Está seguro de que desea eliminar el usuario?");
 

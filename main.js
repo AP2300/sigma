@@ -443,6 +443,83 @@ app.get("/adminUsers", (req, res) => {
     }
 }) 
 
+app.get("/adminEditUser/:id", (req, res) =>{
+    console.log(`Editar ${req.params.id}`);
+    var id = req.params.id;
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("SELECT * FROM usuarios WHERE id = ?", [id], async (error, results)=>{
+                if (error){
+                    console.log(error);
+                } else{
+                    var user = results[0];
+                    console.log(user);
+                    DB.query("SELECT * FROM sucursal", (error, results)=>{
+                        if(error){
+                            console.log(error);
+                        }else{
+                            var sucursal = results;
+                            res.render("adminEditUser", {Sesion:Sesion, user:user, responses:responses, sucursal: sucursal});
+                        }
+                    });
+                }
+            });
+        } else {
+            res.redirect("/home");
+        }
+    } else {
+        res.redirect("/home");
+    }
+})
+
+app.post("/adminEditUser/:id", (req, res) => {
+    var id = req.params.id;
+    var DataUser = req.body.data;
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("SELECT id,nombre, correo FROM usuarios WHERE correo = ? AND NOT id = ?", [DataUser.correo, id], async (error, results)=>{
+                if (error){
+                    console.log(error);
+                    responses.messageOK = "Ocurrió un error, inténtelo nuevamente.";
+                    responses.messageErr = ""; 
+                    res.redirect("/adminEditUsers");
+                }
+                if(results.length>0){
+                    responses.messageErr = "El Correo ya está registrado.";
+                    responses.messageOK = "";
+                    res.redirect("/admin");
+                }
+                let hash = await bcrypt.hash(DataUser.pass, 8);
+                if(responses.messageErr===""){
+                    DB.query("UPDATE usuarios SET ? WHERE id = ?",[{
+                        nombre:DataUser.name,
+                        correo:DataUser.email,
+                        clave:hash,
+                        idSucursal: DataUser.optionSucursal,
+                        tipo_usuario:DataUser.optionType,
+                        cargo:DataUser.optionPos
+                    }, id], (err, results)=>{
+                        if(err) console.log(err)
+                        else{
+                            responses.messageOK = "El usuario fue actualizado satisfactoriamente.";
+                            responses.messageErr = ""; 
+                            res.redirect("/adminUsers");
+                        }   
+                    })
+                }
+            })
+        } else {
+            res.redirect("/home");
+        }
+    } else {
+        res.redirect("/home");
+    }
+})
+
 app.get("/adminDeleteUser/:id", (req, res) =>{
     var id = req.params.id;
     console.log(`eliminar ${id}`);
