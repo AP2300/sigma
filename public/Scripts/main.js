@@ -87,12 +87,9 @@ function buscar(Data, filter, isAdmin){
                         <div class="card-footer" id="catalogPage">
                             <small class="text-muted">Precio: ${producto.precio}$</small>`
                             if(isAdmin==true) {
-                                html += `<br><form class="mt-2 mb-2 d-inline-block" action="/adminEditProduct/${producto.id}" method="GET" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-alert">Editar</button>
-                            </form>
-                            
-                                <button type="button" class="btn btn-danger d-inline-block"  onclick="borrarProducto(${producto.id})" id="boton">Eliminar</button>
-                            
+                                html += `<br>
+                                <span class="btn btn-alert" role="button" id="edit" onclick="editarProducto(${producto.id})"><i class="far fa-edit"></i></span>
+                                <span class="btn" type="" onclick="borrarProducto(${producto.id})" id="boton"><i class="far fa-trash-alt"></i></span>
                         </div>
                     </div>
                 </a>
@@ -108,12 +105,19 @@ function buscar(Data, filter, isAdmin){
     document.getElementById("productos").innerHTML=html;
 }
 
+function editarProducto(id) {
+    window.location.href = `/adminEditProduct/${id}`;
+}
+
 function redirect(id) {
     window.location.href = `/product/${id}`;
 }
 
 $(document).ready(function(){
     $("#boton").click(function(event) {
+        event.stopPropagation();
+    })
+    $("#edit").click(function(event) {
         event.stopPropagation();
     })
 })
