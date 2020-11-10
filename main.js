@@ -568,7 +568,7 @@ app.post("/AddtoCart", (req, res)=>{
 
 })
 
-app.get("/UserCart/:id", (req, res)=>{
+app.get("/UserCart/:id", async (req, res)=>{
     let CartInfo = [];
     if(IsAuthenticated(req.session.user)!=null){
         Sesion= IsAuthenticated(req.session.user)
@@ -581,14 +581,17 @@ app.get("/UserCart/:id", (req, res)=>{
         if(err) console.log(err);
         else{
             for (let i in results) {
+                console.log("hola");
                 let query =  DB.query("SELECT * FROM producto WHERE id = ?", [results[i].idProducto])
-                query.on("result",function (row) {
+                query.on("result",(row)=> {
                     CartInfo[i] = {data:row, cantidad:results[i].cantidad};
                 })
-                if(CartInfo.length===results.length){
-                    console.log(CartInfo[0]);
-                    res.render("Cart",{Sesion:Sesion, CartInfo:CartInfo});
-                }
+                query.on("end",()=>{
+                    if(i==results.length-1){
+                        console.log(CartInfo);
+                        res.render("Cart",{Sesion:Sesion, CartInfo:CartInfo});
+                    }
+                })
             }
 
         }
