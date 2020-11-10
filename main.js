@@ -37,7 +37,7 @@ app.use(cookieParser());
 
 //conexion a mysql//
 var DBconfig = {
-    connectionLimit : 2,
+    connectionLimit : 1,
     host     : "remotemysql.com",
     port     : "3306",
     user     : '7HTdwmHsRH',
@@ -211,9 +211,16 @@ app.get("/admin", function(req,res){
                         if(error){
                             console.log(error);
                         }else{
-                            res.render("admin", {responses:responses, contactoData:contactoData, Sesion:Sesion, sucursal: results});
-                            responses.messageErr="";
-                            responses.messageOK="";
+                            DB.query("SELECT * FROM ganancias", (error, results)=>{
+                                if(error){
+                                    console.log(error);
+                                }else{
+                                    earningsData = results;
+                                    res.render("admin", {responses:responses, contactoData:contactoData, Sesion:Sesion, sucursal: results, earningsData:earningsData});
+                                    responses.messageErr="";
+                                    responses.messageOK="";
+                                }
+                            });
                         }
                     });
                 }
@@ -427,7 +434,7 @@ app.post("/adminAddBranch", (req, res)=>{
         }
     })
 })
-    
+
 app.get("/contactanos", function(req, res){
     IsAuthenticated(req.session.user);
     res.render("contact", {Sesion:Sesion});

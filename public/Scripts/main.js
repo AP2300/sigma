@@ -77,7 +77,7 @@ function buscar(Data, filter, isAdmin){
             console.log(producto.id, producto.nombre);
             html+=`
             <div class="col mb-4">
-                <a class="product" href="/product/${producto.id}">
+                <a class="product" onclick="redirect(${producto.id})" style="cursor: pointer">
                     <div class="card card-producto h-100">
                         <img src="${producto.IMG}" class="card-img-top" >
                         <div class="card-body">
@@ -90,9 +90,9 @@ function buscar(Data, filter, isAdmin){
                                 html += `<br><form class="mt-2 mb-2 d-inline-block" action="/adminEditProduct/${producto.id}" method="GET" enctype="multipart/form-data">
                                 <button type="submit" class="btn btn-alert">Editar</button>
                             </form>
-                            <a href="javascript: void(0)">
-                                <button type="button" class="btn btn-danger d-inline-block" onclick="borrarProducto(${producto.id})">Eliminar</button>
-                            </a>
+                            
+                                <button type="button" class="btn btn-danger d-inline-block"  onclick="borrarProducto(${producto.id})" id="boton">Eliminar</button>
+                            
                         </div>
                     </div>
                 </a>
@@ -107,6 +107,16 @@ function buscar(Data, filter, isAdmin){
     console.log(isAdmin)
     document.getElementById("productos").innerHTML=html;
 }
+
+function redirect(id) {
+    window.location.href = `/product/${id}`;
+}
+
+$(document).ready(function(){
+    $("#boton").click(function(event) {
+        event.stopPropagation();
+    })
+})
 
 function borrarProducto(id) {
     var res = confirm("Está seguro de que desea eliminar el producto?");
