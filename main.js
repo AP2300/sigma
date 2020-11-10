@@ -522,13 +522,14 @@ app.get("/SessionClose", (req,res)=>{
 app.post("/AddtoCart", (req, res)=>{
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
+        console.log(Sesion);
     }else{
        res.redirect("/login");
     }
-    DB.query("SELECT id FROM usuarios WHERE correo= ?", [Session.nickname], (err,results)=>{
+    DB.query("SELECT id FROM usuarios WHERE correo= ?", [Sesion.nickname], (err,results)=>{
         if(err) console.log(err);
         else{
-            DB.query("INSER INTO carrito_producto SET ?",{idProducto:req.body.cantidad,idUsuario:results[0].id,cantidad:req.body.ID}, (err, results)=>{
+            DB.query("INSERT INTO carrito_producto SET ?",{idProducto:req.body.ID,idUsuario:results[0].id,cantidad:Number(req.body.cantidad)}, (err, results)=>{
                 if(err) console.log(err);
                 else{
                     res.redirect("/catalog");

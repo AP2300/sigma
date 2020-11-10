@@ -430,3 +430,8 @@ div.card.Producto.page{
 html body .button-delete{
     z-index: 100000000000000000000;
 }
+
+.fas.fa-shopping-cart{
+    font-size: 1em;
+    cursor: pointer;
+}

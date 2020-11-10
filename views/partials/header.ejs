@@ -53,7 +53,7 @@
                 <%if(Sesion.isAuthed && Sesion.isAdmin){%>
                   <script>
                     $(document).ready(function () {
-                        $('[data-toggle="popover"]').popover({
+                        $('[data-toggle="popoverUser"]').popover({
                             trigger: "click",
                             html: true,
                             content: `<a class="nav-link hover" href="/admin"><i class="fas fa-user-cog"></i> Panel Administrativo</a>
@@ -61,19 +61,28 @@
                         })
                     })
                   </script>
-                <span tabindex="0"  data-toggle="popover" data-trigger="focus" data-placement="bottom"  id="nickname"><i class="fas fa-user"></i> <%=Sesion.nickname%></span>
+                <span tabindex="0"  data-toggle="popoverUser" data-trigger="focus" data-placement="bottom"  id="nickname"><i class="fas fa-user"></i> <%=Sesion.nickname%></span> | 
+                <span tabindex="0"  data-toggle="popover" data-trigger="focus" data-placement="bottom"  ><i class="fas fa-shopping-cart"></i></span>
                 <%}else{%>
               
                 <script>
                   $(document).ready(function () {
-                      $('[data-toggle="popover"]').popover({
+                      $('[data-toggle="popoverUser"]').popover({
                           trigger: "click",
                           html: true,
                           content: `<a class="nav-link hover" href="/SessionClose"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>`
                       })
                   })
+                  $(document).ready(function () {
+                      $('[data-toggle="popoverCart"]').popover({
+                          trigger: "click",
+                          html: true,
+                          content: ``
+                      })
+                  })
                 </script>
-                <span tabindex="0"  data-toggle="popover" data-trigger="focus" data-placement="bottom"  id="nickname"><i class="fas fa-user"></i> <%=Sesion.nickname%></span>
+                <span tabindex="0"  data-toggle="popoverUser" data-trigger="focus" data-placement="bottom"  id="nickname"><i class="fas fa-user"></i> <%=Sesion.nickname%></span> | 
+                <span tabindex="0"  data-toggle="popover" data-trigger="focus" data-placement="bottom"><i class="fas fa-shopping-cart"></i> </span>
               <%}}else{%>
                 <a class="nav-link hover" href="/login"><i class="fas fa-user"></i> Iniciar sesión</a>
               <%}%>
