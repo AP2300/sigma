@@ -1,3 +1,5 @@
+const { type } = require("os");
+
 var responses = {
     messageErr:"",
     messageOK:"",
@@ -10,14 +12,10 @@ var Sesion;
 var express               = require("express"),
     app                   = express(),
     BodyParser            = require("body-parser"),
-    passport              = require("passport"),
-    LocalStrategy         = require("passport-local"),
-    // passportLocalMongoose = require("passport-local-mongoose"),
     FP                    = require("express-fileupload"),
     MethodOverride        = require("method-override"),
     flash                 = require("connect-flash"),
     bcrypt                = require("bcryptjs"),
-    jwt                   = require("jsonwebtoken")  
     Sql                   = require("mysql"),
     session               = require("express-session"),
     MySQLStore            = require("express-mysql-session")(session);
@@ -47,11 +45,6 @@ var DBconfig = {
 
 var DB;
 DB = Sql.createPool(DBconfig);
-/*DB.connect((err) => {
-    if(err) console.log(err);
-    else console.log("DB conectada");
-})*/
-//setTimeout(handleDisconnect, 3000);
 
 //configurado midleware para la sesion//
 
@@ -79,13 +72,6 @@ app.use(session({
 }));
 ///////////////////////////////////////
 
-//  DB.connect((error)=>{
-//      if(error) {
-//          DB.connect();
-//          console.log(error);
-//     }
-//      else console.log("DB conectada");
-//  });  
 
 //todo el codigo aqui//
 
@@ -646,7 +632,7 @@ app.get("/adminEditBranch/:id", (req, res) =>{
                 if (error){
                     console.log(error);
                 } else{
-                    var sucursal = results;
+                    var sucursal = results[0];
                     console.log(sucursal);
                     res.render("adminEditBranch", {Sesion:Sesion, responses:responses, sucursal: sucursal});
                 }
@@ -848,13 +834,23 @@ app.get("/UserCart/:id", async (req, res)=>{
                 for (let i in results) {
                     let query =  DB.query("SELECT * FROM producto WHERE id = ?", [results[i].idProducto])
                     query.on("result",(row)=> {
-                        console.log("hola");
                         CartInfo[i] = {data:row, cantidad:results[i].cantidad, id:results[i].id};
                     })
                     query.on("end",()=>{
                         if(i==results.length-1){
-                            console.log(CartInfo);
-                            res.render("Cart",{Sesion:Sesion, CartInfo:CartInfo});
+                            let ubicacion;
+                            let query1 = DB.query(`SELECT sucursal.ubicacion
+                            FROM sucursal INNER JOIN usuarios
+                            ON sucursal.id=usuarios.idSucursal
+                            WHERE usuarios.id = ?`, [id]);
+             
+                                query1.on('result', function(row, index) {
+                                    ubicacion=row.ubicacion;
+                                    res.render("Cart",{Sesion:Sesion, CartInfo:CartInfo, ubicacion:ubicacion});
+                                })
+                                .on("error" ,function (error, index) {
+                                    console.log(error);
+                                });
                         }
                     })
                 }
@@ -875,7 +871,6 @@ function handleDisconnect() {
     DB.query("select 1", (err) => {
         if(err) console.log(err);
         else {
-            //console.log("DB reconectada");
             setTimeout(handleDisconnect, 3000)
         }
     });

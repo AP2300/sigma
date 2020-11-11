@@ -1,5 +1,9 @@
 <%- include('./partials/header'); %>
 
+<script>
+  var Ubicacion = "<%=ubicacion%>"
+</script>
+
 <div class="px-4 px-lg-0">
 
     <h2 class="name-login"> <img src="/Images/BigLogo.png" style="padding-bottom: 9px;"> Tu Carrito</h2>
@@ -36,13 +40,13 @@
                               <div class="p-2">
                                 <img src="<%=CartInfo[i].data.IMG%>" alt="" width="70" class="img-fluid rounded shadow-sm">
                                 <div class="ml-3 d-inline-block align-middle">
-                                  <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle"><%=CartInfo[i].data.nombre%></a></h5>
+                                  <h5 class="mb-0"> <a href="/product/<%=CartInfo[i].data.id%>" class="text-dark d-inline-block align-middle"><%=CartInfo[i].data.nombre%></a></h5>
                                 </div>
                               </div>
                             </th>
                             <td class="border-0 align-middle"><strong>$<%=CartInfo[i].data.precio%></strong></td>
                             <td class="border-0 align-middle"> <form action="/UpdateCart" method="POST" class="addForm" id="CartForm<%=i%>"">
-                                x  <input type="number" class="addInput" value="<%=CartInfo[i].cantidad%>" name="cantidad" min="1" onchange="SubmitCartForm('CartForm<%=i%>')">
+                                <input type="number" class="addInput" value="<%=CartInfo[i].cantidad%>" name="cantidad" min="1" onchange="SubmitCartForm('CartForm<%=i%>')">
                                 <input type="number" value="<%=CartInfo[i].id%>" name="id" class="invisible">
                                 <input type="number" value="<%=CartInfo[i].data.id%>" class="invisible" name="idProducto">
                                 <input type="number" value="<%=Sesion.id%>" name="UsrId" class="invisible">
@@ -85,10 +89,11 @@
             <div class="p-4">
               <p class="font-italic mb-4">Los costos de envios y adicionales se ajustan en funcion de los productos en tu carrito</p>
               <ul class="list-unstyled mb-4">
-                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Subtotal </strong><strong>$<%=subtotal%></strong></li>
+
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted" >Subtotal </strong> <span id="TotalPrice"><strong>$<%=subtotal%></strong></span></li>
                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Envio</strong><strong>$0.00</strong></li>
-                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Impuesto</strong><strong>$0.00</strong></li>
-                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Impuesto</strong><strong id="Taxes">$0.00</strong></li>
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted" >Total</strong>
                   <h5 class="font-weight-bold">$<%=total%></h5>
                 </li>
               </ul><a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Realizar compra</a>

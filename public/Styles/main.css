@@ -467,3 +467,7 @@ html body div ul li.bgTransparent:hover{
     max-height: 400px;
     max-width: 100%;
 }
+
+#tamañoAdmin{
+    font-size: 3em;
+}
