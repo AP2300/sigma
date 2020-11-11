@@ -64,7 +64,7 @@ $(document).ready(function(){
         $("#DisPanel").collapse("hide")
         document.getElementById("textSelection").innerHTML="Observe las ganancias";
     });
-});
+}); 
 
 if ($(".alert-dismissible").length) {
     $("#UsersPanel").collapse("show");
@@ -228,7 +228,14 @@ function estados() {
     document.getElementById("inputLoc").innerHTML = html;
 }
 
+let path = window.location.pathname.split('/');
+if(path[1] === "adminEditBranch"){
+    EditBranch(ubicacion);
+}
+
+
 function EditBranch(Name) {
+    let html = "";
     let inVen = false     
 
     EstadosVEN.forEach(el => {

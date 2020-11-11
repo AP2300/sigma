@@ -46,7 +46,7 @@
                             </th>
                             <td class="border-0 align-middle"><strong>$<%=CartInfo[i].data.precio%></strong></td>
                             <td class="border-0 align-middle"> <form action="/UpdateCart" method="POST" class="addForm" id="CartForm<%=i%>"">
-                                x  <input type="number" class="addInput" value="<%=CartInfo[i].cantidad%>" name="cantidad" min="1" onchange="SubmitCartForm('CartForm<%=i%>')">
+                                <input type="number" class="addInput" value="<%=CartInfo[i].cantidad%>" name="cantidad" min="1" onchange="SubmitCartForm('CartForm<%=i%>')">
                                 <input type="number" value="<%=CartInfo[i].id%>" name="id" class="invisible">
                                 <input type="number" value="<%=CartInfo[i].data.id%>" class="invisible" name="idProducto">
                                 <input type="number" value="<%=Sesion.id%>" name="UsrId" class="invisible">
