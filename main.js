@@ -1,3 +1,5 @@
+const { type } = require("os");
+
 var responses = {
     messageErr:"",
     messageOK:"",
@@ -819,13 +821,23 @@ app.get("/UserCart/:id", async (req, res)=>{
                 for (let i in results) {
                     let query =  DB.query("SELECT * FROM producto WHERE id = ?", [results[i].idProducto])
                     query.on("result",(row)=> {
-                        console.log("hola");
                         CartInfo[i] = {data:row, cantidad:results[i].cantidad, id:results[i].id};
                     })
                     query.on("end",()=>{
                         if(i==results.length-1){
-                            console.log(CartInfo);
-                            res.render("Cart",{Sesion:Sesion, CartInfo:CartInfo});
+                            let ubicacion;
+                            let query1 = DB.query(`SELECT sucursal.ubicacion
+                            FROM sucursal INNER JOIN usuarios
+                            ON sucursal.id=usuarios.idSucursal
+                            WHERE usuarios.id = ?`, [id]);
+             
+                                query1.on('result', function(row, index) {
+                                    ubicacion=row.ubicacion;
+                                    res.render("Cart",{Sesion:Sesion, CartInfo:CartInfo, ubicacion:ubicacion});
+                                })
+                                .on("error" ,function (error, index) {
+                                    console.log(error);
+                                });
                         }
                     })
                 }

@@ -243,3 +243,5 @@ function SubmitCartForm(data){
 function SubmitDelete(data){
     document.getElementById(data).submit();
 }
+
+console.log(Ubicacion);
