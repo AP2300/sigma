@@ -1,6 +1,7 @@
 body {
     background-image: url("/Images/fondo-medicina.jpg");
-    background-size: cover;
+    background-size: contain;
+    background-repeat: round;
 }
 
 .size{
@@ -466,4 +467,8 @@ html body div ul li.bgTransparent:hover{
     overflow-y: scroll;
     max-height: 400px;
     max-width: 100%;
+}
+
+#tamañoAdmin{
+    font-size: 3em;
 }
