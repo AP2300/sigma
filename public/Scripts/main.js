@@ -255,3 +255,7 @@ function CalculateTaxes(){
     if(!TotalTax) TotalTax = 0.16*Number(document.getElementById("TotalPrice").innerText.slice(1));
     document.getElementById("Taxes").innerText="$"+TotalTax;
 }
+
+if(Ubicacion){
+    CalculateTaxes()
+}
