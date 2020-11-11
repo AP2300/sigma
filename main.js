@@ -699,7 +699,25 @@ app.post("/AddtoCart", (req, res)=>{
             })    
         }
     })
+})
 
+app.post("/UpdateCart", (req,res)=>{
+    DB.query("UPDATE carrito_producto SET ? WHERE id = ?", [{
+        idProducto:req.body.idProducto, 
+        idUsuario:req.body.UsrId, 
+        cantidad:req.body.cantidad},
+        req.body.id], (err, results)=>{
+            if(err) console.log(err);
+            else res.redirect(`UserCart/${req.body.UsrId}`);
+    })
+})
+
+app.post("/DeleteFromCart", (req,res)=>{
+    console.log(req.body.id);
+    DB.query("DELETE FROM carrito_producto WHERE id = ?", [req.body.id], (err, results)=>{
+        if(err) console.log(err);
+        else res.redirect(`/UserCart/${req.body.UsrId}`);
+    });
 })
 
 app.get("/UserCart/:id", async (req, res)=>{
@@ -711,23 +729,26 @@ app.get("/UserCart/:id", async (req, res)=>{
     }
     const id = req.params.id;
 
-    DB.query("SELECT idProducto,cantidad FROM carrito_producto WHERE idUsuario = ?",[id], async (err, results)=>{
+    DB.query("SELECT idProducto,cantidad,id FROM carrito_producto WHERE idUsuario = ?",[id], async (err, results)=>{
         if(err) console.log(err);
         else{
-            for (let i in results) {
-                console.log("hola");
-                let query =  DB.query("SELECT * FROM producto WHERE id = ?", [results[i].idProducto])
-                query.on("result",(row)=> {
-                    CartInfo[i] = {data:row, cantidad:results[i].cantidad};
-                })
-                query.on("end",()=>{
-                    if(i==results.length-1){
-                        console.log(CartInfo);
-                        res.render("Cart",{Sesion:Sesion, CartInfo:CartInfo});
-                    }
-                })
+            if(results.length>0){
+                for (let i in results) {
+                    let query =  DB.query("SELECT * FROM producto WHERE id = ?", [results[i].idProducto])
+                    query.on("result",(row)=> {
+                        console.log("hola");
+                        CartInfo[i] = {data:row, cantidad:results[i].cantidad, id:results[i].id};
+                    })
+                    query.on("end",()=>{
+                        if(i==results.length-1){
+                            console.log(CartInfo);
+                            res.render("Cart",{Sesion:Sesion, CartInfo:CartInfo});
+                        }
+                    })
+                }
+            }else{
+                res.render("Cart",{Sesion:Sesion, CartInfo:null});
             }
-
         }
     })
 })

@@ -224,3 +224,11 @@ function selectuser(){
         document.getElementById("SelectJob").value = "null";
     }
 }
+
+function SubmitCartForm(data){
+    document.getElementById(data).submit();
+}
+
+function SubmitDelete(data){
+    document.getElementById(data).submit();
+}

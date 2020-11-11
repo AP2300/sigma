@@ -15,21 +15,21 @@
                 <thead>
                   <tr>
                     <th scope="col" class="border-0 bg-light">
-                      <div class="p-2 px-3 text-uppercase">Product</div>
+                      <div class="p-2 px-3 text-uppercase">Producto</div>
                     </th>
                     <th scope="col" class="border-0 bg-light">
-                      <div class="py-2 text-uppercase">Price</div>
+                      <div class="py-2 text-uppercase">Precio</div>
                     </th>
                     <th scope="col" class="border-0 bg-light">
-                      <div class="py-2 text-uppercase">Quantity</div>
+                      <div class="py-2 text-uppercase">Cantidad</div>
                     </th>
                     <th scope="col" class="border-0 bg-light">
-                      <div class="py-2 text-uppercase">Remove</div>
+                      <div class="py-2 text-uppercase">Eliminar</div>
                     </th>
                   </tr>
                 </thead>
                 <tbody class="scroll">
-
+                <%if(CartInfo!=null){%>
                     <%for (let i in CartInfo){%>
                         <tr>
                             <th scope="row" class="border-0">
@@ -40,13 +40,24 @@
                                 </div>
                               </div>
                             </th>
-                            <td class="border-0 align-middle"><strong><%=CartInfo[i].data.precio%></strong></td>
-                            <td class="border-0 align-middle"><strong><%=CartInfo[i].cantidad%></strong></td>
-                            <td class="border-0 align-middle"><a href="#" class="text-dark"><i class="fa fa-trash"></i></a></td>
+                            <td class="border-0 align-middle"><strong>$<%=CartInfo[i].data.precio%></strong></td>
+                            <td class="border-0 align-middle"> <form action="/UpdateCart" method="POST" class="addForm" id="CartForm<%=i%>"">
+                                x  <input type="number" class="addInput" value="<%=CartInfo[i].cantidad%>" name="cantidad" min="1" onchange="SubmitCartForm('CartForm<%=i%>')">
+                                <input type="number" value="<%=CartInfo[i].id%>" name="id" class="invisible">
+                                <input type="number" value="<%=CartInfo[i].data.id%>" class="invisible" name="idProducto">
+                                <input type="number" value="<%=Sesion.id%>" name="UsrId" class="invisible">
+                            </form></td>
+                            <form action="/DeleteFromCart" method="POST" class="addForm" id="DelForm<%=i%>">
+                                <input type="number" value="<%=CartInfo[i].id%>" name="id" class="invisible">
+                                <input type="number" value="<%=Sesion.id%>" name="UsrId" class="invisible">
+                            </form>
+                            <td class="border-0 align-middle"><a href="#" class="text-dark" onclick="SubmitDelete('DelForm<%=i%>')"><i class="fa fa-trash"></i></a></td>
                           </tr>
                           <tr>
                     <%}%>
-
+                <%}else{%>
+                    <h2 style="text-align: center;">Tu carrito esta vacio</h2>
+                <%}%>
                 </tbody>
               </table>
             </div>
@@ -56,34 +67,31 @@
   
         <div class="row py-5 p-4 bg-white rounded shadow-sm">
           <div class="col-lg-6">
-            <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Coupon code</div>
+            <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Recomendaciones</div>
             <div class="p-4">
-              <p class="font-italic mb-4">If you have a coupon code, please enter it in the box below</p>
-              <div class="input-group mb-4 border rounded-pill p-2">
-                <input type="text" placeholder="Apply coupon" aria-describedby="button-addon3" class="form-control border-0">
-                <div class="input-group-append border-0">
-                  <button id="button-addon3" type="button" class="btn btn-dark px-4 rounded-pill"><i class="fa fa-gift mr-2"></i>Apply coupon</button>
-                </div>
-              </div>
-            </div>
-            <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Instructions for seller</div>
-            <div class="p-4">
-              <p class="font-italic mb-4">If you have some information for the seller you can leave them in the box below</p>
+              <p class="font-italic mb-4">Si tienes algun tipo de recomendacion dejala en la caja de comentario que se encuentra debajo</p>
               <textarea name="" cols="30" rows="2" class="form-control"></textarea>
             </div>
           </div>
+          <%var subtotal=0,total=0%>
+          <%for(let i in CartInfo){%>
+            <%let calc = Number(CartInfo[i].data.precio)*Number(CartInfo[i].cantidad)%>
+            <%subtotal+=Number(calc)%>
+          <%}%>
+          <%total=subtotal+total%>
+
           <div class="col-lg-6">
-            <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
+            <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Resumen de tu orden</div>
             <div class="p-4">
-              <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
+              <p class="font-italic mb-4">Los costos de envios y adicionales se ajustan en funcion de los productos en tu carrito</p>
               <ul class="list-unstyled mb-4">
-                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>$390.00</strong></li>
-                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>$10.00</strong></li>
-                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tax</strong><strong>$0.00</strong></li>
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Subtotal </strong><strong>$<%=subtotal%></strong></li>
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Envio</strong><strong>$0.00</strong></li>
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Impuesto</strong><strong>$0.00</strong></li>
                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
-                  <h5 class="font-weight-bold">$400.00</h5>
+                  <h5 class="font-weight-bold">$<%=total%></h5>
                 </li>
-              </ul><a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+              </ul><a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Realizar compra</a>
             </div>
           </div>
         </div>
