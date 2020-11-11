@@ -619,7 +619,7 @@ app.get("/adminEditBranch/:id", (req, res) =>{
                 if (error){
                     console.log(error);
                 } else{
-                    var sucursal = results;
+                    var sucursal = results[0];
                     console.log(sucursal);
                     res.render("adminEditBranch", {Sesion:Sesion, responses:responses, sucursal: sucursal});
                 }

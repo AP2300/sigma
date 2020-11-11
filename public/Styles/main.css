@@ -1,7 +1,6 @@
 body {
     background-image: url("/Images/fondo-medicina.jpg");
-    background-size: contain;
-    background-repeat: round;
+    background-size: cover;
 }
 
 .size{
