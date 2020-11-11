@@ -290,8 +290,20 @@
                 </div>
                 <div class="form-row mb-3">
                     <div class="w-100">
-                    <label for="inputLoc">Ubicacion</label>
-                    <input type="text" class="form-control" id="inputLoc" required name="location">
+                        <label for="inputLoc">Pais</label>
+                        <select type="text" class="form-control" onchange="estados()" id="PaisSelect" required name="">
+                            <option selected disabled value="">Elegir...</option>
+                            <option>Estados Unidos</option>
+                            <option>Venezuela</option>                    
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row mb-3">
+                    <div class="w-100">
+                        <label for="inputLoc">Estado</label>
+                    <select type="text" class="form-control" id="inputLoc" required name="location">
+                             
+                    </select>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
