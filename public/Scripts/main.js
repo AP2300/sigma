@@ -1,7 +1,9 @@
-var EstadosUSA = ["Alabama","Alaska","American Samoa","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","District Of Columbia","Federated States Of Micronesia","Florida",
-                "Georgia","Guam","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Marshall Islands","Maryland","Massachusetts","Michigan","Minnesota","Mississippi",
-                "Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Northern Mariana Islands","Ohio","Oklahoma","Oregon","Palau",
-                "Pennsylvania","Puerto Rico","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virgin Islands","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]
+var EstadosUSA = [{name:"Alabama",tax:4},{name:"Alaska", tax:0},{name:"Arizona", tax:5.6},{name:"Arkansas", tax:6.5},{name:"California", tax: 7.5},{name:"Colorado", tax:2.9},{name:"Connecticut", tax:6.35},{name:"Delaware", tax:0},{name:"District Of Columbia", tax:5.75},{name:"Florida", tax: 6},
+                {name:"Georgia", tax: 4},{name:"Guam", tax: 4},{name:"Hawaii", tax:4.17},{name:"Idaho", tax: 6},{name:"Illinois", tax:6.25},{name: "Indiana", tax:7},{name:"Iowa", tax: 6},{name:"Kansas", tax:6.5},{name:"Kentucky", tax:6},{name:"Louisiana", tax: 4.45},{name:"Maine", tax:5.5},
+                {name:"Maryland", tax:6},{name:"Massachusetts", tax:6.25},{name:"Michigan", tax:6},{name:"Minnesota", tax:6.88},{name:"Mississippi", tax:7},{name:"Missouri",tax:4.22},{name:"Montana", tax:0},{name:"Nebraska", tax:5.5},{name:"Nevada", tax:6.85},{name:"New Hampshire", tax:0},
+                {name:"New Jersey", tax: 6.63},{name: "New Mexico", tax:5.13},{name:"New York", tax:4},{name:"North Carolina", tax:4.75},{name: "North Dakota", tax: 5},{name:"Ohio", tax:5.75},{name:"Oklahoma", tax:4.5},{name:"Oregon", tax:0},{name:"Pennsylvania", tax:6},{name:"Puerto Rico", tax:10.5},
+                {name:"Rhode Island", tax:7},{name:"South Carolina", tax:6},{name:"South Dakota", tax:4.5},{name:"Tennessee", tax:7},{name:"Texas", tax:6.25},{name:"Utah", tax:5.95},{name:"Vermont", tax:6},{name:"Virginia", tax:5.3},{name:"Washington", tax:6.5},{name:"West Virginia", tax:6},
+                {name:"Wisconsin", tax: 5},{name:"Wyoming", tax:4}]
 
 var EstadosVEN = ["Amazonas","Anzoategui","Apure","Aragua","Barinas","Bolivar","Carabobo","Cojedes","Delta Amacuro","Distrito Capital","Falcon","Guarico","Lara","Merida","Miranda","Monagas",
                 "Nueva Esparta","Portuguesa","Sucre","Tachira","Trujillo","Vargas","Yacuray","Zulia"]

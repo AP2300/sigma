@@ -10,14 +10,10 @@ var Sesion;
 var express               = require("express"),
     app                   = express(),
     BodyParser            = require("body-parser"),
-    passport              = require("passport"),
-    LocalStrategy         = require("passport-local"),
-    // passportLocalMongoose = require("passport-local-mongoose"),
     FP                    = require("express-fileupload"),
     MethodOverride        = require("method-override"),
     flash                 = require("connect-flash"),
     bcrypt                = require("bcryptjs"),
-    jwt                   = require("jsonwebtoken")  
     Sql                   = require("mysql"),
     session               = require("express-session"),
     MySQLStore            = require("express-mysql-session")(session);
@@ -47,11 +43,6 @@ var DBconfig = {
 
 var DB;
 DB = Sql.createPool(DBconfig);
-/*DB.connect((err) => {
-    if(err) console.log(err);
-    else console.log("DB conectada");
-})*/
-//setTimeout(handleDisconnect, 3000);
 
 //configurado midleware para la sesion//
 
@@ -79,13 +70,6 @@ app.use(session({
 }));
 ///////////////////////////////////////
 
-//  DB.connect((error)=>{
-//      if(error) {
-//          DB.connect();
-//          console.log(error);
-//     }
-//      else console.log("DB conectada");
-//  });  
 
 //todo el codigo aqui//
 
@@ -862,7 +846,6 @@ function handleDisconnect() {
     DB.query("select 1", (err) => {
         if(err) console.log(err);
         else {
-            //console.log("DB reconectada");
             setTimeout(handleDisconnect, 3000)
         }
     });
