@@ -205,22 +205,32 @@ app.get("/admin", function(req,res){
             DB.query("SELECT * FROM contactoLog", (error, results)=>{
                 if(error){
                     console.log(error);
+                    res.redirect("/home");
                 }else{
                     contactoData=results;
                     DB.query("SELECT * FROM sucursal", (error, results)=>{
                         if(error){
                             console.log(error);
+                            res.redirect("/home");
                         }else{
                             var sucursal = results;
                             console.log(sucursal);
                             DB.query("SELECT * FROM ganancias", (error, results)=>{
                                 if(error){
                                     console.log(error);
+                                    res.redirect("/home");
                                 }else{
-                                    earningsData = results;
-                                    res.render("admin", {responses:responses, contactoData:contactoData, Sesion:Sesion, sucursal: sucursal, earningsData:earningsData});
-                                    responses.messageErr="";
-                                    responses.messageOK="";
+                                    DB.query("SELECT * FROM distribucion", (error, results)=>{
+                                        if(error){
+                                            console.log(error);
+                                            res.redirect("/home");
+                                        }else{
+                                            var distributionData = results;
+                                            res.render("admin", {responses:responses, contactoData:contactoData,Sesion:Sesion,sucursal:sucursal, earningsData:earningsData,distributionData:distributionData});
+                                            responses.messageErr="";
+                                            responses.messageOK="";
+                                        }
+                                    });
                                 }
                             });
                         }
@@ -451,10 +461,13 @@ app.get("/adminUsers", (req, res) => {
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
         if(Sesion.isAdmin){
-            DB.query("SELECT * FROM usuarios", (err, results)=>{
+            DB.query(`SELECT sucursal.nombre sNombre, usuarios.nombre uNombre, usuarios.correo, usuarios.tipo_usuario, usuarios.cargo, usuarios.id
+            FROM sucursal INNER JOIN usuarios
+            ON sucursal.id=usuarios.idSucursal;`, (err, results)=>{
                 if(err) console.log(err);
                 else {
                     UserData = results;
+                    console.log(UserData);
                     res.render("adminUsers", {Sesion:Sesion,UserData:UserData,responses:responses});
                     responses.messageErr="";
                     responses.messageOK="";

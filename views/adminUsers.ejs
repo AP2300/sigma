@@ -28,10 +28,10 @@
                         data-target="#collapse<%=i%>">
                         <div class="row">
                             <div class="col-sm">
-                                Nombre: <%=el.nombre%>
+                                Nombre: <%=el.uNombre%>
                             </div>
                             <div class="col-sm">
-                                Tipo de Entidad: 
+                                Sucursal: <%=el.sNombre%>
                             </div>
                             <span class="btn btn-alert mr-2" type="" onclick="editarUsuario('<%=el.id%>')" id="edit"><i class="far fa-edit" ></i></span>
                             <span class="btn" type="" onclick="borrarUsuario('<%=el.id%>')"><i class="far fa-trash-alt"></i></span>
@@ -44,19 +44,19 @@
                 <div class="card-body ">
                     <div class="row">
                         <div class="col-sm">
-                            Nombre: <%=el.nombre%>
+                            Nombre: <%=el.uNombre%>
                         </div>
                         <div class="col-sm">
-                            Apellido: 
+                            Documento de Identidad: 
                         </div>
                         <div class="col-sm">
-                            Documento Identidad: 
+                            Teléfono: 
                         </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-sm">
-                            Sucursal: <%=el.idSucursal%>
+                            Sucursal: <%=el.sNombre%>
                         </div>
                         <div class="col-sm">
                             Tipo de usuario: <%=el.tipo_usuario%>
@@ -70,11 +70,14 @@
                         <div class="col-sm">
                             Correo: <%=el.correo%>
                         </div>
+                        <div class="col-sm">
+                            Dirección: 
+                        </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-sm">
-                            Contrasena: <%=el.clave%>
+                            Contraseña: ******
                         </div>
                     </div>
                 </div>
