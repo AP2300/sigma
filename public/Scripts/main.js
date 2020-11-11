@@ -170,6 +170,15 @@ function borrarUsuario(id) {
     }
 }
 
+function borrarSucursal(id) {
+    var res = confirm("Está seguro de que desea eliminar la sucursal?");
+
+    if(res) {
+        console.log(`eliminado ${id}`);
+        window.location.href = `/adminDeleteBranch/${id}`;
+    }
+}
+
 function handleChange(obj) {
     if(obj.checked == true){
         document.getElementById("CustomFile").setAttribute("disabled", "disabled");

@@ -572,6 +572,29 @@ app.get("/adminDeleteUser/:id", (req, res) =>{
     }
 });
 
+app.get("/adminBranches", (req, res) => {
+    var BranchData = []
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("SELECT * FROM sucursal", (err, results)=>{
+                if(err) console.log(err);
+                else {
+                    BranchData = results;
+                    res.render("adminBranches", {Sesion:Sesion,BranchData:BranchData,responses:responses});
+                    responses.messageErr="";
+                    responses.messageOK="";
+                }
+            })
+        } else {
+            res.redirect("/home");
+        }
+    } else {
+        Sesion = null; 
+        res.redirect("/home");
+    }
+})
+
 app.post("/adminAddBranch", (req, res)=>{
     let DataSucursal = req.body;
     DB.query("SELECT nombre FROM sucursal WHERE nombre = ?", [DataSucursal.name], async (error, results)=>{
@@ -598,6 +621,82 @@ app.post("/adminAddBranch", (req, res)=>{
         }
     })
 })
+
+app.get("/adminEditBranch/:id", (req, res) =>{
+    console.log(`Editar ${req.params.id}`);
+    var id = req.params.id;
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("SELECT * FROM sucursal WHERE id = ?", [id], async (error, results)=>{
+                if (error){
+                    console.log(error);
+                } else{
+                    var sucursal = results;
+                    console.log(sucursal);
+                    res.render("adminEditBranch", {Sesion:Sesion, responses:responses, sucursal: sucursal});
+                }
+            });
+        } else {
+            res.redirect("/home");
+        }
+    } else {
+        res.redirect("/home");
+    }
+})
+
+app.post("/adminEditBranch/:id", (req, res) => {
+    var id = req.params.id;
+    var DataBranch = req.body.data;
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("UPDATE sucursal SET ? WHERE id = ?",[{
+                nombre:DataBranch.name,
+                ubicacion:DataBranch.location
+            }, id], (err, results)=>{
+                if(err) console.log(err)
+                else{
+                    responses.messageOK = "La sucursal fue actualizada satisfactoriamente.";
+                    responses.messageErr = ""; 
+                    res.redirect("/adminBranches");
+                }   
+            })
+        } else {
+            res.redirect("/home");
+        }
+    } else {
+        res.redirect("/home");
+    }
+})
+
+app.get("/adminDeleteBranch/:id", (req, res) =>{
+    var id = req.params.id;
+    console.log(`eliminar ${id}`);
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("DELETE FROM sucursal WHERE id = ?", [id], (error, results)=>{
+                if(error){
+                    console.log(error);
+                    responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                    res.redirect("/adminBranches");
+                }else{
+                    responses.messageOK = "La sucursal ha sido eliminado de forma exitosa";
+                    res.redirect("/adminBranches");
+                }
+            });
+        } else{
+            res.redirect("/home");
+        }
+    } else{
+        Sesion=null
+        res.redirect("/home");
+    }
+});
 
 app.get("/contactanos", function(req, res){
     IsAuthenticated(req.session.user);

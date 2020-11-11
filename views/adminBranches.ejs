@@ -1,0 +1,39 @@
+<%- include('./partials/header'); %>
+
+<div class="card login p-5" style="margin-top:80px;">
+    <% if (responses.messageErr !== "") {%>
+        <div class="alert alert-danger alert-dismissible fade show w-100" role="alert">
+            <strong id="errRegister"><%= responses.messageErr %></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <% } %>
+    <% if (responses.messageOK !== "") {%>
+        <div class="alert alert-success alert-dismissible fade show w-100" role="alert">
+            <strong id="errRegister"><%= responses.messageOK %></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <% } %>
+    <h1 class="mb-4 mx-auto">Lista de sucursales</h1>
+    <%var i=0%>
+    <%BranchData.forEach(el => {%>
+        <div class="row mt-3">
+            <div class="col-sm">
+                Nombre: <%=el.nombre%>
+            </div>
+            <div class="col-sm">
+                Ubicacion: <%=el.ubicacion%>
+            </div>
+            <span class="btn btn-alert mr-2" type="" onclick="window.location.href = `/adminEditBranch/<%=el.id%>`;" id="edit"><i class="far fa-edit" ></i></span>
+            <span class="btn" type="" onclick="borrarSucursal('<%=el.id%>')"><i class="far fa-trash-alt"></i></span>
+        </div>
+    <%i++%>
+    <%});%>
+        
+
+</div>
+
+<%- include('./partials/bottom'); %>
