@@ -273,3 +273,14 @@ function SubmitCartForm(data){
 function SubmitDelete(data){
     document.getElementById(data).submit();
 }
+
+function CalculateTaxes(){
+    let TotalTax;
+    EstadosUSA.forEach(el => {
+        if(el.name===Ubicacion){
+            TotalTax = (el.tax/100)*Number(document.getElementById("TotalPrice").innerText.slice(1));
+        }
+    });
+    if(!TotalTax) TotalTax = 0.16*Number(document.getElementById("TotalPrice").innerText.slice(1));
+    document.getElementById("Taxes").innerText="$"+TotalTax;
+}
