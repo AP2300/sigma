@@ -228,6 +228,36 @@ function estados() {
     document.getElementById("inputLoc").innerHTML = html;
 }
 
+function EditBranch(Name) {
+    let inVen = false     
+
+    EstadosVEN.forEach(el => {
+        if(el === Name){
+            inVen = true;
+        }
+    });
+
+    if(inVen){
+        EstadosVEN.forEach(el => {
+            if(el === Name){
+                html+=`<option selected >${el}</option>`
+            } else {
+                html+=`<option>${el}</option>`
+            }
+        });
+    } else {
+        EstadosUSA.forEach(el => {
+            if(el.name === Name){
+                html+=`<option selected >${el.name}</option>`
+            } else {
+                html+=`<option>${el.name}</option>`
+            }
+        });
+    }
+
+    document.getElementById("inputLoc").innerHTML = html;
+}
+
 function selectuser(){
     let user = document.getElementById("SelectUser").value;
 
@@ -243,5 +273,3 @@ function SubmitCartForm(data){
 function SubmitDelete(data){
     document.getElementById(data).submit();
 }
-
-console.log(Ubicacion);

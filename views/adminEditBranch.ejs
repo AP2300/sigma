@@ -1,6 +1,6 @@
 <%- include('./partials/header'); %>
 
-<div class="card login p-5" style="margin-top:80px;">
+<div class="card login p-5" style="margin-top:80px;" onload="EditBranch(`<%=sucursal.ubicacion%>`)">
     <% if (responses.messageErr !== "") {%>
         <div class="alert alert-danger alert-dismissible fade show w-100" role="alert">
             <strong id="errRegister"><%= responses.messageErr %></strong>
@@ -29,8 +29,10 @@
         <div class="form-group">
             <div class="form-group">
                 <label for="exampleInputPassword1">Ubicacion</label>
-                <input type="text" class="form-control" id="exampleInputPassword1" name="data[location]"
+                <select class="form-control" id="inputLoc" name="data[location]"
                     required value="<%=sucursal.ubicacion%>">
+                
+                </select>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Actualizar</button>
