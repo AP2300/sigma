@@ -8,6 +8,8 @@ var EstadosUSA = [{name:"Alabama",tax:4},{name:"Alaska", tax:0},{name:"Arizona",
 var EstadosVEN = ["Amazonas","Anzoategui","Apure","Aragua","Barinas","Bolivar","Carabobo","Cojedes","Delta Amacuro","Distrito Capital","Falcon","Guarico","Lara","Merida","Miranda","Monagas",
                 "Nueva Esparta","Portuguesa","Sucre","Tachira","Trujillo","Vargas","Yacuray","Zulia"]
 
+var Categories = [{name:"Dolor General",cost: 1},{name:"Salud Digestiva",cost: 2},{name:"Salud Respiratoria",cost: 3},{name:"Vitaminas y Productos Naturales",cost: 5},{name:"Botiquín y Primeros Auxilios",cost: 10},{name:"Rehabilitacion y Equipos Medicos",cost: 50}]
+
 $(document).ready(function(){
     $("#UsersPanel").collapse("hide")
     $("#ProductsPanel").collapse("hide")
@@ -231,6 +233,8 @@ function estados() {
 let path = window.location.pathname.split('/');
 if(path[1] === "adminEditBranch"){
     EditBranch(ubicacion);
+} else if(path[1] === "UserCart") {
+    CalculateTaxes();
 }
 
 
@@ -282,16 +286,29 @@ function SubmitDelete(data){
 }
 
 function CalculateTaxes(){
+    let subTotal
     let TotalTax;
     EstadosUSA.forEach(el => {
         if(el.name===Ubicacion){
-            TotalTax = (el.tax/100)*Number(document.getElementById("TotalPrice").innerText.slice(1));
+            TotalTax = (el.tax/100)*Number(document.getElementById("subTotalPrice").innerText.slice(1));
         }
     });
-    if(!TotalTax) TotalTax = 0.16*Number(document.getElementById("TotalPrice").innerText.slice(1));
-    document.getElementById("Taxes").innerText="$"+TotalTax;
+    if(!TotalTax) TotalTax = 0.16*Number(document.getElementById("subTotalPrice").innerText.slice(1));
+    document.getElementById("Taxes").innerText="$"+ TotalTax.toFixed(2);
+    CalculateShipping(TotalTax);
 }
 
-if(Ubicacion){
-    CalculateTaxes()
+function CalculateShipping(TotalTax){
+    let TotalShipping = 0;
+    console.log(Cart);
+    for(let el in Cart){
+        for(var i of Categories){
+            if(Cart[el].data.tipo_medicamento === i.name){
+                TotalShipping += (i.cost*Number(document.getElementById("Qtty"+el).value));
+            }
+        }
+    }
+    document.getElementById("Shipping").innerText ="$" + (TotalShipping);
+    subTotal = Number(document.getElementById("subTotalPrice").innerText.slice(1));
+    document.getElementById("TotalPrice").innerText ="$" + (subTotal + TotalTax + TotalShipping);
 }
