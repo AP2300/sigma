@@ -834,7 +834,7 @@ app.get("/UserCart/:id", async (req, res)=>{
                 for (let i in results) {
                     let query =  DB.query("SELECT * FROM producto WHERE id = ?", [results[i].idProducto])
                     query.on("result",(row)=> {
-                        CartInfo[i] = {data:row, cantidad:results[i].cantidad, id:results[i].id};
+                        CartInfo[i] = {data:row, cantidad:results[i].cantidad, id:results[i].id, categoria:results[i].tipo_medicamento};
                     })
                     query.on("end",()=>{
                         if(i==results.length-1){

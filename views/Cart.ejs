@@ -2,6 +2,8 @@
 
 <script>
   var Ubicacion = "<%=ubicacion%>"
+  var length = "<%=CartInfo.length%>"
+  var Cart = <%- JSON.stringify(CartInfo) %>
 </script>
 
 <div class="px-4 px-lg-0">
@@ -46,7 +48,7 @@
                             </th>
                             <td class="border-0 align-middle"><strong>$<%=CartInfo[i].data.precio%></strong></td>
                             <td class="border-0 align-middle"> <form action="/UpdateCart" method="POST" class="addForm" id="CartForm<%=i%>"">
-                                <input type="number" class="addInput" value="<%=CartInfo[i].cantidad%>" name="cantidad" min="1" onchange="SubmitCartForm('CartForm<%=i%>')">
+                                <input type="number" class="addInput" value="<%=CartInfo[i].cantidad%>" name="cantidad" id="Qtty<%=i%>" min="1" onchange="SubmitCartForm('CartForm<%=i%>')">
                                 <input type="number" value="<%=CartInfo[i].id%>" name="id" class="invisible">
                                 <input type="number" value="<%=CartInfo[i].data.id%>" class="invisible" name="idProducto">
                                 <input type="number" value="<%=Sesion.id%>" name="UsrId" class="invisible">
@@ -90,13 +92,13 @@
               <p class="font-italic mb-4">Los costos de envios y adicionales se ajustan en funcion de los productos en tu carrito</p>
               <ul class="list-unstyled mb-4">
 
-                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted" >Subtotal </strong> <span id="TotalPrice"><strong>$<%=subtotal%></strong></span></li>
-                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Envio</strong><strong>$0.00</strong></li>
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted" >Subtotal </strong> <span id="subTotalPrice"><strong>$<%=subtotal%></strong></span></li>
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Envio</strong><strong id="Shipping">$0.00</strong></li>
                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Impuesto</strong><strong id="Taxes">$0.00</strong></li>
                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted" >Total</strong>
-                  <h5 class="font-weight-bold">$<%=total%></h5>
+                  <h5 class="font-weight-bold" id="TotalPrice">$<%=total%></h5>
                 </li>
-              </ul><a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Realizar compra</a>
+              </ul><a href="/buy" class="btn btn-dark rounded-pill py-2 btn-block">Realizar compra</a>
             </div>
           </div>
         </div>
