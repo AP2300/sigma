@@ -500,3 +500,8 @@ html body div ul li.bgTransparent:hover{
     min-width: 232px;
     overflow-x: scroll;
 }
+
+.bgButtonTransfer{
+    margin: 1% 4.3%;
+    width: 100%;    
+}
