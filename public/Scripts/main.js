@@ -6,7 +6,7 @@ var EstadosUSA = [{name:"Alabama",tax:4},{name:"Alaska", tax:0},{name:"Arizona",
 {name:"Wisconsin", tax: 5},{name:"Wyoming", tax:4}]
 
 var EstadosVEN = ["Amazonas","Anzoategui","Apure","Aragua","Barinas","Bolivar","Carabobo","Cojedes","Delta Amacuro","Distrito Capital","Falcon","Guarico","Lara","Merida","Miranda","Monagas",
-                "Nueva Esparta","Portuguesa","Sucre","Tachira","Trujillo","Vargas","Yacuray","Zulia"]
+                "Nueva Esparta","Portuguesa","Sucre","Tachira","Trujillo","Vargas","Yaracuy","Zulia"]
 
 var Categories = [{name:"Dolor General",cost: 1},{name:"Salud Digestiva",cost: 2},{name:"Salud Respiratoria",cost: 3},{name:"Vitaminas y Productos Naturales",cost: 5},{name:"Botiquín y Primeros Auxilios",cost: 10},{name:"Rehabilitacion y Equipos Medicos",cost: 50}]
 
@@ -144,7 +144,7 @@ $(document).ready(function(){
 })
 
 function borrarlog(id) {
-    var res = confirm("Está seguro de que desea eliminar el producto?");
+    var res = confirm("Está seguro de que desea eliminar la consulta?");
 
     if(res) {
         console.log(`eliminado ${id}`);

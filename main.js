@@ -430,7 +430,7 @@ app.get("/adminDeleteLog/:id", (req, res) =>{
                     responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
                     res.redirect("/admin");
                 }else{
-                    responses.messageOK = "El Log ha sido eliminado de forma exitosa";
+                    responses.messageOK = "La consulta ha sido eliminada de forma exitosa";
                     res.redirect("/admin");
                 }
             });
@@ -613,6 +613,7 @@ app.post("/adminAddBranch", (req, res)=>{
             }, (err, result)=>{
                 if(err) console.log(err)
                 else {
+                    console.log(result);
                     responses.messageOK = "El registro fue hecho satisfactoriamente.";
                     responses.messageErr = ""; 
                     res.redirect("/admin");
