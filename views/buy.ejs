@@ -1,121 +1,136 @@
 <%- include('./partials/header'); %>
 
-    <div class="containerContact">
-        <h2 class="name-login"> <img src="Images/BigLogo.png" style="padding-bottom: 9px;"> Sigma</h2>
+<div class="containerContact">
+	<h2 class="name-login"> <img src="Images/BigLogo.png" style="padding-bottom: 9px;"> Sigma</h2>
 
-        <div class="containerBuy">
-            <div class="row marginrow">
+	<div class="containerBuy">
+        <form action="/processbuy" method="POST">
+            <div class="row marginrow text-center">
                 <div class="col-sm-5 bgData">
+                    <h2 class="legend col-md-12 col-sm-12 col-xs-12">Productos</h2>
                     <table class="table table-hover table-borderless">
                         <thead>
-                          <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Precio</th>
-                          </tr>
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Precio</th>
+                            </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3</th>
-                            <td >Larry the Bird</td>
-                          </tr>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Larry the Bird</td>
+                            </tr>
                         </tbody>
-                      </table>
+                    </table>
                 </div>
                 <div class="col-sm-6 bgData">
                     <div id="shipping_address" class="row">
 
-                        <h2 class="legend col-md-12 col-sm-12 col-xs-12">Shipping Address</h2>
+                        <h2 class="legend col-md-12 col-sm-12 col-xs-12">Direccion de Envio</h2>
                         <div id="shipping_address_name" class="field text-field col-md-6 col-sm-12 col-xs-12 form-group">
-                          <label for="order_shipping_address_name" class="control-label">Name <em>*</em></label>
-                          <input type="text" name="order_shipping_address[name]" value="aads" id="order_shipping_address_name" class="text form-control" required="required" autocomplete="given-name">
-                          
+                            <label for="order_shipping_address_name" class="control-label">Nombre <em>*</em></label>
+                            <input type="text" name="order_shipping_address[name]" id="order_shipping_address_name"
+                                class="text form-control" required="required" autocomplete="given-name">
+
                         </div>
+
                         <div id="shipping_address_surname" class="field text-field col-md-6 col-sm-12 col-xs-12 form-group">
-                          <label for="order_shipping_address_surname" class="control-label">Surname <em>*</em></label>
-                          <input type="text" name="order_shipping_address[surname]" value="asdasd" id="order_shipping_address_surname" class="text form-control" required="required" autocomplete="family-name">
-                          
+                            <label for="order_shipping_address_surname" class="control-label">Apellido <em>*</em></label>
+                            <input type="text" name="order_shipping_address[surname]" id="order_shipping_address_surname"
+                                class="text form-control" required="required" autocomplete="family-name">
+
                         </div>
-                        <div id="shipping_address_address" class="field text-field col-md-6 col-sm-12 col-xs-12 form-group">
-                          <label for="order_shipping_address_address" class="control-label">Address <em>*</em></label>
-                          <input type="text" name="order_shipping_address[address]" value="hola, hola" id="order_shipping_address_address" class="text form-control" required="required" autocomplete="street-address">
-                          
+
+                        <div id="shipping_address_country"
+                            class="field select-field col-md-6 col-sm-12 col-xs-12 form-group">
+                            <label for="order_shipping_address_country" class="control-label">Pais<em>*</em></label>
+                            <select name="order_shipping_address[country]" onchange="estados()" id="PaisSelect"
+                                class="select col-sm-12 form-control" autocomplete="country">
+
+                                <option selected disabled value="">Elegir...</option>
+                                <option>Estados Unidos</option>
+                                <option>Venezuela</option>
+
+                            </select>
                         </div>
+
+                        <div id="shipping_address_region"
+                            class="field select-field col-md-6 col-sm-12 col-xs-12 form-group">
+                            <label for="order_shipping_address_region" class="control-label">Estado<em>*</em></label>
+                            <select name="order_shipping_address[region]" id="inputLoc"
+                                class="select col-sm-12 form-control" autocomplete="address-level1">
+                                <option value=""></option>
+                            </select>
+
+                        </div>
+
                         <div id="shipping_address_city" class="field text-field col-md-6 col-sm-12 col-xs-12 form-group">
-                          <label for="order_shipping_address_city" class="control-label">City <em>*</em></label>
-                          <input type="text" name="order_shipping_address[city]" value="hola" id="order_shipping_address_city" class="text form-control" required="required" autocomplete="address-level2">
-                          
+                            <label for="order_shipping_address_city" class="control-label">Ciudad <em>*</em></label>
+                            <input type="text" name="order_shipping_address[city]" placeholder="Ej. Florida, Caracas, etc"
+                                id="order_shipping_address_city" class="text form-control" required="required"
+                                autocomplete="address-level2">
+
                         </div>
+
+                        <div id="shipping_address_address" class="field text-field col-md-6 col-sm-12 col-xs-12 form-group">
+                            <label for="order_shipping_address_address" class="control-label">Direccion <em>*</em></label>
+                            <input type="text" name="order_shipping_address[address]"
+                                placeholder="Ej. Av 5 de Julio Frente al Seniat" id="order_shipping_address_address"
+                                class="text form-control" required="required" autocomplete="street-address">
+
+                        </div>
+
                         <div id="shipping_address_postal" class="field text-field col-md-6 col-sm-12 col-xs-12 form-group">
-                          <label for="order_shipping_address_postal" class="control-label">Postal Code </label>
-                          <input type="text" name="order_shipping_address[postal]" value="4001" id="order_shipping_address_postal" class="text form-control" autocomplete="postal-code">
-                          
+                            <label for="order_shipping_address_postal" class="control-label">Codigo Postal </label>
+                            <input type="text" name="order_shipping_address[postal]" placeholder="Ej. 4001"
+                                id="order_shipping_address_postal" class="text form-control" autocomplete="postal-code">
+
                         </div>
-                
-                        
-                
-                        <div id="shipping_address_country" class="field select-field col-md-6 col-sm-12 col-xs-12 form-group">
-                          <label for="order_shipping_address_country" class="control-label">Country <em>*</em></label>
-                          <select name="order_shipping_address[country]" id="order_shipping_address_country" class="select col-sm-12 form-control" autocomplete="country"><option value=""></option>
- 
-                </select>
-                          
+
+
+
+                    </div>
+                </div>
+
+                <div class="col-11 bgDataTransfer">
+                    <div class="input-group mt-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">N°</span>
                         </div>
-                
-                        <div id="shipping_address_region" class="field select-field col-md-6 col-sm-12 col-xs-12 form-group">
-                          <label for="order_shipping_address_region" class="control-label">Region <em>*</em></label>
-                          <select name="order_shipping_address[region]" id="order_shipping_address_region" class="select col-sm-12 form-control" autocomplete="address-level1"><option value=""></option>
-              
-                </select>
-                          
+                        <input type="text" class="form-control" placeholder="Número de refrencia" aria-label="Username"
+                            aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="input-group mt-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Subir Archivo</span>
                         </div>
-                
-                        <div id="shipping_address_municipality" class="field select-field col-md-6 col-sm-12 col-xs-12 form-group" style="display: none;">
-                          <label for="order_shipping_address_municipality" style="display: none;" class="control-label">Municipality <em>*</em></label>
-                          <select name="order_shipping_address[municipality]" id="order_shipping_address_municipality" class="select form-control" style="display: none;" autocomplete="address-level3"><option value=""></option>
-                </select>
-                          
-                        </div>
-                
-                        <div id="shipping_address_same_as_shipping" class="field checkbox-field checkbox col-sm-12 col-xs-12 no-label form-group">
-                          <input type="hidden" name="order_shipping_address[shipping_same_as_billing]" value="0"><input type="checkbox" name="order_shipping_address[shipping_same_as_billing]" value="1" id="shipping_same_as_billing" class="checkbox" checked="checked" onchange="togglebilling(this.checked)">
-                          <label for="shipping_same_as_billing" class="control-label">Billing Address same as Shipping</label>
-                          
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Suba su Referencia del Banco</label>
                         </div>
                     </div>
                 </div>
 
-                    <div class="col-11 bgDataTransfer">
-                        <div class="input-group mt-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text" id="basic-addon1">#</span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Número de refrencia" aria-label="Username" aria-describedby="basic-addon1">
-                          </div>
-
-                          <div class="input-group mt-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                            </div>
-                            <div class="custom-file">
-                              <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                            </div>
-                          </div>
+                <div class="row justify-content-center bgButtonTransfer">
+                    <div class="Login-button ">
+                            <button type="submit" class="btn btn-primary">Finalizar Compra</button>
+                    </div>
+                </div>
             </div>
-        </div>
-            
+        </form>
+	</div>
 
-    </div>
-
-<%- include('./partials/bottom'); %>
+	<%- include('./partials/bottom'); %>
