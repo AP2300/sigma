@@ -10,63 +10,65 @@ var EstadosVEN = ["Amazonas","Anzoategui","Apure","Aragua","Barinas","Bolivar","
 
 var Categories = [{name:"Dolor General",cost: 1},{name:"Salud Digestiva",cost: 2},{name:"Salud Respiratoria",cost: 3},{name:"Vitaminas y Productos Naturales",cost: 5},{name:"Botiquín y Primeros Auxilios",cost: 10},{name:"Rehabilitacion y Equipos Medicos",cost: 50}]
 
-$(document).ready(function(){
-    $("#UsersPanel").collapse("hide")
-    $("#ProductsPanel").collapse("hide")
-    $("#OtrosPanel").collapse("hide")
-    $("#SucursalPanel").collapse("hide")
-    $("#DisPanel").collapse("hide")
-    $("#EarningsPanel").collapse("hide")
+if(window.location.pathname === "/admin") {
+    $(document).ready(function(){
+        $("#UsersPanel").collapse("hide")
+        $("#ProductsPanel").collapse("hide")
+        $("#OtrosPanel").collapse("hide")
+        $("#SucursalPanel").collapse("hide")
+        $("#DisPanel").collapse("hide")
+        $("#EarningsPanel").collapse("hide")
 
-    $("#Productos").click(function () { 
-        $("#UsersPanel").collapse("hide")
-        $("#OtrosPanel").collapse("hide")
-        $("#SucursalPanel").collapse("hide")
-        $("#DisPanel").collapse("hide")
-        $("#EarningsPanel").collapse("hide")
-        document.getElementById("textSelection").innerHTML="Administre los productos";
-    });
-    $("#Users").click(function () { 
-        $("#ProductsPanel").collapse("hide")
-        $("#SucursalPanel").collapse("hide")
-        $("#OtrosPanel").collapse("hide")
-        $("#DisPanel").collapse("hide")
-        $("#EarningsPanel").collapse("hide")
-        document.getElementById("textSelection").innerHTML="Administre los usuarios";
-    });
-    $("#Admins").click(function () { 
-        $("#UsersPanel").collapse("hide")
-        $("#ProductsPanel").collapse("hide")
-        $("#SucursalPanel").collapse("hide")
-        $("#DisPanel").collapse("hide")
-        $("#EarningsPanel").collapse("hide")
-        document.getElementById("textSelection").innerHTML="Administre las consultas";
-    });
-    $("#Sucursal").click(function () { 
-        $("#UsersPanel").collapse("hide")
-        $("#ProductsPanel").collapse("hide")
-        $("#OtrosPanel").collapse("hide")
-        $("#DisPanel").collapse("hide")
-        $("#EarningsPanel").collapse("hide")
-        document.getElementById("textSelection").innerHTML="Administre las sucursales";
-    });
-    $("#Distribution").click(function () { 
-        $("#ProductsPanel").collapse("hide")
-        $("#UsersPanel").collapse("hide")
-        $("#OtrosPanel").collapse("hide")
-        $("#SucursalPanel").collapse("hide")
-        $("#EarningsPanel").collapse("hide")
-        document.getElementById("textSelection").innerHTML="Administre las distribuciones";
-    });
-    $("#Earning").click(function () { 
-        $("#ProductsPanel").collapse("hide")
-        $("#UsersPanel").collapse("hide")
-        $("#OtrosPanel").collapse("hide")
-        $("#SucursalPanel").collapse("hide")
-        $("#DisPanel").collapse("hide")
-        document.getElementById("textSelection").innerHTML="Observe las ganancias";
-    });
-}); 
+        $("#Productos").click(function () { 
+            $("#UsersPanel").collapse("hide")
+            $("#OtrosPanel").collapse("hide")
+            $("#SucursalPanel").collapse("hide")
+            $("#DisPanel").collapse("hide")
+            $("#EarningsPanel").collapse("hide")
+            document.getElementById("textSelection").innerHTML="Administre los productos";
+        });
+        $("#Users").click(function () { 
+            $("#ProductsPanel").collapse("hide")
+            $("#SucursalPanel").collapse("hide")
+            $("#OtrosPanel").collapse("hide")
+            $("#DisPanel").collapse("hide")
+            $("#EarningsPanel").collapse("hide")
+            document.getElementById("textSelection").innerHTML="Administre los usuarios";
+        });
+        $("#Admins").click(function () { 
+            $("#UsersPanel").collapse("hide")
+            $("#ProductsPanel").collapse("hide")
+            $("#SucursalPanel").collapse("hide")
+            $("#DisPanel").collapse("hide")
+            $("#EarningsPanel").collapse("hide")
+            document.getElementById("textSelection").innerHTML="Administre las consultas";
+        });
+        $("#Sucursal").click(function () { 
+            $("#UsersPanel").collapse("hide")
+            $("#ProductsPanel").collapse("hide")
+            $("#OtrosPanel").collapse("hide")
+            $("#DisPanel").collapse("hide")
+            $("#EarningsPanel").collapse("hide")
+            document.getElementById("textSelection").innerHTML="Administre las sucursales";
+        });
+        $("#Distribution").click(function () { 
+            $("#ProductsPanel").collapse("hide")
+            $("#UsersPanel").collapse("hide")
+            $("#OtrosPanel").collapse("hide")
+            $("#SucursalPanel").collapse("hide")
+            $("#EarningsPanel").collapse("hide")
+            document.getElementById("textSelection").innerHTML="Administre las distribuciones";
+        });
+        $("#Earning").click(function () { 
+            $("#ProductsPanel").collapse("hide")
+            $("#UsersPanel").collapse("hide")
+            $("#OtrosPanel").collapse("hide")
+            $("#SucursalPanel").collapse("hide")
+            $("#DisPanel").collapse("hide")
+            document.getElementById("textSelection").innerHTML="Observe las ganancias";
+        });
+    }); 
+}
 
 if ($(".alert-dismissible").length) {
     $("#UsersPanel").collapse("show");
@@ -134,14 +136,15 @@ function redirect(id) {
     window.location.href = `/product/${id}`;
 }
 
-$(document).ready(function(){
-    $("#boton").click(function(event) {
-        event.stopPropagation();
+if(window.location.pathname === "/catalog") {
+    $(document).ready(function(){
+        $(".btn").click(function(event) {
+            event.stopPropagation();
+            console.log(event.isPropagationStopped());
+        })
     })
-    $("#edit").click(function(event) {
-        event.stopPropagation();
-    })
-})
+}
+
 
 function borrarlog(id) {
     var res = confirm("Está seguro de que desea eliminar la consulta?");
