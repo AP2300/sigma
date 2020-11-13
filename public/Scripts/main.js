@@ -223,7 +223,7 @@ function estados() {
         });
     } else if (Name === 'Venezuela'){
         EstadosVEN.forEach(el => {
-            html+=`<option>${el.name}</option>`
+            html+=`<option>${el}</option>`
         });
     }
 
