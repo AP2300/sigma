@@ -473,7 +473,7 @@ html body div ul li.bgTransparent:hover{
 }
 
 .containerBuy{
-    margin: 2% 10%;
+    margin: 2% 5%;
     background-color: #f6ecd2bd;
     backdrop-filter: blur(10px);
     border-radius: 1em;
@@ -483,9 +483,20 @@ html body div ul li.bgTransparent:hover{
 .bgData{
     background-color: rgba(255, 255, 240, 0.397);
     border-radius: 1em;
-    margin: 0 2%;
+    margin: 1% 2%;
+    min-width: 232px;
+    overflow-x: scroll;
+    justify-content: center;
 }
 
 .marginrow{
     padding:0 12px;
+}
+
+.bgDataTransfer{
+    background-color: rgba(255, 255, 240, 0.397);
+    border-radius: 1em;
+    margin: 1% 4.3%;
+    min-width: 232px;
+    overflow-x: scroll;
 }
