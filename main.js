@@ -613,6 +613,7 @@ app.post("/adminAddBranch", (req, res)=>{
             }, (err, result)=>{
                 if(err) console.log(err)
                 else {
+                    console.log(result);
                     responses.messageOK = "El registro fue hecho satisfactoriamente.";
                     responses.messageErr = ""; 
                     res.redirect("/admin");
