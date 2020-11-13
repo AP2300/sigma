@@ -3,74 +3,100 @@
     <div class="containerContact">
         <h2 class="name-login"> <img src="Images/BigLogo.png" style="padding-bottom: 9px;"> Sigma</h2>
 
-        <div class="container">
-            <div class="card">
-                <div class="collapse multi-collapse hideMeBox" id="OtrosPanel">
-                    <%var i=0%>
-                    <%Car.forEach(el => {%>
-                    <div class="accordion " id="accordion">
-                        <div class="card comentarios">
-                            <div class="card-header" id="headingThree">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-                                        data-target="#product<%=i%>">
-                                        <div class="row">
-                                            <div class="col-sm">
-                                                Nombre: <%=el.NombreEmpresa%>
-                                            </div>
-                                            <div class="col-sm">
-                                                Tipo de Entidad: <%=el.TipoEntidad%>
-                                            </div>
-                                            <span class="btn" type=""><i class="far fa-trash-alt"></i></span>
-                                        </div>
-                                    </button>
-                                </h2>
-                            </div>
-        
-                            <div id="product<%=i%>" class="collapse">
-                                <div class="card-body ">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            Nombre: <%=el.Nombre%>
-                                        </div>
-                                        <div class="col-sm">
-                                            Apellido: <%=el.Apellido%>
-                                        </div>
-                                        <div class="col-sm">
-                                            RIF: <%=el.RIF%>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            Pais: <%=el.Pais%>
-                                        </div>
-                                        <div class="col-sm">
-                                            Estado: <%=el.Estado%>
-                                        </div>
-                                        <div class="col-sm">
-                                            Ciudad: <%=el.Ciudad%>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            Correo: <%=el.Email%>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            Comentario: <%=el.Comentario%>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="containerBuy">
+            <div class="row marginrow">
+                <div class="col-5 bgData">
+                    <table class="table table-hover table-borderless">
+                        <thead>
+                          <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Precio</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">3</th>
+                            <td >Larry the Bird</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+                <div class="col-6 bgData">
+                    <div id="shipping_address" class="row">
+
+                        <h2 class="legend col-md-12 col-sm-12 col-xs-12">Shipping Address</h2>
+                        <div id="shipping_address_name" class="field text-field col-md-6 col-sm-12 col-xs-12 form-group">
+                          <label for="order_shipping_address_name" class="control-label">Name <em>*</em></label>
+                          <input type="text" name="order_shipping_address[name]" value="aads" id="order_shipping_address_name" class="text form-control" required="required" autocomplete="given-name">
+                          
+                        </div>
+                        <div id="shipping_address_surname" class="field text-field col-md-6 col-sm-12 col-xs-12 form-group">
+                          <label for="order_shipping_address_surname" class="control-label">Surname <em>*</em></label>
+                          <input type="text" name="order_shipping_address[surname]" value="asdasd" id="order_shipping_address_surname" class="text form-control" required="required" autocomplete="family-name">
+                          
+                        </div>
+                        <div id="shipping_address_address" class="field text-field col-md-6 col-sm-12 col-xs-12 form-group">
+                          <label for="order_shipping_address_address" class="control-label">Address <em>*</em></label>
+                          <input type="text" name="order_shipping_address[address]" value="hola, hola" id="order_shipping_address_address" class="text form-control" required="required" autocomplete="street-address">
+                          
+                        </div>
+                        <div id="shipping_address_city" class="field text-field col-md-6 col-sm-12 col-xs-12 form-group">
+                          <label for="order_shipping_address_city" class="control-label">City <em>*</em></label>
+                          <input type="text" name="order_shipping_address[city]" value="hola" id="order_shipping_address_city" class="text form-control" required="required" autocomplete="address-level2">
+                          
+                        </div>
+                        <div id="shipping_address_postal" class="field text-field col-md-6 col-sm-12 col-xs-12 form-group">
+                          <label for="order_shipping_address_postal" class="control-label">Postal Code </label>
+                          <input type="text" name="order_shipping_address[postal]" value="4001" id="order_shipping_address_postal" class="text form-control" autocomplete="postal-code">
+                          
+                        </div>
+                
+                        
+                
+                        <div id="shipping_address_country" class="field select-field col-md-6 col-sm-12 col-xs-12 form-group">
+                          <label for="order_shipping_address_country" class="control-label">Country <em>*</em></label>
+                          <select name="order_shipping_address[country]" id="order_shipping_address_country" class="select col-sm-12 form-control" autocomplete="country"><option value=""></option>
+ 
+                </select>
+                          
+                        </div>
+                
+                        <div id="shipping_address_region" class="field select-field col-md-6 col-sm-12 col-xs-12 form-group">
+                          <label for="order_shipping_address_region" class="control-label">Region <em>*</em></label>
+                          <select name="order_shipping_address[region]" id="order_shipping_address_region" class="select col-sm-12 form-control" autocomplete="address-level1"><option value=""></option>
+              
+                </select>
+                          
+                        </div>
+                
+                        <div id="shipping_address_municipality" class="field select-field col-md-6 col-sm-12 col-xs-12 form-group" style="display: none;">
+                          <label for="order_shipping_address_municipality" style="display: none;" class="control-label">Municipality <em>*</em></label>
+                          <select name="order_shipping_address[municipality]" id="order_shipping_address_municipality" class="select form-control" style="display: none;" autocomplete="address-level3"><option value=""></option>
+                </select>
+                          
+                        </div>
+                
+                        <div id="shipping_address_same_as_shipping" class="field checkbox-field checkbox col-sm-12 col-xs-12 no-label form-group">
+                          <input type="hidden" name="order_shipping_address[shipping_same_as_billing]" value="0"><input type="checkbox" name="order_shipping_address[shipping_same_as_billing]" value="1" id="shipping_same_as_billing" class="checkbox" checked="checked" onchange="togglebilling(this.checked)">
+                          <label for="shipping_same_as_billing" class="control-label">Billing Address same as Shipping</label>
+                          
                         </div>
                     </div>
-                    <%i++%>
-                    <%});%>
                 </div>
+                <hr>
+                <div class="row">
+
                 </div>
             </div>
         </div>

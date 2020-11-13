@@ -471,3 +471,21 @@ html body div ul li.bgTransparent:hover{
 #tamañoAdmin{
     font-size: 3em;
 }
+
+.containerBuy{
+    margin: 2% 10%;
+    background-color: #f6ecd2bd;
+    backdrop-filter: blur(10px);
+    border-radius: 1em;
+    padding: 1% 1%;
+}
+
+.bgData{
+    background-color: rgba(255, 255, 240, 0.397);
+    border-radius: 1em;
+    margin: 0 2%;
+}
+
+.marginrow{
+    padding:0 12px;
+}
