@@ -206,6 +206,7 @@ app.get("/admin", function(req,res){
                                     console.log(error);
                                     res.redirect("/home");
                                 }else{
+                                    var earningsData = results;
                                     DB.query("SELECT * FROM distribucion", (error, results)=>{
                                         if(error){
                                             console.log(error);
