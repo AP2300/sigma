@@ -144,7 +144,7 @@ $(document).ready(function(){
 })
 
 function borrarlog(id) {
-    var res = confirm("Está seguro de que desea eliminar el producto?");
+    var res = confirm("Está seguro de que desea eliminar la consulta?");
 
     if(res) {
         console.log(`eliminado ${id}`);

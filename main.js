@@ -430,7 +430,7 @@ app.get("/adminDeleteLog/:id", (req, res) =>{
                     responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
                     res.redirect("/admin");
                 }else{
-                    responses.messageOK = "El Log ha sido eliminado de forma exitosa";
+                    responses.messageOK = "La consulta ha sido eliminada de forma exitosa";
                     res.redirect("/admin");
                 }
             });
