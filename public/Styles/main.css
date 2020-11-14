@@ -382,11 +382,11 @@ html body a:hover {
 }
 
 .img-producto{
-    height: 65vh;
+    height: 66.4vh;
 }
 
 html body div.card-body.page{
-    margin-top: -113px;
+    margin-top: -125px;
     color: whitesmoke;
     text-shadow: 0 0 7px #00000085;
     background-color: rgba(0, 0, 0, 0.219);
@@ -508,5 +508,11 @@ html body div ul li.bgTransparent:hover{
 .table-products{
     overflow-y: scroll;
     max-height: 192px;
-    
+}
+
+.card-description{
+    overflow-y: scroll;
+    max-height: 60px;
+    text-align: start;
+    padding-left: 1%;
 }
