@@ -18,7 +18,7 @@
 	<h2 class="name-login"> <img src="/Images/BigLogo.png" style="padding-bottom: 9px;"> Finaliza tu compra</h2>
 
 	<div class="containerBuy">
-        <form action="/processbuy/<%=Sesion.id%>" method="POST">
+        <form action="/Checkout" method="POST">
             <div class="row marginrow text-center">
                 <div class="col-sm-5 bgData">
                     <h2 class="legend col-md-12 col-sm-12 col-xs-12">Productos</h2>
@@ -101,7 +101,7 @@
 
                         <div id="shipping_address_address" class="field text-field col-md-6 col-sm-12 col-xs-12 form-group">
                             <label for="order_shipping_address_address" class="control-label">Direccion <em>*</em></label>
-                            <input type="text" name="order_shipping_address[address]"
+                            <input type="text" name="address"
                                 placeholder="Ej. Av 5 de Julio Frente al Seniat" id="order_shipping_address_address"
                                 class="text form-control" required="required" autocomplete="street-address">
 
@@ -139,7 +139,9 @@
                 </div>
 
                 <div class="row justify-content-center bgButtonTransfer">
-                    <input type="text" name="idsucursal" value="<%=idsucursal%>" class="invisible">
+                    <input type="number" name="idsucursal" value="<%=idsucursal%>" class="invisible">
+                    <input type="date" name="Fsalida" id="Fsalida" class="invisible">
+                    <input type="date" name="Fentrega" id="Fentrega" class="invisible">
                     <div class="Login-button ">
                             <button type="submit" class="btn btn-primary">Finalizar Compra</button>
                     </div>
