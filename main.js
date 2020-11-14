@@ -429,9 +429,13 @@ app.get("/adminDeleteProduct/:id", (req, res) =>{
                     console.log(image);
                     DB.query("DELETE FROM producto WHERE id = ?", [id], (error, results)=>{
                         if(error){
-                            console.log(error);
-                            responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
-                            res.redirect("/catalog");
+                            if(error.errno == 1217) {
+                                responses.messageErr = "No se puede eliminar el producto ya que pertenece a una distribución";
+                            } else {
+                                responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                            }
+                                console.log(error.errno)
+                                res.redirect("/catalog");
                         }else{
                             fs.unlink(image, function(err) {
                                 if (err) {
@@ -596,8 +600,12 @@ app.get("/adminDeleteUser/:id", (req, res) =>{
             
             DB.query(`DELETE FROM usuarios WHERE id = ?`, [id], (error, results)=>{
                 if(error){
-                    console.log(error);
-                    responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                    if(error.errno == 1217) {
+                        responses.messageErr = "No se puede eliminar el usuario ya que tiene una distribución asociada";
+                    } else {
+                        responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                    }
+                    console.log(error.errno)
                     res.redirect("/adminUsers");
                 }else{
                     responses.messageOK = "El usuario ha sido eliminado de forma exitosa";
@@ -723,8 +731,12 @@ app.get("/adminDeleteBranch/:id", (req, res) =>{
         if(Sesion.isAdmin){
             DB.query("DELETE FROM sucursal WHERE id = ?", [id], (error, results)=>{
                 if(error){
-                    console.log(error);
-                    responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                    if(error.errno == 1217) {
+                        responses.messageErr = "No se puede eliminar la sucursal ya que posee usuarios o distribuciones asociadas";
+                    } else {
+                        responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                    }
+                    console.log(error.errno);
                     res.redirect("/adminBranches");
                 }else{
                     responses.messageOK = "La sucursal ha sido eliminado de forma exitosa";
