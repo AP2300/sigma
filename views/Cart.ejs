@@ -2,7 +2,6 @@
 
 <script>
   var Ubicacion = "<%=ubicacion%>"
-  var length = "<%=CartInfo.length%>"
   var Cart = <%- JSON.stringify(CartInfo) %>
 </script>
 
@@ -98,7 +97,12 @@
                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted" >Total</strong>
                   <h5 class="font-weight-bold" id="TotalPrice">$<%=total%></h5>
                 </li>
-              </ul><a href="/buy/<%=Sesion.id%>" class="btn btn-dark rounded-pill py-2 btn-block">Realizar compra</a>
+              </ul>
+              <%if(CartInfo!=null){%>
+              <a href="/buy/<%=Sesion.id%>" class="btn btn-dark rounded-pill py-2 btn-block">Realizar compra</a>
+              <%}else{%>
+              <a href="/buy/<%=Sesion.id%>" class="btn btn-dark rounded-pill py-2 btn-block disabled" >Realizar compra</a>
+              <%}%>
             </div>
           </div>
         </div>

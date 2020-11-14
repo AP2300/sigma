@@ -132,6 +132,30 @@ function buscar(Data, filter, isAdmin){
     document.getElementById("productos").innerHTML=html;
 }
 
+function showProducts(producto){
+    let html = "";
+
+    for(let i=0; i < 4; i++){    
+        html+=`
+            <div class="col mb-4">
+                <a class="product" onclick="redirect(${producto[i].id})" style="cursor: pointer">
+                    <div class="card card-producto h-100">
+                        <img src="${producto[i].IMG}" class="card-img-top imgSize" >
+                        <div class="card-body">
+                            <h5 class="card-title">${producto[i].nombre}</h5>
+                            <p class="card-text">Tipo de Medicamento: ${producto[i].tipo_medicamento}</p>
+                        </div>
+                        <div class="card-footer" id="catalogPage">
+                            <small class="text-muted">Precio: ${producto[i].precio}$</small>
+                        </div>
+                    </div>
+                </a>
+            </div>`
+    }
+    
+    document.getElementById("seeProducts").innerHTML=html;
+}
+
 function editarProducto(id) {
     window.location.href = `/adminEditProduct/${id}`;
 }
@@ -207,6 +231,7 @@ $("ol").on("click","li", function (){
 })
 
 if(window.location.pathname === "/catalog") buscar(SearchData,filter,isAdmin);
+if(window.location.pathname === "/home") showProducts(SearchData);
 
 function AddToCart() {  
     document.getElementById("qtty").submit();
@@ -245,6 +270,9 @@ if(path[1] === "adminEditBranch"){
 } else if(path[1] === "buy") {
     CalculateTaxes();
     Nation_State(Ubicacion);
+    let dates = getDate(document.getElementById("PaisSelect").innerText);
+    document.getElementById("Fsalida").value=dates[0]
+    document.getElementById("Fentrega").value=dates[1]
 }
 
 
@@ -346,10 +374,15 @@ function CalculateShipping(TotalTax){
     document.getElementById("TotalPrice").innerText ="$" + (subTotal + TotalTax + TotalShipping);
 }
 
-var getDate = function() {
+function getDate(data) {
+    console.log(data);
     var fechaActual = new Date(Date.now());
     var fechaExport = new Date(fechaActual.getTime() + 604800000);
     var fechaDis    = new Date(fechaActual.getTime() + 1209600000);
-
-    return [`${fechaActual.getDate()}/${parseInt(fechaActual.getMonth())+1}/${fechaActual.getFullYear()}`, `${fechaExport.getDate()}/${parseInt(fechaExport.getMonth())+1}/${fechaExport.getFullYear()}`, `${fechaDis.getDate()}/${parseInt(fechaDis.getMonth())+1}/${fechaDis.getFullYear()}`, fechaActual, fechaExport, fechaDis];
+    if(data!=="Estados unidos"){
+        console.log("hola");
+        return  [`${fechaActual.getFullYear()}-${parseInt(fechaActual.getMonth())+1}-${fechaActual.getDate()}`, `${fechaDis.getFullYear()}-${parseInt(fechaDis.getMonth())+1}/${fechaDis.getDate()}`, fechaActual.toLocaleDateString(), fechaDis.toLocaleDateString()];
+    }else{
+        return [`${fechaActual.getFullYear()}-${parseInt(fechaActual.getMonth())+1}-${fechaActual.getDate()}`, `${fechaExport.getFullYear()}-${parseInt(fechaExport.getMonth())+1}-${fechaExport.getDate()}`, fechaActual.toLocaleDateString(), fechaExport.toLocaleDateString() ];
+    }
 }

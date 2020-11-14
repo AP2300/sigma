@@ -394,6 +394,17 @@ html body div.card-body.page{
     padding: .1em;
 }
 
+.home{
+    color: whitesmoke;
+    text-shadow: 0 0 7px #00000085;
+    background-color: rgba(0, 0, 0, 0.219);
+    box-shadow: rgb(0 0 0 / 31%) 1px -20px 60px 0px;
+}
+
+.imgSize{
+    height: 200px;
+}
+
 .price{
     text-align: center;
     color: #6c757d;
@@ -515,4 +526,8 @@ html body div ul li.bgTransparent:hover{
     max-height: 60px;
     text-align: start;
     padding-left: 1%;
+}
+
+.Shadow{
+    text-shadow: 0 0 10px #00000085;
 }
