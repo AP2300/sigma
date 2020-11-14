@@ -1,3 +1,4 @@
+const { query } = require("express");
 const { type } = require("os");
 
 var responses = {
@@ -18,7 +19,7 @@ var express               = require("express"),
     bcrypt                = require("bcryptjs"),
     Sql                   = require("mysql"),
     session               = require("express-session"),
-    MySQLStore            = require("express-mysql-session")(session);
+    MySQLStore            = require("express-mysql-session")(session),
     cookieParser          = require("cookie-parser"),
     fs                    = require("fs"),
     { v4: uuidv4 }        = require('uuid');
@@ -132,19 +133,56 @@ app.get("/product/:id", (req, res) =>{
     })
 })
 
-app.get("/buy", (req, res)=>{
+app.get("/buy/:id", (req, res)=>{
     IsAuthenticated(req.session.user);
-    var Car= [];
+    var CartInfo= [];
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
-        res.render("buy", {Sesion:Sesion,Car:Car,responses:responses});
-        responses.messageErr="";
-        responses.messageOK="";
-        
     } else{
         Sesion=null
         res.redirect("/login");
     }
+    const id = req.params.id;
+
+    DB.query("SELECT idProducto,cantidad,id FROM carrito_producto WHERE idUsuario = ?",[id], async (err, results)=>{
+        if(err) console.log(err);
+        else{
+            if(results.length>0){
+                for (let i in results) {
+                    let query =  DB.query("SELECT * FROM producto WHERE id = ?", [results[i].idProducto])
+                    query.on("result",(row)=> {
+                        CartInfo[i] = {data:row, cantidad:results[i].cantidad, id:results[i].id, categoria:results[i].tipo_medicamento};
+                    })
+                    query.on("end", async()=>{
+                        if(i==results.length-1){
+                            let ubicacion;
+                            let sucursal;
+                            let query1 = DB.query(`SELECT sucursal.ubicacion,sucursal.nombre 
+                            FROM sucursal INNER JOIN usuarios
+                            ON sucursal.id=usuarios.idSucursal
+                            WHERE usuarios.id = ?`, [id]);
+             
+                            query1.on('result', async function(row, index) {
+                                ubicacion=row.ubicacion;
+                                sucursal = row.nombre;
+                                console.log(row)
+                                console.log(ubicacion)
+                                res.render("buy",{Sesion:Sesion, CartInfo:CartInfo, ubicacion:ubicacion, sucursal:sucursal, responses:responses});
+                                responses.messageErr="";
+                                responses.messageOK=""; 
+                            })
+                            .on("error" ,function (error, index) {
+                                console.log(error);
+                            });
+                        }
+                    })
+                }
+            }else{
+                res.render("buy",{Sesion:Sesion, Car:null});
+            }
+        }
+    })
+
 })
 
 app.post("/login", function(req, res){
@@ -864,6 +902,24 @@ app.get("/UserCart/:id", async (req, res)=>{
 })
 
 app.post("/Checkout", (req, res)=>{
+    DB.query("SELECT * FROM carrito_producto WHERE idUsuario = ?",[req.session.user.id], (err, resultsCart)=>{
+        if(err) console.log(err);
+        else{
+            DB.query("INSERT INTO distribucion SET = ?"[
+                {idUsuario:req.session.user.id,
+                    idSucursal:req.body.idsucursal,
+                    origen:req.body.sucursal,
+                    destino:req.body.destino,
+                    fecha_salida:req.body.Fsalida,
+                    fecha_entrega:req.body.Fentrega
+                }], (err, resultsDist)=>{
+                    if(err) console.log(err);
+                    else{
+                        console.log(resultsCart);
+                    }
+                })
+        }
+    })
     transporter.sendMail({
         from: '"SuplyMedica"andresparedes202@gmail.com', // sender address
         to: Usr.username, // list of receivers
