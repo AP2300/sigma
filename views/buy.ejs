@@ -73,7 +73,7 @@
                         <div id="shipping_address_country"
                             class="field select-field col-md-6 col-sm-12 col-xs-12 form-group">
                             <label for="order_shipping_address_country" class="control-label">Sucursal<em>*</em></label>
-                            <select name="destino" id="sucursal"
+                            <select name="sucursal" id="sucursal"
                                 class="select col-sm-12 form-control" autocomplete="country">
                                     <option selected><%= sucursal %></option>
                             </select>
@@ -82,7 +82,7 @@
                         <div id="shipping_address_country"
                             class="field select-field col-md-6 col-sm-12 col-xs-12 form-group">
                             <label for="order_shipping_address_country" class="control-label">Pais<em>*</em></label>
-                            <select name="order_shipping_address[country]" id="PaisSelect"
+                            <select name="destino" id="PaisSelect"
                                 class="select col-sm-12 form-control" autocomplete="country">
                                 <option selected disabled value="">Elegir...</option>
 
@@ -140,7 +140,6 @@
 
                 <div class="row justify-content-center bgButtonTransfer">
                     <input type="text" name="idsucursal" value="<%=idsucursal%>" class="invisible">
-                    <input type="text" name="sucursal" value="<%=sucursal%>" class="invisible">
                     <div class="Login-button ">
                             <button type="submit" class="btn btn-primary">Finalizar Compra</button>
                     </div>
