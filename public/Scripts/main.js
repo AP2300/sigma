@@ -302,8 +302,8 @@ function Nation_State(ubicacion){
 function selectuser(){
     let user = document.getElementById("SelectUser").value;
 
-    if(user === "client"){
-        document.getElementById("SelectJob").value = "null";
+    if(user === "Cliente"){
+        document.getElementById("SelectJob").value = "Ninguno";
     }
 }
 
