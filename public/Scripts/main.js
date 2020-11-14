@@ -132,6 +132,30 @@ function buscar(Data, filter, isAdmin){
     document.getElementById("productos").innerHTML=html;
 }
 
+function showProducts(producto){
+    let html = "";
+
+    for(let i=0; i < 4; i++){    
+        html+=`
+            <div class="col mb-4">
+                <a class="product" onclick="redirect(${producto[i].id})" style="cursor: pointer">
+                    <div class="card card-producto h-100">
+                        <img src="${producto[i].IMG}" class="card-img-top imgSize" >
+                        <div class="card-body">
+                            <h5 class="card-title">${producto[i].nombre}</h5>
+                            <p class="card-text">Tipo de Medicamento: ${producto[i].tipo_medicamento}</p>
+                        </div>
+                        <div class="card-footer" id="catalogPage">
+                            <small class="text-muted">Precio: ${producto[i].precio}$</small>
+                        </div>
+                    </div>
+                </a>
+            </div>`
+    }
+    
+    document.getElementById("seeProducts").innerHTML=html;
+}
+
 function editarProducto(id) {
     window.location.href = `/adminEditProduct/${id}`;
 }
@@ -207,6 +231,7 @@ $("ol").on("click","li", function (){
 })
 
 if(window.location.pathname === "/catalog") buscar(SearchData,filter,isAdmin);
+if(window.location.pathname === "/home") showProducts(SearchData);
 
 function AddToCart() {  
     document.getElementById("qtty").submit();
