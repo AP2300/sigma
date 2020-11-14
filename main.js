@@ -1,3 +1,4 @@
+const { query } = require("express");
 const { type } = require("os");
 
 var responses = {
@@ -18,7 +19,7 @@ var express               = require("express"),
     bcrypt                = require("bcryptjs"),
     Sql                   = require("mysql"),
     session               = require("express-session"),
-    MySQLStore            = require("express-mysql-session")(session);
+    MySQLStore            = require("express-mysql-session")(session),
     cookieParser          = require("cookie-parser"),
     fs                    = require("fs"),
     { v4: uuidv4 }        = require('uuid');
@@ -901,6 +902,24 @@ app.get("/UserCart/:id", async (req, res)=>{
 })
 
 app.post("/Checkout", (req, res)=>{
+    DB.query("SELECT * FROM carrito_producto WHERE idUsuario = ?",[req.session.user.id], (err, resultsCart)=>{
+        if(err) console.log(err);
+        else{
+            DB.query("INSERT INTO distribucion SET = ?"[
+                {idUsuario:req.session.user.id,
+                    idSucursal:req.body.idsucursal,
+                    origen:req.body.sucursal,
+                    destino:req.body.destino,
+                    fecha_salida:req.body.Fsalida,
+                    fecha_entrega:req.body.Fentrega
+                }], (err, resultsDist)=>{
+                    if(err) console.log(err);
+                    else{
+                        console.log(resultsCart);
+                    }
+                })
+        }
+    })
     transporter.sendMail({
         from: '"SuplyMedica"andresparedes202@gmail.com', // sender address
         to: Usr.username, // list of receivers
