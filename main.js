@@ -969,7 +969,7 @@ app.post("/Checkout", (req, res)=>{
                                             }else{
                                                 transporter.sendMail({
                                                     from: '"Sigma"andresparedes202@gmail.com', // sender address
-                                                    to: Sesion.username, // list of receivers
+                                                    to: Sesion.nickname, // list of receivers
                                                     subject: "Su pedido esta siendo procesado", // Subject line
                                                     html:`
                                                     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
