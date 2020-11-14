@@ -157,7 +157,7 @@ app.get("/buy/:id", (req, res)=>{
                         if(i==results.length-1){
                             let ubicacion;
                             let sucursal;
-                            let query1 = DB.query(`SELECT sucursal.ubicacion,sucursal.nombre 
+                            let query1 = DB.query(`SELECT sucursal.ubicacion,sucursal.nombre,sucursal.id 
                             FROM sucursal INNER JOIN usuarios
                             ON sucursal.id=usuarios.idSucursal
                             WHERE usuarios.id = ?`, [id]);
@@ -165,9 +165,11 @@ app.get("/buy/:id", (req, res)=>{
                             query1.on('result', async function(row, index) {
                                 ubicacion=row.ubicacion;
                                 sucursal = row.nombre;
+                                idsucursal=row.id;
                                 console.log(row)
                                 console.log(ubicacion)
-                                res.render("buy",{Sesion:Sesion, CartInfo:CartInfo, ubicacion:ubicacion, sucursal:sucursal, responses:responses});
+                                res.render("buy",{Sesion:Sesion, CartInfo:CartInfo, ubicacion:ubicacion, sucursal:sucursal,
+                                idsucursal:idsucursal, responses:responses});
                                 responses.messageErr="";
                                 responses.messageOK=""; 
                             })
