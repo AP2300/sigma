@@ -241,7 +241,7 @@ app.get("/admin", function(req,res){
                         }else{
                             var sucursal = results;
                             console.log(sucursal);
-                            DB.query("SELECT * FROM ganancias", (error, results)=>{
+                            DB.query("SELECT * FROM ganancias INNER JOIN sucursal ON ganancias.idSucursal=sucursal.id ORDER BY fecha DESC;", (error, results)=>{
                                 if(error){
                                     console.log(error);
                                     res.redirect("/home");
@@ -593,7 +593,8 @@ app.get("/adminDeleteUser/:id", (req, res) =>{
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
         if(Sesion.isAdmin){
-            DB.query("DELETE FROM usuarios WHERE id = ?", [id], (error, results)=>{
+            
+            DB.query(`DELETE FROM usuarios WHERE id = ?`, [id], (error, results)=>{
                 if(error){
                     console.log(error);
                     responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
