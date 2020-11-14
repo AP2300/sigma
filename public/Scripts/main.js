@@ -72,6 +72,10 @@ if ($(".alert-dismissible").length) {
     $("#UsersPanel").collapse("show");
 }
 
+$('#btn_save').on('click', function() {
+
+})
+
 $('#CustomFile').on('change',function(){
     //get the file name
     var fileName = $(this).val();
@@ -135,10 +139,7 @@ function redirect(id) {
 }
 
 $(document).ready(function(){
-    $("#boton").click(function(event) {
-        event.stopPropagation();
-    })
-    $("#edit").click(function(event) {
+    $(".btn").click(function(event) {
         event.stopPropagation();
     })
 })
@@ -235,7 +236,11 @@ if(path[1] === "adminEditBranch"){
     EditBranch(ubicacion);
 } else if(path[1] === "UserCart") {
     CalculateTaxes();
+} else if(path[1] === "buy") {
+    CalculateTaxes();
+    Nation_State(Ubicacion);
 }
+
 
 
 function EditBranch(Name) {
@@ -267,6 +272,25 @@ function EditBranch(Name) {
     }
 
     document.getElementById("inputLoc").innerHTML = html;
+}
+
+function Nation_State(ubicacion){
+    let inVen = false     
+
+    EstadosVEN.forEach(el => {
+        if(el === ubicacion){
+            document.getElementById("PaisSelect").innerHTML = `<option selected >Venezuela</option>`;
+            document.getElementById("inputLoc").innerHTML = `<option selected >${el}</option>`
+        }
+    });
+
+    EstadosUSA.forEach(el => {
+        if(el.name === ubicacion){
+            document.getElementById("PaisSelect").innerHTML = `<option selected >Estados unidos</option>`;
+            document.getElementById("inputLoc").innerHTML = `<option selected >${el.name}</option>`
+        }
+    });
+
 }
 
 function selectuser(){
@@ -304,7 +328,10 @@ function CalculateShipping(TotalTax){
     for(let el in Cart){
         for(var i of Categories){
             if(Cart[el].data.tipo_medicamento === i.name){
-                TotalShipping += (i.cost*Number(document.getElementById("Qtty"+el).value));
+                if(document.getElementById("Qtty"+el).value) TotalShipping += (i.cost*Number(document.getElementById("Qtty"+el).value));
+                else  TotalShipping += (i.cost*Number(document.getElementById("Qtty"+el).innerText));
+
+                console.log(document.getElementById("Qtty"+el).innerText)
             }
         }
     }

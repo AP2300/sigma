@@ -1,38 +1,56 @@
 <%- include('./partials/header'); %>
 
+<script>
+    var Ubicacion = "<%=ubicacion%>"
+    var length = "<%=CartInfo.length%>"
+    var Cart = <%-JSON.stringify(CartInfo)%>
+    var sucursal = "<%=sucursal%>"
+  </script>
+
+<%var subtotal=0,total=0%>
+<%for(let i in CartInfo){%>
+  <%let calc = Number(CartInfo[i].data.precio)*Number(CartInfo[i].cantidad)%>
+  <%subtotal+=Number(calc)%>
+<%}%>
+<%total=subtotal+total%>
+
 <div class="containerContact">
-	<h2 class="name-login"> <img src="Images/BigLogo.png" style="padding-bottom: 9px;"> Sigma</h2>
+	<h2 class="name-login"> <img src="/Images/BigLogo.png" style="padding-bottom: 9px;"> Finaliza tu compra</h2>
 
 	<div class="containerBuy">
-        <form action="/processbuy" method="POST">
+        <form action="/processbuy/<%=Sesion.id%>" method="POST">
             <div class="row marginrow text-center">
                 <div class="col-sm-5 bgData">
                     <h2 class="legend col-md-12 col-sm-12 col-xs-12">Productos</h2>
-                    <table class="table table-hover table-borderless">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Precio</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry the Bird</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-products">
+                        <table class="table table-hover table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%for (let i in CartInfo){%>
+                                    <tr>
+                                        <th scope="row"><%=CartInfo[i].data.nombre%></th>
+                                        <td id="Qtty<%=i%>"><%=CartInfo[i].cantidad%></td>
+                                        <td>$<%= CartInfo[i].data.precio * CartInfo[i].cantidad %></td>
+                                    </tr>
+                                <%}%>
+                            </tbody>
+                        </table>
+                    </div>    
+                    <ul class="list-unstyled mb-4">
+
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted" >Subtotal </strong> <span id="subTotalPrice"><strong>$<%=subtotal%></strong></span></li>
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Envio</strong><strong id="Shipping">$0.00</strong></li>
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Impuesto</strong><strong id="Taxes">$0.00</strong></li>
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted" >Total</strong>
+                          <h5 class="font-weight-bold" id="TotalPrice">$<%=total%></h5>
+                        </li>
+                      </ul>
                 </div>
                 <div class="col-sm-6 bgData">
                     <div id="shipping_address" class="row">
@@ -54,13 +72,19 @@
 
                         <div id="shipping_address_country"
                             class="field select-field col-md-6 col-sm-12 col-xs-12 form-group">
-                            <label for="order_shipping_address_country" class="control-label">Pais<em>*</em></label>
-                            <select name="order_shipping_address[country]" onchange="estados()" id="PaisSelect"
+                            <label for="order_shipping_address_country" class="control-label">Sucursal<em>*</em></label>
+                            <select name="order_shipping_address[country]" id="sucursal"
                                 class="select col-sm-12 form-control" autocomplete="country">
+                                    <option selected><%= sucursal %></option>
+                            </select>
+                        </div>
 
+                        <div id="shipping_address_country"
+                            class="field select-field col-md-6 col-sm-12 col-xs-12 form-group">
+                            <label for="order_shipping_address_country" class="control-label">Pais<em>*</em></label>
+                            <select name="order_shipping_address[country]" id="PaisSelect"
+                                class="select col-sm-12 form-control" autocomplete="country">
                                 <option selected disabled value="">Elegir...</option>
-                                <option>Estados Unidos</option>
-                                <option>Venezuela</option>
 
                             </select>
                         </div>
@@ -70,16 +94,8 @@
                             <label for="order_shipping_address_region" class="control-label">Estado<em>*</em></label>
                             <select name="order_shipping_address[region]" id="inputLoc"
                                 class="select col-sm-12 form-control" autocomplete="address-level1">
-                                <option value=""></option>
+                                
                             </select>
-
-                        </div>
-
-                        <div id="shipping_address_city" class="field text-field col-md-6 col-sm-12 col-xs-12 form-group">
-                            <label for="order_shipping_address_city" class="control-label">Ciudad <em>*</em></label>
-                            <input type="text" name="order_shipping_address[city]" placeholder="Ej. Florida, Caracas, etc"
-                                id="order_shipping_address_city" class="text form-control" required="required"
-                                autocomplete="address-level2">
 
                         </div>
 
@@ -97,8 +113,6 @@
                                 id="order_shipping_address_postal" class="text form-control" autocomplete="postal-code">
 
                         </div>
-
-
 
                     </div>
                 </div>
