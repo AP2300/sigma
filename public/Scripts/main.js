@@ -351,5 +351,5 @@ var getDate = function() {
     var fechaExport = new Date(fechaActual.getTime() + 604800000);
     var fechaDis    = new Date(fechaActual.getTime() + 1209600000);
 
-    return [`${fechaExport.getDate()}/${parseInt(fechaExport.getMonth())+1}/${fechaExport.getFullYear()}`, `${fechaDis.getDate()}/${parseInt(fechaDis.getMonth())+1}/${fechaDis.getFullYear()}`, fechaExport, fechaDis];
+    return [`${fechaActual.getDate()}/${parseInt(fechaActual.getMonth())+1}/${fechaActual.getFullYear()}`, `${fechaExport.getDate()}/${parseInt(fechaExport.getMonth())+1}/${fechaExport.getFullYear()}`, `${fechaDis.getDate()}/${parseInt(fechaDis.getMonth())+1}/${fechaDis.getFullYear()}`, fechaActual, fechaExport, fechaDis];
 }
