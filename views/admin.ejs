@@ -75,7 +75,7 @@
         </div>
         <div class="col-sm">
             <a class="card text-center" id="Earning" data-toggle="collapse" aria-expanded="false"
-                aria-controls="EarningsPanel" href="#">
+                aria-controls="EarningsPanel" href="#EarningsPanel">
                 <div class="card-header">
                     Ganancias
                 </div>
@@ -312,6 +312,7 @@
         <div class="collapse multi-collapse hideMeBox" id="EarningsPanel">
             <%var i=0%>
             <%earningsData.forEach(el => {%>
+                <%let date=new Date(el.fecha)%>
             <div class="accordion " id="accordion">
                 <div class="card comentarios">
                     <div class="card-header" id="headingThree">
@@ -320,12 +321,11 @@
                                 data-target="#collapse<%=i%>">
                                 <div class="row">
                                     <div class="col-sm">
-                                        Nombre: <%=el.NombreEmpresa%>
+                                        Sucursal: <%- el.nombre %>
                                     </div>
-                                    <div class="col-sm">
-                                        Tipo de Entidad: <%=el.TipoEntidad%>
+                                    <div class="col-md-2">
+                                        Fecha: <%- `${date.getDate()}/${parseInt(date.getMonth())+1}/${date.getFullYear()}` %>
                                     </div>
-                                    <span class="btn" type=""><i class="far fa-trash-alt"></i></span>
                                 </div>
                             </button>
                         </h2>
@@ -335,37 +335,25 @@
                         <div class="card-body ">
                             <div class="row">
                                 <div class="col-sm">
-                                    Nombre: <%=el.Nombre%>
+                                    Nombre Sucursal:  <%- el.nombre %>
                                 </div>
                                 <div class="col-sm">
-                                    Apellido: <%=el.Apellido%>
+                                    Fecha: <%- `${date.getDate()}/${parseInt(date.getMonth())+1}/${date.getFullYear()}` %>
                                 </div>
                                 <div class="col-sm">
-                                    RIF: <%=el.RIF%>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm">
-                                    Pais: <%=el.Pais%>
-                                </div>
-                                <div class="col-sm">
-                                    Estado: <%=el.Estado%>
-                                </div>
-                                <div class="col-sm">
-                                    Ciudad: <%=el.Ciudad%>
+                                    Lote: <%- el.lote %> 
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm">
-                                    Correo: <%=el.Email%>
+                                    Ubicacion Sucursal: <%- el.ubicacion %> 
                                 </div>
-                            </div>
-                            <hr>
-                            <div class="row">
                                 <div class="col-sm">
-                                    Comentario: <%=el.Comentario%>
+                                    Capital Bruto: $ <%- el.capital_bruto %> 
+                                </div>
+                                <div class="col-sm">
+                                    Capital Neto: $ <%- el.capital_neto %> 
                                 </div>
                             </div>
                         </div>
