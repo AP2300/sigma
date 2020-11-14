@@ -10,63 +10,65 @@ var EstadosVEN = ["Amazonas","Anzoategui","Apure","Aragua","Barinas","Bolivar","
 
 var Categories = [{name:"Dolor General",cost: 1},{name:"Salud Digestiva",cost: 2},{name:"Salud Respiratoria",cost: 3},{name:"Vitaminas y Productos Naturales",cost: 5},{name:"Botiquín y Primeros Auxilios",cost: 10},{name:"Rehabilitacion y Equipos Medicos",cost: 50}]
 
-$(document).ready(function(){
-    $("#UsersPanel").collapse("hide")
-    $("#ProductsPanel").collapse("hide")
-    $("#OtrosPanel").collapse("hide")
-    $("#SucursalPanel").collapse("hide")
-    $("#DisPanel").collapse("hide")
-    $("#EarningsPanel").collapse("hide")
+if(window.location.pathname === "/admin") {
+    $(document).ready(function(){
+        $("#UsersPanel").collapse("hide")
+        $("#ProductsPanel").collapse("hide")
+        $("#OtrosPanel").collapse("hide")
+        $("#SucursalPanel").collapse("hide")
+        $("#DisPanel").collapse("hide")
+        $("#EarningsPanel").collapse("hide")
 
-    $("#Productos").click(function () { 
-        $("#UsersPanel").collapse("hide")
-        $("#OtrosPanel").collapse("hide")
-        $("#SucursalPanel").collapse("hide")
-        $("#DisPanel").collapse("hide")
-        $("#EarningsPanel").collapse("hide")
-        document.getElementById("textSelection").innerHTML="Administre los productos";
-    });
-    $("#Users").click(function () { 
-        $("#ProductsPanel").collapse("hide")
-        $("#SucursalPanel").collapse("hide")
-        $("#OtrosPanel").collapse("hide")
-        $("#DisPanel").collapse("hide")
-        $("#EarningsPanel").collapse("hide")
-        document.getElementById("textSelection").innerHTML="Administre los usuarios";
-    });
-    $("#Admins").click(function () { 
-        $("#UsersPanel").collapse("hide")
-        $("#ProductsPanel").collapse("hide")
-        $("#SucursalPanel").collapse("hide")
-        $("#DisPanel").collapse("hide")
-        $("#EarningsPanel").collapse("hide")
-        document.getElementById("textSelection").innerHTML="Administre las consultas";
-    });
-    $("#Sucursal").click(function () { 
-        $("#UsersPanel").collapse("hide")
-        $("#ProductsPanel").collapse("hide")
-        $("#OtrosPanel").collapse("hide")
-        $("#DisPanel").collapse("hide")
-        $("#EarningsPanel").collapse("hide")
-        document.getElementById("textSelection").innerHTML="Administre las sucursales";
-    });
-    $("#Distribution").click(function () { 
-        $("#ProductsPanel").collapse("hide")
-        $("#UsersPanel").collapse("hide")
-        $("#OtrosPanel").collapse("hide")
-        $("#SucursalPanel").collapse("hide")
-        $("#EarningsPanel").collapse("hide")
-        document.getElementById("textSelection").innerHTML="Administre las distribuciones";
-    });
-    $("#Earning").click(function () { 
-        $("#ProductsPanel").collapse("hide")
-        $("#UsersPanel").collapse("hide")
-        $("#OtrosPanel").collapse("hide")
-        $("#SucursalPanel").collapse("hide")
-        $("#DisPanel").collapse("hide")
-        document.getElementById("textSelection").innerHTML="Observe las ganancias";
-    });
-}); 
+        $("#Productos").click(function () { 
+            $("#UsersPanel").collapse("hide")
+            $("#OtrosPanel").collapse("hide")
+            $("#SucursalPanel").collapse("hide")
+            $("#DisPanel").collapse("hide")
+            $("#EarningsPanel").collapse("hide")
+            document.getElementById("textSelection").innerHTML="Administre los productos";
+        });
+        $("#Users").click(function () { 
+            $("#ProductsPanel").collapse("hide")
+            $("#SucursalPanel").collapse("hide")
+            $("#OtrosPanel").collapse("hide")
+            $("#DisPanel").collapse("hide")
+            $("#EarningsPanel").collapse("hide")
+            document.getElementById("textSelection").innerHTML="Administre los usuarios";
+        });
+        $("#Admins").click(function () { 
+            $("#UsersPanel").collapse("hide")
+            $("#ProductsPanel").collapse("hide")
+            $("#SucursalPanel").collapse("hide")
+            $("#DisPanel").collapse("hide")
+            $("#EarningsPanel").collapse("hide")
+            document.getElementById("textSelection").innerHTML="Administre las consultas";
+        });
+        $("#Sucursal").click(function () { 
+            $("#UsersPanel").collapse("hide")
+            $("#ProductsPanel").collapse("hide")
+            $("#OtrosPanel").collapse("hide")
+            $("#DisPanel").collapse("hide")
+            $("#EarningsPanel").collapse("hide")
+            document.getElementById("textSelection").innerHTML="Administre las sucursales";
+        });
+        $("#Distribution").click(function () { 
+            $("#ProductsPanel").collapse("hide")
+            $("#UsersPanel").collapse("hide")
+            $("#OtrosPanel").collapse("hide")
+            $("#SucursalPanel").collapse("hide")
+            $("#EarningsPanel").collapse("hide")
+            document.getElementById("textSelection").innerHTML="Administre las distribuciones";
+        });
+        $("#Earning").click(function () { 
+            $("#ProductsPanel").collapse("hide")
+            $("#UsersPanel").collapse("hide")
+            $("#OtrosPanel").collapse("hide")
+            $("#SucursalPanel").collapse("hide")
+            $("#DisPanel").collapse("hide")
+            document.getElementById("textSelection").innerHTML="Observe las ganancias";
+        });
+    }); 
+}
 
 if ($(".alert-dismissible").length) {
     $("#UsersPanel").collapse("show");
@@ -138,11 +140,15 @@ function redirect(id) {
     window.location.href = `/product/${id}`;
 }
 
-$(document).ready(function(){
-    $(".btn").click(function(event) {
-        event.stopPropagation();
+if(window.location.pathname === "/catalog") {
+    $(document).ready(function(){
+        $(".btn").click(function(event) {
+            event.stopPropagation();
+            console.log(event.isPropagationStopped());
+        })
     })
-})
+}
+
 
 function borrarlog(id) {
     var res = confirm("Está seguro de que desea eliminar la consulta?");
@@ -296,8 +302,8 @@ function Nation_State(ubicacion){
 function selectuser(){
     let user = document.getElementById("SelectUser").value;
 
-    if(user === "client"){
-        document.getElementById("SelectJob").value = "null";
+    if(user === "Cliente"){
+        document.getElementById("SelectJob").value = "Ninguno";
     }
 }
 
@@ -338,4 +344,12 @@ function CalculateShipping(TotalTax){
     document.getElementById("Shipping").innerText ="$" + (TotalShipping);
     subTotal = Number(document.getElementById("subTotalPrice").innerText.slice(1));
     document.getElementById("TotalPrice").innerText ="$" + (subTotal + TotalTax + TotalShipping);
+}
+
+var getDate = function() {
+    var fechaActual = new Date(Date.now());
+    var fechaExport = new Date(fechaActual.getTime() + 604800000);
+    var fechaDis    = new Date(fechaActual.getTime() + 1209600000);
+
+    return [`${fechaActual.getDate()}/${parseInt(fechaActual.getMonth())+1}/${fechaActual.getFullYear()}`, `${fechaExport.getDate()}/${parseInt(fechaExport.getMonth())+1}/${fechaExport.getFullYear()}`, `${fechaDis.getDate()}/${parseInt(fechaDis.getMonth())+1}/${fechaDis.getFullYear()}`, fechaActual, fechaExport, fechaDis];
 }
