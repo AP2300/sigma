@@ -18,6 +18,7 @@ var express               = require("express"),
     flash                 = require("connect-flash"),
     bcrypt                = require("bcryptjs"),
     Sql                   = require("mysql"),
+    nodemailer            = require("nodemailer"),
     session               = require("express-session"),
     MySQLStore            = require("express-mysql-session")(session),
     cookieParser          = require("cookie-parser"),
@@ -91,11 +92,18 @@ app.get("/", function (_, res) {
 })
 
 app.get("/home",function(req, res){
+    var ProductoData = []
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
     }
     console.log(Sesion);
-    res.render("index", {Sesion:Sesion});
+    DB.query("SELECT * FROM producto", (err, results)=>{
+        if(err) console.log(err);
+        else {
+            ProductoData = results
+            res.render("index", {Sesion:Sesion,ProductoData:ProductoData});
+        }
+    })
 })
 
 app.get("/login", function(req, res){
