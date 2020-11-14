@@ -117,8 +117,10 @@ app.get("/catalog", (req, res)=>{
     IsAuthenticated(req.session.user);
     var ProductoData = []
     DB.query("SELECT * FROM producto", (err, results)=>{
-        if(err) console.log(err);
-        else {
+        if(err) {
+            console.log(err);
+            res.redirect("/home");
+        } else {
             ProductoData = results
             if(IsAuthenticated(req.session.user)!=null){
                 Sesion=IsAuthenticated(req.session.user);
@@ -138,8 +140,10 @@ app.get("/product/:id", (req, res) =>{
     const id = req.params.id;
     let Producto = "";
     DB.query("SELECT * FROM producto WHERE id = ?", [id], (err, results)=>{
-        if(err) console.log(err);
-        else {
+        if(err) {
+            console.log(err);
+            res.redirect("/catalog");
+        } else {
             if(results.length > 0){
                 Producto = results;
                 console.log(Producto);
@@ -212,7 +216,10 @@ app.post("/login", function(req, res){
         if(error) console.log(error);
         if(results.length > 0) {
             await bcrypt.compare(loginData.pass, results[0].clave, function(err, result) {
-                if(err) console.log(err);
+                if(err) { 
+                    console.log(err);
+                    res.redirect("/login");
+                }
                 if(result) {
 
                     if(results[0].tipo_usuario==="admin") admin=true; 
