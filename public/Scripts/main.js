@@ -345,3 +345,11 @@ function CalculateShipping(TotalTax){
     subTotal = Number(document.getElementById("subTotalPrice").innerText.slice(1));
     document.getElementById("TotalPrice").innerText ="$" + (subTotal + TotalTax + TotalShipping);
 }
+
+var getDate = function() {
+    var fechaActual = new Date(Date.now());
+    var fechaExport = new Date(fechaActual.getTime() + 604800000);
+    var fechaDis    = new Date(fechaActual.getTime() + 1209600000);
+
+    return [`${fechaExport.getDate()}/${parseInt(fechaExport.getMonth())+1}/${fechaExport.getFullYear()}`, `${fechaDis.getDate()}/${parseInt(fechaDis.getMonth())+1}/${fechaDis.getFullYear()}`, fechaExport, fechaDis];
+}
