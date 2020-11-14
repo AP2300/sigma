@@ -14,7 +14,9 @@
         <div class="card-body center page">
           <h5 class="card-title"><%= Producto[0].nombre%></h5>
           <hr>
-          <p class="card-text"><%= Producto[0].descripcion%></p>
+          <div class="card-description">
+            <p class="card-text"><%= Producto[0].descripcion%></p>
+          </div>
         </div>
         <script>
             Value= <%=Producto[0].precio%>
