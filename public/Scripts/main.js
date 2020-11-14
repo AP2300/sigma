@@ -270,6 +270,9 @@ if(path[1] === "adminEditBranch"){
 } else if(path[1] === "buy") {
     CalculateTaxes();
     Nation_State(Ubicacion);
+    let dates = getDate(document.getElementById("PaisSelect").innerText);
+    document.getElementById("Fsalida").value=dates[0]
+    document.getElementById("Fentrega").value=dates[1]
 }
 
 
@@ -371,10 +374,15 @@ function CalculateShipping(TotalTax){
     document.getElementById("TotalPrice").innerText ="$" + (subTotal + TotalTax + TotalShipping);
 }
 
-var getDate = function() {
+function getDate(data) {
+    console.log(data);
     var fechaActual = new Date(Date.now());
     var fechaExport = new Date(fechaActual.getTime() + 604800000);
     var fechaDis    = new Date(fechaActual.getTime() + 1209600000);
-
-    return [`${fechaActual.getDate()}/${parseInt(fechaActual.getMonth())+1}/${fechaActual.getFullYear()}`, `${fechaExport.getDate()}/${parseInt(fechaExport.getMonth())+1}/${fechaExport.getFullYear()}`, `${fechaDis.getDate()}/${parseInt(fechaDis.getMonth())+1}/${fechaDis.getFullYear()}`, fechaActual, fechaExport, fechaDis];
+    if(data!=="Estados unidos"){
+        console.log("hola");
+        return  [`${fechaActual.getFullYear()}-${parseInt(fechaActual.getMonth())+1}-${fechaActual.getDate()}`, `${fechaDis.getFullYear()}-${parseInt(fechaDis.getMonth())+1}/${fechaDis.getDate()}`, fechaActual.toLocaleDateString(), fechaDis.toLocaleDateString()];
+    }else{
+        return [`${fechaActual.getFullYear()}-${parseInt(fechaActual.getMonth())+1}-${fechaActual.getDate()}`, `${fechaExport.getFullYear()}-${parseInt(fechaExport.getMonth())+1}-${fechaExport.getDate()}`, fechaActual.toLocaleDateString(), fechaExport.toLocaleDateString() ];
+    }
 }
