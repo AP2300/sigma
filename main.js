@@ -1,6 +1,3 @@
-const { query } = require("express");
-const { type } = require("os");
-
 var responses = {
     messageErr:"",
     messageOK:"",
@@ -103,7 +100,7 @@ app.get("/home",function(req, res){
         else {
             ProductoData = results;
             res.render("index", {Sesion:Sesion,ProductoData:ProductoData,responses:responses});
-            // responses.CmessageOK="";
+            responses.CmessageOK="";
         }
     })
 })
@@ -862,23 +859,51 @@ app.get("/SessionClose", (req,res)=>{
 })
 
 app.post("/AddtoCart", (req, res)=>{
+    let key;
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
         console.log(Sesion);
     }else{
        res.redirect("/login");
     }
-    DB.query("SELECT id FROM usuarios WHERE correo= ?", [Sesion.nickname], (err,results)=>{
-        if(err) console.log(err);
-        else{
-            DB.query("INSERT INTO carrito_producto SET ?",{idProducto:req.body.ID,idUsuario:results[0].id,cantidad:Number(req.body.cantidad)}, (err, results)=>{
-                if(err) console.log(err);
-                else{
-                    res.redirect("/catalog");
-                }
-            })    
+    console.log(req.body.ID);
+    DB.query("SELECT cantidad FROM carrito_producto WHERE idProducto= ?",[req.body.ID], (err, results)=>{
+        if(err){
+            console.log(err);
+            res.redirect("/home");
+        }else{
+            
+            if(results.length<1){
+                DB.query("SELECT id FROM usuarios WHERE correo= ?", [Sesion.nickname], (err,results1)=>{
+                    if(err){
+                        console.log(err);
+                    } 
+                    else{
+                        DB.query("INSERT INTO carrito_producto SET ?",{idProducto:req.body.ID,idUsuario:results1[0].id,cantidad:Number(req.body.cantidad)}, (err, results)=>{
+                            if(err){
+                                console.log(err);
+                            }
+                            else{
+                                res.redirect("/catalog");
+                            }
+                        })    
+                    }
+                })
+            }else{
+                key = Number(results[0].cantidad)+Number(req.body.cantidad);
+                DB.query("UPDATE carrito_producto SET ? WHERE idProducto = ?",[{cantidad:key}, req.body.ID], (err, result)=>{
+                    if(err){
+                        console.log(err);
+                        res.redirect("/home");
+                    }else{
+                        res.redirect("/catalog");
+                    }
+                })
+            }
         }
     })
+
+
 })
 
 app.post("/UpdateCart", (req,res)=>{
