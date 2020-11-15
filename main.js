@@ -5,7 +5,8 @@ var responses = {
     messageErr:"",
     messageOK:"",
     PmessageErr:"",
-    PmessageOK: ""
+    PmessageOK: "",
+    CmessageOK:"",
 }
 
 var Sesion;
@@ -100,8 +101,9 @@ app.get("/home",function(req, res){
     DB.query("SELECT * FROM producto", (err, results)=>{
         if(err) console.log(err);
         else {
-            ProductoData = results
-            res.render("index", {Sesion:Sesion,ProductoData:ProductoData});
+            ProductoData = results;
+            res.render("index", {Sesion:Sesion,ProductoData:ProductoData,responses:responses});
+            // responses.CmessageOK="";
         }
     })
 })
@@ -945,7 +947,8 @@ app.post("/Checkout", (req, res)=>{
     DB.query("SELECT * FROM carrito_producto WHERE idUsuario = ?",[req.session.user.id], (err, resultsCart)=>{
         if(err){
             console.log(err);
-            res.redirect("/buy/"+Sesion.id)
+            res.redirect("/buy/"+Sesion.id);
+            responses.CmessageOK=false;
         }
         else{
             DB.query("INSERT INTO distribucion SET ?",[
@@ -959,20 +962,23 @@ app.post("/Checkout", (req, res)=>{
                 }], (err, resultsDist)=>{
                     if(err){
                         console.log(err);
-                        res.redirect("/buy/"+Sesion.id)
+                        res.redirect("/buy/"+Sesion.id);
+                        responses.CmessageOK=false;
                     } 
                     else{
                         for (let i in resultsCart) {
                             DB.query("INSERT INTO productos_distribucion SET ?",[{idProductos:resultsCart[i].idProducto, idDistribucion:resultsDist.insertId, cantidad:resultsCart[i].cantidad}], (err, results)=>{
                                 if(err){
                                     console.log(err);
-                                    res.redirect("/buy/"+Sesion.id)
+                                    res.redirect("/buy/"+Sesion.id);
+                                    responses.CmessageOK=false;
                                 }else{
                                     if(i==(resultsCart.length-1)){
                                         DB.query("DELETE FROM carrito_producto WHERE idUsuario = ? ",[Sesion.id], (err,resullts)=>{
                                             if(err){
                                                 console.log(err);
                                                 res.redirect("/buy/"+Sesion.id);
+                                                responses.CmessageOK=false;
                                             }else{
                                                 transporter.sendMail({
                                                     from: '"Sigma"andresparedes202@gmail.com', // sender address
@@ -1165,8 +1171,8 @@ app.post("/Checkout", (req, res)=>{
                                                 </table>
                                                 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
                                                 <div style="color:#ff8754;font-family:Verdana, Geneva, sans-serif;line-height:1.2;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-                                                <div style="line-height: 1.2; font-size: 12px; font-family: Verdana, Geneva, sans-serif; color: #ff8754; mso-line-height-alt: 14px;">
-                                                <p style="line-height: 1.2; text-align: center; font-family: Verdana, Geneva, sans-serif; word-break: break-word; mso-line-height-alt: 14px; margin: 0;"><span style="background-color: #ffffff;"><strong><span style="font-size: 46px; background-color: #ffffff;"><span style="color: #ff6600;">Suply</span><span style="color: #000080;">Medica</span></span></strong></span></p>
+                                                <div style="line-height: 1.2; font-size: 12px; font-family: Verdana, Geneva, sans-serif; color: #000000; mso-line-height-alt: 14px;">
+                                                <p style="line-height: 1.2; text-align: center; font-family: Verdana, Geneva, sans-serif; word-break: break-word; mso-line-height-alt: 14px; margin: 0;"><span style="background-color: #ffffff;"><strong><span style="font-size: 46px; background-color: #ffffff;"><img src="cid:sigmalogo">Sigma</p>
                                                 </div>
                                                 </div>
                                                 <!--[if mso]></td></tr></table><![endif]-->
@@ -1292,16 +1298,42 @@ app.post("/Checkout", (req, res)=>{
                                                     `,
                                                     attachments:[
                                                         {
-                                                            path: "public/Images/Thanks.png",
+                                                            path: "public/Images/Welcome_Email.png",
                                                             cid: "thanksimg"
+
+                                                        },{
+                                                            path:"public/Images/BigLogo.png",
+                                                            cid:"sigmalogo"
                                                         }
                                                     ]
                                                     },function(err, data){
                                                         if(err) console.log(err);
                                                         else  console.log("email enviado");
                                                     });
-                                            
+                                                    
+                                                    for (let i in resultsCart) {
+                                                        DB.query("SELECT cantidad FROM producto WHERE id=?",[resultsCart[i].idProducto],(err, resultsFQ)=>{
+                                                            if(err) console.log(err);
+                                                            else{
+                                                                let Ncantidad = Number(resultsFQ[0].cantidad)-Number(resultsCart[i].cantidad);
+                                                                console.log(Ncantidad);
+                                                                DB.query("UPDATE producto SET ? WHERE id= ?",[{cantidad:Ncantidad},resultsCart[i].idProducto],(err,results)=>{
+                                                                    if(err) console.log(err);
+                                                                })
+                                                            }
+                                                        })
+                                                    }
+
+                                                    // DB.query("INSERT INTO ganancias SET ?", [], (err,results)=>{
+                                                    //     if(err) console.log(err);
+                                                    //     else{
+
+                                                    //     }
+                                                    // })
+                                                responses.CmessageOK=true;
+                                                
                                                 res.redirect("/home");
+
                                             }
                                         })
                                     }

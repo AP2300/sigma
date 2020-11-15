@@ -531,3 +531,12 @@ html body div ul li.bgTransparent:hover{
 .Shadow{
     text-shadow: 0 0 10px #00000085;
 }
+
+html body div.alert.DisplayType{
+    position: fixed;
+    left: 30%; 
+    right: 30%;
+    top: 56px; 
+    z-index: 1000000;
+    margin-bottom: 0;
+}
