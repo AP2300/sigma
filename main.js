@@ -981,7 +981,10 @@ app.post("/Checkout", (req, res)=>{
                     destino:req.body.sucursal,
                     fecha_salida:req.body.Fsalida,
                     fecha_entrega:req.body.Fentrega,
-                    direccion: req.body.address
+                    direccion: req.body.address,
+                    total: req.body.subtotal,
+                    estado: false,
+                    referencia: req.body.referencia
                 }], (err, resultsDist)=>{
                     if(err){
                         console.log(err);

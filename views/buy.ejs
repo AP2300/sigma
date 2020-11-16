@@ -121,8 +121,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">N°</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Número de refrencia" aria-label="Username"
-                            aria-describedby="basic-addon1">
+                        <input type="number" class="form-control" placeholder="Número de refrencia" aria-label="Username"
+                            aria-describedby="basic-addon1" name="referencia">
                     </div>
 
                     <div class="input-group mt-3">
@@ -138,6 +138,7 @@
                 </div>
                 
                 <div class="row justify-content-center bgButtonTransfer">
+                    <input type="text" name="subtotal" id="Total4BE" class="invisible">
                     <input type="number" name="idsucursal" value="<%=idsucursal%>" class="invisible">
                     <input type="date" name="Fsalida" id="Fsalida" class="invisible">
                     <input type="date" name="Fentrega" id="Fentrega" class="invisible">
