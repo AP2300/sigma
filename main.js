@@ -784,9 +784,40 @@ app.get("/contactanos", function(req, res){
     res.render("contact", {Sesion:Sesion});
 })
 
-app.get("/tracking", function(req, res){
-    IsAuthenticated(req.session.user);
-    res.render("tracking", {Sesion:Sesion});
+app.get("/estatus", function(req, res){
+    var Distribution;
+    var idSucursal= "";
+    var nameSucursal= "";
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        const id = Sesion.id;
+        DB.query("SELECT * FROM distribucion WHERE idUsuario = ?", [id] ,(err, results)=>{
+            if(err){
+                console.log(err);
+                responses.messageErr="Hubo un error al entrar en los Estatus de las Distribuciones";
+                res.redirect("/home");
+            } 
+            else {
+                Distribution = results;
+                idSucursal = results[0].idSucursal;
+                console.log(results[0].idSucursal)
+                DB.query("SELECT nombre FROM sucursal WHERE id = ?", [idSucursal], (err,results)=>{
+                    if(err){
+                        console.log(err);
+                        responses.messageErr="Hubo un error al entrar en los Estatus de las Distribuciones";
+                        res.redirect("/home");
+                    }
+                    else{
+                        nameSucursal = results[0].nombre;
+                        res.render("estatus", {Sesion:Sesion,responses:responses,Distribution:Distribution,nameSucursal:nameSucursal});
+                    }
+                })
+            }
+        })
+    } else{
+        Sesion=null
+        res.redirect("/login");
+    }
 })
 
 app.post("/contactanos", (req, res)=>{
