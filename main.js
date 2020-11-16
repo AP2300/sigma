@@ -853,14 +853,14 @@ app.get("/estatus", function(req, res){
                 Distribution = results;
                 idSucursal = results[0].idSucursal;
                 console.log(results[0].idSucursal)
-                DB.query("SELECT nombre FROM sucursal WHERE id = ?", [idSucursal], (err,results)=>{
+                DB.query("SELECT ubicacion FROM sucursal WHERE id = ?", [idSucursal], (err,results)=>{
                     if(err){
                         console.log(err);
                         responses.messageErr="Hubo un error al entrar en los Estatus de las Distribuciones";
                         res.redirect("/home");
                     }
                     else{
-                        nameSucursal = results[0].nombre;
+                        nameSucursal = results[0].ubicacion;
                         res.render("estatus", {Sesion:Sesion,responses:responses,Distribution:Distribution,nameSucursal:nameSucursal});
                     }
                 })

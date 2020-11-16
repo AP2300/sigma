@@ -8,6 +8,8 @@
 
     <h2 class="name-login"> <img src="Images/BigLogo.png" style="padding-bottom: 9px;"> Sigma</h2>
 
+    <% var count = 0%>
+
     <div class="card login">
         <div class="card-body colorBg">
             <div class="accordion " id="accordion">
@@ -15,7 +17,7 @@
                     <div class="card comentarios">
                         <div class="card-header" id="headingThree">
                         <h2 class="mb-0">
-                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse1" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse<%= count%>" >
                             <div class="row">
                                 <div class="col-sm">
                                     Sucursal Destino: <%= el.destino%>
@@ -31,7 +33,7 @@
                             </button>
                         </h2>
                         </div>
-                        <div id="collapse1" class="collapse" >
+                        <div id="collapse<%= count%>" class="collapse" >
                         <div class="card-body ">
                             <div class="row">
                                 <div class="col-sm">
@@ -74,6 +76,7 @@
                             </div>
                         </div>
                     </div>
+                    <% count++ %>
                 <%})%>
             </div>
         </div>
