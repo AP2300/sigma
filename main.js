@@ -1,6 +1,3 @@
-const { query } = require("express");
-const { type } = require("os");
-
 var responses = {
     messageErr:"",
     messageOK:"",
@@ -103,7 +100,7 @@ app.get("/home",function(req, res){
         else {
             ProductoData = results;
             res.render("index", {Sesion:Sesion,ProductoData:ProductoData,responses:responses});
-            // responses.CmessageOK="";
+            responses.CmessageOK="";
         }
     })
 })
@@ -190,8 +187,6 @@ app.get("/buy/:id", (req, res)=>{
                                 ubicacion=row.ubicacion;
                                 sucursal = row.nombre;
                                 idsucursal=row.id;
-                                console.log(row)
-                                console.log(ubicacion)
                                 res.render("buy",{Sesion:Sesion, CartInfo:CartInfo, ubicacion:ubicacion, sucursal:sucursal,
                                 idsucursal:idsucursal, responses:responses});
                                 responses.messageErr="";
@@ -274,7 +269,7 @@ app.get("/admin", function(req,res){
                                     res.redirect("/home");
                                 }else{
                                     var earningsData = results;
-                                    DB.query("SELECT * FROM distribucion", (error, results)=>{
+                                    DB.query("SELECT usuarios.nombre, distribucion.* FROM distribucion INNER JOIN usuarios ON distribucion.idUsuario=usuarios.id;", (error, results)=>{
                                         if(error){
                                             console.log(error);
                                             res.redirect("/home");
@@ -779,6 +774,63 @@ app.get("/adminDeleteBranch/:id", (req, res) =>{
     }
 });
 
+app.get("/adminAprobeDis/:id", (req, res) => {
+    var id = req.params.id;
+    console.log(`aprobar ${id}`);
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("UPDATE distribucion SET estado='1' WHERE id = ?", [id], (error, results)=>{
+                if(error){
+                    if(error) {
+                        responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                        console.log(error);
+                        res.redirect("/admin");
+                    }
+                }else{
+                    responses.messageOK = "La distribucion ha sido aprobada de forma exitosa";
+                    res.redirect("/admin");
+                }
+            });
+        } else{
+            res.redirect("/home");
+        }
+    } else{
+        Sesion=null
+        res.redirect("/home");
+    }
+})
+
+app.get("/adminDelDis/:id", (req, res) => {
+    var id = req.params.id;
+    console.log(`eliminar ${id}`);
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            
+            DB.query(`DELETE FROM distribucion WHERE id = ?`, [id], (error, results)=>{
+                if(error){
+                    if(error) {
+                        responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                        console.log(error)
+                        res.redirect("/admin");
+                    }
+                }else{
+                    responses.messageOK = "La distribucion ha sido eliminada de forma exitosa";
+                    res.redirect("/admin");
+                }
+            });
+        } else{
+            res.redirect("/home");
+        }
+    } else{
+        Sesion=null
+        res.redirect("/home");
+    }
+})
+
 app.get("/contactanos", function(req, res){
     IsAuthenticated(req.session.user);
     res.render("contact", {Sesion:Sesion});
@@ -893,23 +945,51 @@ app.get("/SessionClose", (req,res)=>{
 })
 
 app.post("/AddtoCart", (req, res)=>{
+    let key;
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
         console.log(Sesion);
     }else{
        res.redirect("/login");
     }
-    DB.query("SELECT id FROM usuarios WHERE correo= ?", [Sesion.nickname], (err,results)=>{
-        if(err) console.log(err);
-        else{
-            DB.query("INSERT INTO carrito_producto SET ?",{idProducto:req.body.ID,idUsuario:results[0].id,cantidad:Number(req.body.cantidad)}, (err, results)=>{
-                if(err) console.log(err);
-                else{
-                    res.redirect("/catalog");
-                }
-            })    
+    console.log(req.body.ID);
+    DB.query("SELECT cantidad FROM carrito_producto WHERE idProducto= ?",[req.body.ID], (err, results)=>{
+        if(err){
+            console.log(err);
+            res.redirect("/home");
+        }else{
+            
+            if(results.length<1){
+                DB.query("SELECT id FROM usuarios WHERE correo= ?", [Sesion.nickname], (err,results1)=>{
+                    if(err){
+                        console.log(err);
+                    } 
+                    else{
+                        DB.query("INSERT INTO carrito_producto SET ?",{idProducto:req.body.ID,idUsuario:results1[0].id,cantidad:Number(req.body.cantidad)}, (err, results)=>{
+                            if(err){
+                                console.log(err);
+                            }
+                            else{
+                                res.redirect("/catalog");
+                            }
+                        })    
+                    }
+                })
+            }else{
+                key = Number(results[0].cantidad)+Number(req.body.cantidad);
+                DB.query("UPDATE carrito_producto SET ? WHERE idProducto = ?",[{cantidad:key}, req.body.ID], (err, result)=>{
+                    if(err){
+                        console.log(err);
+                        res.redirect("/home");
+                    }else{
+                        res.redirect("/catalog");
+                    }
+                })
+            }
         }
     })
+
+
 })
 
 app.post("/UpdateCart", (req,res)=>{
@@ -985,8 +1065,8 @@ app.post("/Checkout", (req, res)=>{
             DB.query("INSERT INTO distribucion SET ?",[
                 {idUsuario:req.session.user.id,
                     idSucursal:Number(req.body.idsucursal),
-                    origen:req.body.sucursal,
-                    destino:req.body.destino,
+                    origen:"Sigmar",
+                    destino:req.body.sucursal,
                     fecha_salida:req.body.Fsalida,
                     fecha_entrega:req.body.Fentrega,
                     direccion: req.body.address

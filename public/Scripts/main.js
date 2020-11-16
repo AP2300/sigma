@@ -183,6 +183,24 @@ function borrarlog(id) {
     }
 }
 
+function borrardis(id) {
+    var res = confirm("Está seguro de que desea eliminar la distribucion?");
+
+    if(res) {
+        console.log(`eliminado ${id}`);
+        window.location.href = `/adminDelDis/${id}`;
+    }
+}
+
+function cambiarEstatus(id) {
+    var res = confirm("Está seguro de que desea aprobar la distribucion?");
+
+    if(res) {
+        console.log(`aprobado ${id}`);
+        window.location.href = `/adminAprobeDis/${id}`;
+    }
+}
+
 function borrarProducto(id) {
     var res = confirm("Está seguro de que desea eliminar el producto?");
 
@@ -381,7 +399,7 @@ function getDate(data) {
     var fechaDis    = new Date(fechaActual.getTime() + 1209600000);
     if(data!=="Estados unidos"){
         console.log("hola");
-        return  [`${fechaActual.getFullYear()}-${parseInt(fechaActual.getMonth())+1}-${fechaActual.getDate()}`, `${fechaDis.getFullYear()}-${parseInt(fechaDis.getMonth())+1}/${fechaDis.getDate()}`, fechaActual.toLocaleDateString(), fechaDis.toLocaleDateString()];
+        return  [`${fechaActual.getFullYear()}-${parseInt(fechaActual.getMonth())+1}-${fechaActual.getDate()}`, `${fechaDis.getFullYear()}-${parseInt(fechaDis.getMonth())+1}-${fechaDis.getDate()}`, fechaActual.toLocaleDateString(), fechaDis.toLocaleDateString()];
     }else{
         return [`${fechaActual.getFullYear()}-${parseInt(fechaActual.getMonth())+1}-${fechaActual.getDate()}`, `${fechaExport.getFullYear()}-${parseInt(fechaExport.getMonth())+1}-${fechaExport.getDate()}`, fechaActual.toLocaleDateString(), fechaExport.toLocaleDateString() ];
     }
