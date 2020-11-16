@@ -115,8 +115,8 @@ function buscar(Data, filter, isAdmin){
                             <small class="text-muted">Precio: ${producto.precio}$</small>`
                             if(isAdmin==true) {
                                 html += `<br>
-                                <span class="btn btn-alert mt-2" role="button" id="edit" onclick="editarProducto(${producto.id})"><i class="far fa-edit"></i></span>
-                                <span class="btn mt-2" type="" onclick="borrarProducto(${producto.id})" id="boton"><i class="far fa-trash-alt"></i></span>
+                                <span class="btn btns btn-alert mt-2" role="button" id="edit" onclick="editarProducto(${producto.id})"><i class="far fa-edit"></i></span>
+                                <span class="btn btns mt-2" type="" onclick="borrarProducto(${producto.id})" id="boton"><i class="far fa-trash-alt"></i></span>
                         </div>
                     </div>
                 </a>
@@ -164,14 +164,14 @@ function redirect(id) {
     window.location.href = `/product/${id}`;
 }
 
-if(window.location.pathname === "/catalog") {
+//if(window.location.pathname === "/catalog") {
     $(document).ready(function(){
-        $(".btn").click(function(event) {
+        $(".btns").click(function(event) {
             event.stopPropagation();
             console.log(event.isPropagationStopped());
         })
     })
-}
+//}
 
 
 function borrarlog(id) {

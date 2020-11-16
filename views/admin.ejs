@@ -228,7 +228,7 @@
                                     <div class="col-sm">
                                         Tipo de Entidad: <%=el.TipoEntidad%>
                                     </div>
-                                    <span class="btn" onclick='borrarlog(`<%=el.ID%>`)' type="" id="boton"><i class="far fa-trash-alt"></i></span>
+                                    <span class="btn btns" onclick='borrarlog(`<%=el.ID%>`)' type="" id="boton"><i class="far fa-trash-alt"></i></span>
                                 </div>
                             </button>
                         </h2>
@@ -315,7 +315,7 @@
                 <%let fechaSalida=new Date(el.fecha_salida)%>
                 <%let fechaEntrega=new Date(el.fecha_entrega)%>
                 <%let estado = (el.estado==0) ? "En espera de aprobacion" : "Aprobado"%>
-                <%let html = `<span class="btn btn-success mr-2" onclick='cambiarEstatus(${el.id})' type="" id="botonSuccess"><i class="fas fa-check"></i></span>`%>
+                <%let html = `<span class="btn btns btn-success mr-2" onclick='cambiarEstatus(${el.id})' type="" id="botonSuccess"><i class="fas fa-check"></i></span>`%>
                 <%let disabled = (el.estado == 0) ? html : '' %>
             <div class="accordion " id="accordion">
                 <div class="card comentarios">
@@ -331,7 +331,7 @@
                                         Fecha de entrega: <%=`${fechaEntrega.getDate()}/${parseInt(fechaEntrega.getMonth())+1}/${fechaEntrega.getFullYear()}`%>
                                     </div>
                                     <%-disabled%>
-                                    <span class="btn" onclick='borrardis(`<%=el.id%>`)' type="" id="boton"><i class="far fa-trash-alt"></i></span>
+                                    <span class="btn btns" onclick='borrardis(`<%=el.id%>`)' type="" id="boton"><i class="far fa-trash-alt"></i></span>
                                 </div>
                             </button>
                         </h2>
