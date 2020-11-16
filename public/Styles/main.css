@@ -411,6 +411,18 @@ html body div.card-body.page{
     box-shadow: rgb(0 0 0 / 31%) 1px -20px 60px 0px;
 }
 
+.table-products{
+    overflow-y: scroll;
+    max-height: 192px;
+}
+
+.card-description{
+    overflow-y: scroll;
+    max-height: 60px;
+    text-align: start;
+    padding-left: 1%;
+}
+
 .imgSize{
     height: 200px;
 }
@@ -524,18 +536,6 @@ html body div ul li.bgTransparent:hover{
 .bgButtonTransfer{
     margin: 1% 4.3%;
     width: 100%;    
-}
-
-.table-products{
-    overflow-y: scroll;
-    max-height: 192px;
-}
-
-.card-description{
-    overflow-y: scroll;
-    max-height: 60px;
-    text-align: start;
-    padding-left: 1%;
 }
 
 .Shadow{
