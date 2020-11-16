@@ -353,6 +353,12 @@ html body span.btn{
     background-color: rgb(20, 141, 37);
 }
 
+#botonSuccess:hover {
+    background-color: rgba(0, 0, 0, 0.425);
+    color: whitesmoke;
+    transition: 250ms;
+}
+
 html body div div div div#productos div div.card-producto img.card-img-top{
     height: 300px;
 }

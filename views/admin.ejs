@@ -62,7 +62,7 @@
         </div>
         <div class="col-sm">
             <a class="card text-center" id="Distribution" data-toggle="collapse" aria-expanded="false"
-                aria-controls="DisPanel" href="#DistribucionPanel">
+                aria-controls="DisPanel" href="#DisPanel">
                 <div class="card-header">
                     Distribuciones
                 </div>
@@ -278,9 +278,6 @@
             <%i++%>
             <%});%>
         </div>
-        <div class="collapse multi-collapse hideMeBox" id="DistribucionPanel">
-            
-        </div>
         <div class="collapse multi-collapse hideMeBox" id="SucursalPanel">
             <a href="/adminBranches"><button class="btn btn-alert">Administrar sucursales</button></a>
             <hr>
@@ -318,6 +315,8 @@
                 <%let fechaSalida=new Date(el.fecha_salida)%>
                 <%let fechaEntrega=new Date(el.fecha_entrega)%>
                 <%let estado = (el.estado==0) ? "En espera de aprobacion" : "Aprobado"%>
+                <%let html = `<span class="btn btn-success mr-2" onclick='cambiarEstatus(${el.id})' type="" id="botonSuccess"><i class="fas fa-check"></i></span>`%>
+                <%let disabled = (el.estado == 0) ? html : '' %>
             <div class="accordion " id="accordion">
                 <div class="card comentarios">
                     <div class="card-header" id="headingThree">
@@ -331,7 +330,7 @@
                                     <div class="col-sm">
                                         Fecha de entrega: <%=`${fechaEntrega.getDate()}/${parseInt(fechaEntrega.getMonth())+1}/${fechaEntrega.getFullYear()}`%>
                                     </div>
-                                    <span class="btn btn-success mr-2" onclick='cambiarEstatus(`<%=el.id%>`)' type="" id="botonSuccess"><i class="fas fa-check"></i></span>
+                                    <%-disabled%>
                                     <span class="btn" onclick='borrardis(`<%=el.id%>`)' type="" id="boton"><i class="far fa-trash-alt"></i></span>
                                 </div>
                             </button>
