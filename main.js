@@ -781,7 +781,7 @@ app.get("/adminAprobeDis/:id", (req, res) => {
     if(IsAuthenticated(req.session.user)!=null){
         Sesion=IsAuthenticated(req.session.user);
         if(Sesion.isAdmin){
-            DB.query("UPDATE distribucion SET estado='1' WHERE id = ?", [id], (error, results)=>{
+            DB.query("SELECT * FROM distribucion WHERE id=?;", [id], (error, results)=>{
                 if(error){
                     if(error) {
                         responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
@@ -789,8 +789,36 @@ app.get("/adminAprobeDis/:id", (req, res) => {
                         res.redirect("/admin");
                     }
                 }else{
-                    responses.messageOK = "La distribucion ha sido aprobada de forma exitosa";
-                    res.redirect("/admin");
+                    var DisData = results[0];
+                    var capitalBruto = Number(DisData.total) - Number(DisData.total) * 0.16;
+                    var date = new Date(Date.now());
+                    DB.query("INSERT INTO ganancias SET ?", [{
+                        idSucursal: DisData.idSucursal,
+                        fecha: `${date.getFullYear()}-${parseInt(date.getMonth())+1}-${date.getDate()}`,
+                        capital_bruto: Number(capitalBruto),
+                        capital_neto: DisData.total
+                    }], (error, results)=>{
+                        if(error){
+                            if(error) {
+                                responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                                console.log(error);
+                                res.redirect("/admin");
+                            }
+                        }else{
+                            DB.query("UPDATE distribucion SET estado='1' WHERE id = ?", [id], (error, results)=>{
+                                if(error){
+                                    if(error) {
+                                        responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                                        console.log(error);
+                                        res.redirect("/admin");
+                                    }
+                                }else{
+                                    responses.messageOK = "La distribucion ha sido aprobada de forma exitosa";
+                                    res.redirect("/admin");
+                                }
+                            });
+                        }
+                    });
                 }
             });
         } else{
