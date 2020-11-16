@@ -1314,7 +1314,7 @@ app.post("/Checkout", (req, res)=>{
                                                 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
                                                 <div style="color:#ff8754;font-family:Verdana, Geneva, sans-serif;line-height:1.2;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
                                                 <div style="line-height: 1.2; font-size: 12px; font-family: Verdana, Geneva, sans-serif; color: #000000; mso-line-height-alt: 14px;">
-                                                <p style="line-height: 1.2; text-align: center; font-family: Verdana, Geneva, sans-serif; word-break: break-word; mso-line-height-alt: 14px; margin: 0;"><span style="background-color: #ffffff;"><strong><span style="font-size: 46px; background-color: #ffffff;"><img src="cid:sigmalogo">Sigma</p>
+                                                <p style="line-height: 1.2; text-align: center; font-family: Verdana, Geneva, sans-serif; word-break: break-word; mso-line-height-alt: 14px; margin: 0;"><span style="background-color: #ffffff;"><strong><span style="font-size: 46px; background-color: #ffffff;"><img src="cid:sigmalogo"></p>
                                                 </div>
                                                 </div>
                                                 <!--[if mso]></td></tr></table><![endif]-->
@@ -1376,7 +1376,7 @@ app.post("/Checkout", (req, res)=>{
                                                 <div style="color:#555555;font-family:Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;line-height:1.5;padding-top:20px;padding-right:40px;padding-bottom:10px;padding-left:40px;">
                                                 <div style="line-height: 1.5; font-size: 12px; font-family: Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; color: #555555; mso-line-height-alt: 18px;">
                                                 <p style="line-height: 1.5; word-break: break-word; font-family: Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; font-size: 16px; mso-line-height-alt: 24px; margin: 0;"><span style="font-size: 16px; color: #6d89bc;">Saludos,</span></p>
-                                                <p style="line-height: 1.5; word-break: break-word; font-family: Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; font-size: 16px; mso-line-height-alt: 24px; margin: 0;"><span style="font-size: 16px; color: #6d89bc;">Andres Paredes- CEO</span></p>
+                                                <p style="line-height: 1.5; word-break: break-word; font-family: Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; font-size: 16px; mso-line-height-alt: 24px; margin: 0;"><span style="font-size: 16px; color: #6d89bc;"> El equipo de Sigma</span></p>
                                                 <p style="line-height: 1.5; word-break: break-word; font-family: Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; mso-line-height-alt: 18px; margin: 0;"> </p>
                                                 </div>
                                                 </div>
@@ -1444,7 +1444,7 @@ app.post("/Checkout", (req, res)=>{
                                                             cid: "thanksimg"
 
                                                         },{
-                                                            path:"public/Images/BigLogo.png",
+                                                            path:"public/Images/SigmaLogo.png",
                                                             cid:"sigmalogo"
                                                         }
                                                     ]
