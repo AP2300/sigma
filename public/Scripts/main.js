@@ -183,6 +183,24 @@ function borrarlog(id) {
     }
 }
 
+function borrardis(id) {
+    var res = confirm("Está seguro de que desea eliminar la distribucion?");
+
+    if(res) {
+        console.log(`eliminado ${id}`);
+        window.location.href = `/adminDelDis/${id}`;
+    }
+}
+
+function cambiarEstatus(id) {
+    var res = confirm("Está seguro de que desea aprobar la distribucion?");
+
+    if(res) {
+        console.log(`aprobado ${id}`);
+        window.location.href = `/adminAprobeDis/${id}`;
+    }
+}
+
 function borrarProducto(id) {
     var res = confirm("Está seguro de que desea eliminar el producto?");
 

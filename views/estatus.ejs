@@ -1,71 +1,81 @@
 <%- include('./partials/header'); %>
 
+<script>
+    var distri = <%-JSON.stringify(Distribution)%>
+</script>
+
 <div class="containerContact">
 
     <h2 class="name-login"> <img src="Images/BigLogo.png" style="padding-bottom: 9px;"> Sigma</h2>
 
     <div class="card login">
         <div class="card-body colorBg">
-           <!-- <div class="collapse multi-collapse hideMeBox" >-->
-                <div class="accordion " id="accordion">
+            <div class="accordion " id="accordion">
+                <% Distribution.forEach( el =>{%>
                     <div class="card comentarios">
                         <div class="card-header" id="headingThree">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse1" >
                             <div class="row">
                                 <div class="col-sm">
-                                    Nombre: Prueba
+                                    Sucursal Destino: <%= el.destino%>
                                 </div>
                                 <div class="col-sm">
-                                    Tipo de Entidad: prueba
-                                </div>                                        
+                                    Referencia: <%= el.referencia%>
+                                </div>    
+                                <div class="col-sm">
+                                    Total: <%= el.total%>
+                                </div>                                      
                                 <span class="btn" type=""><i class="far fa-trash-alt"></i></span>
                             </div>
                             </button>
                         </h2>
                         </div>
-            
                         <div id="collapse1" class="collapse" >
                         <div class="card-body ">
                             <div class="row">
                                 <div class="col-sm">
-                                    Nombre: prueba
+                                    Realizado el: <%= `${el.fecha_salida.getDate()}-${parseInt(el.fecha_salida.getMonth())+1}-${el.fecha_salida.getFullYear()}` %>
                                 </div>
                                 <div class="col-sm">
-                                    Apellido: prueba
-                                </div>
-                                <div class="col-sm">
-                                    RIF: prueba
+                                    Fecha de Entrega Propuesta: <%= `${el.fecha_entrega.getDate()}-${parseInt(el.fecha_entrega.getMonth())+1}-${el.fecha_entrega.getFullYear()}` %>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm">
-                                    Pais: prueba
+                                    Sucursal Origen: <%= el.origen%>
+                                </div>   
+                                <div class="col-sm">
+                                    Estado: <%= nameSucursal%>
                                 </div>
                                 <div class="col-sm">
-                                    Estado: prueba
-                                </div>
-                                <div class="col-sm">
-                                    Ciudad: prueba
+                                    Direccion: <%= el.direccion%>
                                 </div>
                             </div>
                             <hr>
-                                <div class="row">
+                                <div class="row justify-content-center">
                                     <div class="col-sm">
-                                        Correo: prueba
+                                        Correo: <%= Sesion.nickname%>
                                     </div>
                                 </div>
                             <hr>
-                            <div class="row">
+                            <div class="row justify-content-center">
+                                <% if( el.estado === 0){%>
                                 <div class="col-sm">
-                                    Comentario: prueba
+                                    Estatus: En Proceso de Aprobacion
                                 </div>
+                                <%}%>
+                                <% if( el.estado === 1){%>
+                                    <div class="col-sm">
+                                        Estatus: Aprobado, El envio estara siendo realizado a la brevedad
+                                    </div>
+                                <%}%>
                             </div>
                         </div>
-                        </div>
-                </div>
-            <!--</div>-->
+                    </div>
+                <%})%>
+            </div>
         </div>
     </div>
 

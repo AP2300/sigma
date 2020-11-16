@@ -269,7 +269,7 @@ app.get("/admin", function(req,res){
                                     res.redirect("/home");
                                 }else{
                                     var earningsData = results;
-                                    DB.query("SELECT * FROM distribucion", (error, results)=>{
+                                    DB.query("SELECT usuarios.nombre, distribucion.* FROM distribucion INNER JOIN usuarios ON distribucion.idUsuario=usuarios.id;", (error, results)=>{
                                         if(error){
                                             console.log(error);
                                             res.redirect("/home");
@@ -774,14 +774,102 @@ app.get("/adminDeleteBranch/:id", (req, res) =>{
     }
 });
 
+app.get("/adminAprobeDis/:id", (req, res) => {
+    var id = req.params.id;
+    console.log(`aprobar ${id}`);
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            DB.query("UPDATE distribucion SET estado='1' WHERE id = ?", [id], (error, results)=>{
+                if(error){
+                    if(error) {
+                        responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                        console.log(error);
+                        res.redirect("/admin");
+                    }
+                }else{
+                    responses.messageOK = "La distribucion ha sido aprobada de forma exitosa";
+                    res.redirect("/admin");
+                }
+            });
+        } else{
+            res.redirect("/home");
+        }
+    } else{
+        Sesion=null
+        res.redirect("/home");
+    }
+})
+
+app.get("/adminDelDis/:id", (req, res) => {
+    var id = req.params.id;
+    console.log(`eliminar ${id}`);
+
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        if(Sesion.isAdmin){
+            
+            DB.query(`DELETE FROM distribucion WHERE id = ?`, [id], (error, results)=>{
+                if(error){
+                    if(error) {
+                        responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
+                        console.log(error)
+                        res.redirect("/admin");
+                    }
+                }else{
+                    responses.messageOK = "La distribucion ha sido eliminada de forma exitosa";
+                    res.redirect("/admin");
+                }
+            });
+        } else{
+            res.redirect("/home");
+        }
+    } else{
+        Sesion=null
+        res.redirect("/home");
+    }
+})
+
 app.get("/contactanos", function(req, res){
     IsAuthenticated(req.session.user);
     res.render("contact", {Sesion:Sesion});
 })
 
-app.get("/tracking", function(req, res){
-    IsAuthenticated(req.session.user);
-    res.render("tracking", {Sesion:Sesion});
+app.get("/estatus", function(req, res){
+    var Distribution;
+    var idSucursal= "";
+    var nameSucursal= "";
+    if(IsAuthenticated(req.session.user)!=null){
+        Sesion=IsAuthenticated(req.session.user);
+        const id = Sesion.id;
+        DB.query("SELECT * FROM distribucion WHERE idUsuario = ?", [id] ,(err, results)=>{
+            if(err){
+                console.log(err);
+                responses.messageErr="Hubo un error al entrar en los Estatus de las Distribuciones";
+                res.redirect("/home");
+            } 
+            else {
+                Distribution = results;
+                idSucursal = results[0].idSucursal;
+                console.log(results[0].idSucursal)
+                DB.query("SELECT nombre FROM sucursal WHERE id = ?", [idSucursal], (err,results)=>{
+                    if(err){
+                        console.log(err);
+                        responses.messageErr="Hubo un error al entrar en los Estatus de las Distribuciones";
+                        res.redirect("/home");
+                    }
+                    else{
+                        nameSucursal = results[0].nombre;
+                        res.render("estatus", {Sesion:Sesion,responses:responses,Distribution:Distribution,nameSucursal:nameSucursal});
+                    }
+                })
+            }
+        })
+    } else{
+        Sesion=null
+        res.redirect("/login");
+    }
 })
 
 app.post("/contactanos", (req, res)=>{
