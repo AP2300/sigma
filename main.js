@@ -187,8 +187,6 @@ app.get("/buy/:id", (req, res)=>{
                                 ubicacion=row.ubicacion;
                                 sucursal = row.nombre;
                                 idsucursal=row.id;
-                                console.log(row)
-                                console.log(ubicacion)
                                 res.render("buy",{Sesion:Sesion, CartInfo:CartInfo, ubicacion:ubicacion, sucursal:sucursal,
                                 idsucursal:idsucursal, responses:responses});
                                 responses.messageErr="";
@@ -1036,8 +1034,8 @@ app.post("/Checkout", (req, res)=>{
             DB.query("INSERT INTO distribucion SET ?",[
                 {idUsuario:req.session.user.id,
                     idSucursal:Number(req.body.idsucursal),
-                    origen:req.body.sucursal,
-                    destino:req.body.destino,
+                    origen:"Sigmar",
+                    destino:req.body.sucursal,
                     fecha_salida:req.body.Fsalida,
                     fecha_entrega:req.body.Fentrega,
                     direccion: req.body.address
