@@ -349,6 +349,10 @@ html body span.btn{
     background-color: rgb(253, 75, 75);
 }
 
+#botonSuccess {
+    background-color: rgb(20, 141, 37);
+}
+
 html body div div div div#productos div div.card-producto img.card-img-top{
     height: 300px;
 }

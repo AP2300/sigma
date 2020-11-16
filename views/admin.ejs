@@ -62,7 +62,7 @@
         </div>
         <div class="col-sm">
             <a class="card text-center" id="Distribution" data-toggle="collapse" aria-expanded="false"
-                aria-controls="DisPanel" href="#">
+                aria-controls="DisPanel" href="#DisPanel">
                 <div class="card-header">
                     Distribuciones
                 </div>
@@ -308,6 +308,76 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
             </form>
+        </div>
+        <div class="collapse multi-collapse hideMeBox" id="DisPanel">
+            <%var i=0%>
+            <%distributionData.forEach(el => {%>
+                <%let fechaSalida=new Date(el.fecha_salida)%>
+                <%let fechaEntrega=new Date(el.fecha_entrega)%>
+                <%let estado = (el.estado==0) ? "En espera de aprobacion" : "Aprobado"%>
+            <div class="accordion " id="accordion">
+                <div class="card comentarios">
+                    <div class="card-header" id="headingThree">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                data-target="#collapse<%=i%>">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Nombre: <%=el.nombre%>
+                                    </div>
+                                    <div class="col-sm">
+                                        Fecha de entrega: <%=`${fechaEntrega.getDate()}/${parseInt(fechaEntrega.getMonth())+1}/${fechaEntrega.getFullYear()}`%>
+                                    </div>
+                                    <span class="btn btn-success mr-2" onclick='cambiarEstatus(`<%=el.id%>`)' type="" id="botonSuccess"><i class="fas fa-check"></i></span>
+                                    <span class="btn" onclick='borrardis(`<%=el.id%>`)' type="" id="boton"><i class="far fa-trash-alt"></i></span>
+                                </div>
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapse<%=i%>" class="collapse">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-sm">
+                                    Nombre: <%=el.nombre%>
+                                </div>
+                                <div class="col-sm">
+                                    Fecha de salida: <%=`${fechaSalida.getDate()}/${parseInt(fechaSalida.getMonth())+1}/${fechaSalida.getFullYear()}`%>
+                                </div>
+                                <div class="col-sm">
+                                    Fecha de entrega: <%=`${fechaEntrega.getDate()}/${parseInt(fechaEntrega.getMonth())+1}/${fechaEntrega.getFullYear()}`%>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm">
+                                    Sucursal de origen: <%=el.origen%>
+                                </div>
+                                <div class="col-sm">
+                                    Sucursal de destino: <%=el.destino%>
+                                </div>
+                                <div class="col-sm">
+                                    Direccion: <%=el.direccion%>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm">
+                                    Total de la compra: $ <%=el.total%>
+                                </div>
+                                <div class="col-sm">
+                                    Referencia: <%=el.referencia%>
+                                </div>
+                                <div class="col-sm">
+                                    Estado: <%=estado%>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%i++%>
+            <%});%>
         </div>
         <div class="collapse multi-collapse hideMeBox" id="EarningsPanel">
             <%var i=0%>
