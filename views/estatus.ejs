@@ -14,11 +14,11 @@
         <div class="card-body colorBg">
             <div class="accordion " id="accordion">
                 <% Distribution.forEach( el =>{%>
-                    <div class="card comentarios">
+                    <div class="card comentarios center">
                         <div class="card-header" id="headingThree">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse<%= count%>" >
-                            <div class="row">
+                            <div class="row center">
                                 <div class="col-sm">
                                     Sucursal Destino: <%= el.destino%>
                                 </div>
@@ -28,14 +28,13 @@
                                 <div class="col-sm">
                                     Total: <%= el.total%>
                                 </div>                                      
-                                <span class="btn" type=""><i class="far fa-trash-alt"></i></span>
                             </div>
                             </button>
                         </h2>
                         </div>
                         <div id="collapse<%= count%>" class="collapse" >
                         <div class="card-body ">
-                            <div class="row">
+                            <div class="row justify-content-center ">
                                 <div class="col-sm">
                                     Realizado el: <%= `${el.fecha_salida.getDate()}-${parseInt(el.fecha_salida.getMonth())+1}-${el.fecha_salida.getFullYear()}` %>
                                 </div>
@@ -44,7 +43,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="row">
+                            <div class="row justify-content-center ">
                                 <div class="col-sm">
                                     Sucursal Origen: <%= el.origen%>
                                 </div>   
@@ -56,7 +55,7 @@
                                 </div>
                             </div>
                             <hr>
-                                <div class="row justify-content-center">
+                                <div class="row justify-content-center ">
                                     <div class="col-sm">
                                         Correo: <%= Sesion.nickname%>
                                     </div>
