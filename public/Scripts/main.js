@@ -381,8 +381,7 @@ function CalculateShipping(TotalTax){
         for(var i of Categories){
             if(Cart[el].data.tipo_medicamento === i.name){
                 if(document.getElementById("Qtty"+el).value) TotalShipping += (i.cost*Number(document.getElementById("Qtty"+el).value));
-                else  TotalShipping += (i.cost*Number(document.getElementById("Qtty"+el).innerText));
-
+                else TotalShipping += (i.cost*Number(document.getElementById("Qtty"+el).innerText));
                 console.log(document.getElementById("Qtty"+el).innerText)
             }
         }
@@ -390,6 +389,10 @@ function CalculateShipping(TotalTax){
     document.getElementById("Shipping").innerText ="$" + (TotalShipping);
     subTotal = Number(document.getElementById("subTotalPrice").innerText.slice(1));
     document.getElementById("TotalPrice").innerText ="$" + (subTotal + TotalTax + TotalShipping);
+    if(document.getElementById("Total4BE")){
+        document.getElementById("Total4BE").value=(subTotal + TotalTax + TotalShipping);
+    }
+
 }
 
 function getDate(data) {
