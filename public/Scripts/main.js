@@ -98,10 +98,9 @@ function buscar(Data, filter, isAdmin){
     
 
     for(let producto of Data){
-        if(reg.test(producto.nombre)&&producto.tipo_medicamento===filter||reg.test(producto.nombre)&&filter==="Todos"
-        ||reg.test(producto.nombre)&&filter===""){
-            console.log(filter);
-            console.log(producto.id, producto.nombre);
+        if(reg.test(producto.nombre)&&producto.tipo_medicamento===filter&&producto.cantidad>0||reg.test(producto.nombre)&&filter==="Todos"&&producto.cantidad>0
+        ||reg.test(producto.nombre)&&filter===""&&producto.cantidad>0){
+
             html+=`
             <div class="col mb-4">
                 <a class="product" onclick="redirect(${producto.id})" style="cursor: pointer">
@@ -386,11 +385,11 @@ function CalculateShipping(TotalTax){
             }
         }
     }
-    document.getElementById("Shipping").innerText ="$" + (TotalShipping);
+    document.getElementById("Shipping").innerText ="$" + (TotalShipping).toFixed(2);
     subTotal = Number(document.getElementById("subTotalPrice").innerText.slice(1));
-    document.getElementById("TotalPrice").innerText ="$" + (subTotal + TotalTax + TotalShipping);
+    document.getElementById("TotalPrice").innerText ="$" + (subTotal + TotalTax + TotalShipping).toFixed(2);
     if(document.getElementById("Total4BE")){
-        document.getElementById("Total4BE").value=(subTotal + TotalTax + TotalShipping);
+        document.getElementById("Total4BE").value=(subTotal + TotalTax + TotalShipping).toFixed(2);
     }
 
 }
