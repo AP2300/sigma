@@ -978,10 +978,12 @@ app.get("/SessionClose", (req,res)=>{
 app.post("/AddtoCart", (req, res)=>{
     let key;
     if(IsAuthenticated(req.session.user)!=null){
+        
         Sesion=IsAuthenticated(req.session.user);
         console.log(Sesion);
     }else{
        res.redirect("/login");
+       return null;
     }
     console.log(req.body.ID);
     DB.query("SELECT cantidad FROM carrito_producto WHERE idProducto= ?",[req.body.ID], (err, results)=>{
