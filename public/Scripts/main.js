@@ -401,13 +401,13 @@ function getDate(data) {
     var fechaDis    = new Date(fechaActual.getTime() + 1209600000);
     if(data!=="Estados unidos"){
         console.log(fechaActual.getDate());
-        if(fechaDis.getDate()===1){
+        if(fechaDis.getDate()<10){
             return  [`${fechaActual.getFullYear()}-${parseInt(fechaActual.getMonth())+1}-${fechaActual.getDate()}`, `${fechaDis.getFullYear()}-${parseInt(fechaDis.getMonth())+1}-0${fechaDis.getDate()}`, fechaActual.toLocaleDateString(), fechaDis.toLocaleDateString()];
         }else{
             return  [`${fechaActual.getFullYear()}-${parseInt(fechaActual.getMonth())+1}-${fechaActual.getDate()}`, `${fechaDis.getFullYear()}-${parseInt(fechaDis.getMonth())+1}-${fechaDis.getDate()}`, fechaActual.toLocaleDateString(), fechaDis.toLocaleDateString()];
         }
     }else{
-        if(fechaDis.getDate()===1){
+        if(fechaDis.getDate()<10){
             return  [`${fechaActual.getFullYear()}-${parseInt(fechaActual.getMonth())+1}-${fechaActual.getDate()}`, `${fechaDis.getFullYear()}-${parseInt(fechaDis.getMonth())+1}-0${fechaDis.getDate()}`, fechaActual.toLocaleDateString(), fechaDis.toLocaleDateString()];
         }else{
             return [`${fechaActual.getFullYear()}-${parseInt(fechaActual.getMonth())+1}-${fechaActual.getDate()}`, `${fechaExport.getFullYear()}-${parseInt(fechaExport.getMonth())+1}-${fechaExport.getDate()}`, fechaActual.toLocaleDateString(), fechaExport.toLocaleDateString() ];
