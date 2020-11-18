@@ -59,7 +59,7 @@ let transporter = NodeMailer.createTransport({
 //configurado midleware para la sesion//
 
 var sessionStore = new MySQLStore({
-    expiration: 10000*30,
+    expiration: 10000*300,
     clearExpired: true,
     checkExpirationInterval: 10000*60,
     createDatabaseTable: true,
