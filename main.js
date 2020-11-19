@@ -311,12 +311,10 @@ app.post("/adminAddProduct", (req, res)=>{
             else{
                 console.log("entre a la subida de imagenes")
                 File = req.files.img;
-//                 uniqueName = uuidv4();
-//                 ${uniqueName}${File.name.slice(File.name.indexOf("."))}
-//                 ${uniqueName}${File.name.slice(File.name.indexOf("."))}
-                imgSource = `/Img-Producto/${File.name}`;
-                File.mv(`./public/Img-Producto/${File.name}`, (err)=>{
-                    if(err){
+                uniqueName = uuidv4();
+                imgSource = `/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`;
+                File.mv(`./public/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`, (err)=>{
+                    if(err) {
                         console.log("entre al error de subida de imagenes")
                         console.log(err);
                         return next();
