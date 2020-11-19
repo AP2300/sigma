@@ -414,3 +414,17 @@ function getDate(data) {
         }
     }
 }
+
+function Hide(){
+    if(window.location.pathname === "/admin") {
+        $(document).ready(function(){
+            $("#UsersPanel").collapse("hide")
+            $("#ProductsPanel").collapse("hide")
+            $("#OtrosPanel").collapse("hide")
+            $("#SucursalPanel").collapse("hide")
+            $("#DisPanel").collapse("hide")
+            $("#EarningsPanel").collapse("hide")
+        })
+    }
+    
+}
