@@ -324,7 +324,7 @@ app.post("/adminAddProduct", (req, res)=>{
                 tipo_medicamento:DataProducto.type,
                 cantidad:DataProducto.quantity,
                 descripcion:DataProducto.description,
-                IMG:imgSource
+                IMG:""
             }, (err, result)=>{
                 if(err) console.log(err)
                 else {
