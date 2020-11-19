@@ -309,6 +309,7 @@ app.post("/adminAddProduct", (req, res)=>{
         }else{
             if(!req.files) return res.redirect("/admin");
             else{
+                console.log("entre a la subida de imagenes")
                 File = req.files.img;
 //                 uniqueName = uuidv4();
 //                 ${uniqueName}${File.name.slice(File.name.indexOf("."))}
@@ -316,6 +317,7 @@ app.post("/adminAddProduct", (req, res)=>{
                 imgSource = `/Img-Producto/${File.name}`;
                 File.mv(`./public/Img-Producto/${File.name}`, (err)=>{
                     if(err){
+                        console.log("entre al error de subida de imagenes")
                         console.log(err);
                         return next();
                     }
@@ -323,6 +325,7 @@ app.post("/adminAddProduct", (req, res)=>{
             }
         }
         if(responses.PmessageErr===""){
+            console.log("aqui img source esta apunto de entrar al query ===> "+ imgSource)
             DB.query("INSERT INTO producto SET ?",{
                 nombre:DataProducto.name,
                 precio:DataProducto.price,
