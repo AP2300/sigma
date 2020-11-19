@@ -70,9 +70,6 @@ if(window.location.pathname === "/admin") {
     }); 
 }
 
-if ($(".alert-dismissible").length) {
-    $("#UsersPanel").collapse("show");
-}
 
 $('#btn_save').on('click', function() {
 
@@ -415,16 +412,5 @@ function getDate(data) {
     }
 }
 
-function Hide(){
-    if(window.location.pathname === "/admin") {
-        $(document).ready(function(){
-            $("#UsersPanel").collapse("hide")
-            $("#ProductsPanel").collapse("hide")
-            $("#OtrosPanel").collapse("hide")
-            $("#SucursalPanel").collapse("hide")
-            $("#DisPanel").collapse("hide")
-            $("#EarningsPanel").collapse("hide")
-        })
-    }
     
-}
+
