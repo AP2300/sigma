@@ -308,14 +308,14 @@ app.post("/adminAddProduct", (req, res)=>{
             res.redirect("/admin");
         }else{
             if(!req.files) return res.redirect("/admin");
-            else{
-                File = req.files.img;
-                uniqueName = uuidv4();
-                imgSource = `/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`;
-                File.mv(`./public/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`, (err)=>{
-                    if(err) console.log(err);
-                })
-            }
+//             else{
+//                 File = req.files.img;
+//                 uniqueName = uuidv4();
+//                 imgSource = `/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`;
+//                 File.mv(`./public/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`, (err)=>{
+//                     if(err) console.log(err);
+//                 })
+//             }
         }
         if(responses.PmessageErr===""){
             DB.query("INSERT INTO producto SET ?",{
