@@ -304,8 +304,8 @@ app.post("/adminAddProduct", (req, res)=>{
             console.log(error);
         }
         if(results.length>0){
-            responses.PmessageErr = "Este producto ya se encuentra en el sistema";
-            responses.PmessageOK = "";
+            responses.messageErr = "Este producto ya se encuentra en el sistema";
+            responses.messageOK = "";
             res.redirect("/admin");
         }else{
             console.log("Entre en el Primer Else")
@@ -325,7 +325,7 @@ app.post("/adminAddProduct", (req, res)=>{
                 console.log("JESUS ES MUYYYY PENDEJO")
             }
         }
-        if(responses.PmessageErr===""){
+        if(responses.messageErr===""){
             console.log("aqui img source esta apunto de entrar al query ===> "+ imgSource)
             DB.query("INSERT INTO producto SET ?",{
                 nombre:DataProducto.name,
