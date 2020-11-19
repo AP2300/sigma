@@ -387,7 +387,7 @@ app.post("/adminEditProduct/:id", (req, res) => {
                             descripcion:DataProducto.description
                         }
                     } else {
-                        var image = `./public/${results[0].IMG}`;
+                        var image = `./public${results[0].IMG}`;
                         fs.unlink(image, function(err) {
                             if (err) {
                                 console.log(err);
