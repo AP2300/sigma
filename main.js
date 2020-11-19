@@ -308,14 +308,19 @@ app.post("/adminAddProduct", (req, res)=>{
             res.redirect("/admin");
         }else{
             if(!req.files) return res.redirect("/admin");
-//             else{
-//                 File = req.files.img;
+            else{
+                File = req.files.img;
 //                 uniqueName = uuidv4();
-//                 imgSource = `/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`;
-//                 File.mv(`./public/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`, (err)=>{
-//                     if(err) console.log(err);
-//                 })
-//             }
+//                 ${uniqueName}${File.name.slice(File.name.indexOf("."))}
+//                 ${uniqueName}${File.name.slice(File.name.indexOf("."))}
+                imgSource = `/Img-Producto/${File.name}`;
+                File.mv(`./public/Img-Producto/${File.name}`, (err)=>{
+                    if(err){
+                        console.log(err);
+                        return next();
+                    }
+                })
+            }
         }
         if(responses.PmessageErr===""){
             DB.query("INSERT INTO producto SET ?",{
@@ -324,7 +329,7 @@ app.post("/adminAddProduct", (req, res)=>{
                 tipo_medicamento:DataProducto.type,
                 cantidad:DataProducto.quantity,
                 descripcion:DataProducto.description,
-                IMG:""
+                IMG:imgSource
             }, (err, result)=>{
                 if(err) console.log(err)
                 else {
