@@ -322,6 +322,7 @@ app.post("/adminAddProduct", (req, res)=>{
                         console.log(err);
                     }
                 })
+                console.log("JESUS ES MUYYYY PENDEJO")
             }
         }
         if(responses.PmessageErr===""){
