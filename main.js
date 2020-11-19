@@ -455,7 +455,7 @@ app.get("/adminDeleteProduct/:id", (req, res) =>{
                     responses.messageErr = "Ha ocurrido un error, inténtelo nuevamente";
                     res.redirect("/catalog");
                 }else{ 
-                    var image = `./public/${results[0].IMG}`;
+                    var image = `./public${results[0].IMG}`;
                     console.log(image);
                     DB.query("DELETE FROM producto WHERE id = ?", [id], (error, results)=>{
                         if(error){
