@@ -296,6 +296,7 @@ app.get("/admin", function(req,res){
 });
 
 app.post("/adminAddProduct", (req, res)=>{
+    console.log("Entre en el Post")
     let DataProducto = req.body;
     DB.query("SELECT nombre FROM producto WHERE nombre = ?", [DataProducto.name], async (error, results)=>{
         let imgSource;
@@ -307,17 +308,18 @@ app.post("/adminAddProduct", (req, res)=>{
             responses.PmessageOK = "";
             res.redirect("/admin");
         }else{
+            console.log("Entre en el Primer Else")
             if(!req.files) return res.redirect("/admin");
             else{
                 console.log("entre a la subida de imagenes")
                 File = req.files.img;
                 uniqueName = uuidv4();
                 imgSource = `/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`;
+                console.log(imgSource);
                 File.mv(`./public/Img-Producto/${uniqueName}${File.name.slice(File.name.indexOf("."))}`, (err)=>{
                     if(err) {
                         console.log("entre al error de subida de imagenes")
                         console.log(err);
-                        return next();
                     }
                 })
             }
