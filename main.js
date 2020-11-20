@@ -995,7 +995,7 @@ app.post("/AddtoCart", (req, res)=>{
        return null;
     }
     console.log(req.body.ID);
-    DB.query("SELECT cantidad FROM carrito_producto WHERE idProducto= ?",[req.body.ID], (err, results)=>{
+    DB.query("SELECT cantidad FROM carrito_producto WHERE idProducto= ? AND idUsuario= ?",[req.body.ID, Sesion.id], (err, results)=>{
         if(err){
             console.log(err);
             res.redirect("/home");
