@@ -47,17 +47,19 @@
         <div class="form-group">
             <label for="exampleInputType1">Tipo de usuario</label> <br>
             <select name="data[optionType]" class="form-control" id="" value="<%=user.tipo_usuario%>">
-                <option disabled value="">Elegir...</option>
+                <option selected disabled value="">Elegir...</option>
                 <option value="admin">Administrador</option>
-                <option value="other">Otro</option>
+                <option value="Empleado">Empleado</option>
+                <option value="Cliente">Cliente</option>
             </select>
         </div>
         <div class="form-group">
             <label for="exampleInputPos1">Cargo</label> <br>
             <select name="data[optionPos]" class="form-control" id="" value="<%=user.cargo%>">
-                <option disabled value="">Elegir...</option>
-                <option value="encargado">Encargado</option>
-                <option value="cachifo">Cachifo</option>
+                <option selected disabled value="">Elegir...</option>
+                <option value="Encargado">Encargado</option>
+                <option value="Contador">Contador</option>
+                <option value="Ninguno">Ninguno</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Actualizar</button>
